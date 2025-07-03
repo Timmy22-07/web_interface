@@ -1,9 +1,10 @@
 import os, re, json, shutil, requests, chardet
 from urllib.parse import urlparse
+from pathlib import Path
 
-RAW_DIR  = "data/raw"
+RAW_DIR = "data/raw"
 DICT_PATH = "data/dictionary.json"
-ML_DIR  = "ml_data"
+ML_DIR = "ml_data"
 ML_FILE = os.path.join(ML_DIR, "training_data.csv")
 LAST_FILE_PATH = "data/last_imported.txt"  # ✅ fichier mémoire
 
@@ -29,6 +30,7 @@ def is_url(path: str) -> bool:
 
 # ---------- ajout d'un fichier ----------
 def add_one_file(source: str) -> str | None:
+    ensure_dirs()
     with open(DICT_PATH, "r", encoding="utf-8") as f:
         dico = json.load(f)
 
@@ -44,8 +46,17 @@ def add_one_file(source: str) -> str | None:
 
     try:
         if is_url(source):
-            r = requests.get(source, timeout=30)
+            # Vérifie extension valide
+            if not any(ext in source.lower() for ext in [".csv", ".xlsx", ".xls"]):
+                raise ValueError("URL non valide (doit se terminer par .csv, .xlsx ou .xls)")
+
+            # Vérifie que ce n’est pas un lien dynamique comme StatCan (action?pid=)
+            if "action?" in source:
+                raise ValueError("Lien dynamique détecté. Merci de télécharger le fichier manuellement.")
+
+            r = requests.get(source, timeout=10)
             r.raise_for_status()
+
             with open(raw_path, "wb") as f_out:
                 f_out.write(r.content)
         else:
@@ -53,10 +64,11 @@ def add_one_file(source: str) -> str | None:
                 print("❌ Fichier local introuvable.")
                 return None
             shutil.copy(source, raw_path)
+
         print(f"✅ Sauvegardé sous {raw_path}")
     except Exception as e:
         print("❌ Erreur de transfert :", e)
-        return None
+        raise e  # Propagation utile pour affichage dans l’interface
 
     enc = detect_encoding(raw_path)
 
@@ -83,8 +95,7 @@ def main() -> str:
         last_path = add_one_file(src)
     print("\n🎉 Import terminé.")
     return last_path if last_path else ""
-    
 
-# ---------- mode exécution directe ----------
+# ---------- exécution directe ----------
 if __name__ == "__main__":
     main()
