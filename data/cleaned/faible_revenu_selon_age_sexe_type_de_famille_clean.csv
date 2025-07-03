@@ -1,0 +1,629 @@
+﻿doctype_html
+"<html class=""no-js"" lang=""fr"" dir=""ltr"""
+"      xmlns=""http://www.w3.org/1999/xhtml"">"
+<head>
+"    <meta charset=""utf-8"">"
+"    <base href=""https://www150.statcan.gc.ca/t1/tbl1/"" />"
+    <title>
+"    <link rel=""schema.dcterms"" href=""http://purl.org/dc/terms/""/>"
+"        <meta name=""keywords"" content=""Données municipales et locales"" />"
+"    <meta name=""dcterms.language"" title=""ISO639-2/T"" content=""fra"" />"
+"    <meta name=""dcterms.issued"" title=""W3CDTF"" content=""2015-07-08"" />"
+"        <meta name=""dcterms.modified"" title=""W3CDTF"" content=""2025-05-01"" />"
+"    <meta name=""dcterms.subject"" title=""gcstc"" content=""nul"" />"
+"    <meta property=""dcterms:service"" content=""StatCan""/>"
+"    <meta property=""dcterms:accessRights"" content=""2""/>"
+"    <link rel=""canonical"" href=""https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1110013501"" />"
+"    <link href=""/t1/wet-boew4b/assets/favicon.ico"" rel=""icon"" type=""image/x-icon"">"
+"    <link rel=""stylesheet"" href=""/t1/wet-boew4b/css/wet-boew.min.css"">"
+"    <script src=""/t1/wet-boew4b/js/jquery.min.js""></script>"
+"    <link rel=""stylesheet"" href=""/t1/wet-boew4b/css/theme.min.css"">"
+"    <link rel=""stylesheet"" href=""/t1/wet-boew4b/css/statcan.css"">"
+    <!--[if lt IE 9]>
+"    <link href=""/t1/wet-boew4b/assets/favicon.ico"" rel=""shortcut icon"" />"
+"    <link rel=""stylesheet"" href=""/t1/wet-boew4b/css/ie8-wet-boew.min.css"" />"
+    <![endif]-->
+"    <link rel=""stylesheet"" href=""/t1/wet-boew4b/invitation-manager/Overlay.css"">"
+"    <noscript><link rel=""stylesheet"" href=""/t1/wet-boew4b/css/noscript.min.css"" /></noscript>"
+"    <script src=""https://assets.adobedtm.com/be5dfd287373/8cdb3d539c44/launch-6df9e9b447f9.min.js"" crossorigin=""anonymous""></script>"
+    <script>dataLayer1 = [];</script>
+"    <script src=""resources/js/support/lodash/lodash.min.js""></script>"
+"    <script src=""resources/js/custom/jsDate.js""></script>"
+"    <script src=""resources/js/applyButton3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js"" type=""text/javascript""></script>"
+"    <script src=""resources/js/sharedJS3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js"" type=""text/javascript""></script>"
+"    <script src=""resources/js/dataTable/jquery.dataTables.min.js""></script>"
+"    <script src=""resources/js/dataTable/plugins/natural.sorting.js""></script>"
+"    <script src=""resources/js/dataTable/plugins/formatted-numbers.js""></script>"
+"    <link href=""resources/css/custom/tabs.css"" rel=""stylesheet"" />"
+"    <link href=""resources/css/custom/correction.css"" rel=""stylesheet"" />"
+"    <link href=""resources/css/pubs3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.css"" media=""all"" rel=""stylesheet"" type=""text/css"" />"
+"    <link href=""resources/css/general.css""  rel=""stylesheet"" />"
+"    <link href=""resources/font-awesome/css/font-awesome.min.css""  rel=""stylesheet"" />"
+"    <meta name=""format-detection"" content=""telephone=no"">"
+</head>
+"<body vocab=""http://schema.org/"" typeof=""WebPage"">"
+"<ul id=""wb-tphp"">"
+"<li class=""wb-slc"">"
+"<a class=""wb-sl"" href=""#wb-cont"">Passer au contenu principal</a>"
+</li>
+"<li class=""wb-slc visible-sm visible-md visible-lg"">"
+"<a class=""wb-sl"" href=""#wb-info"">Passer &#224; &#171;&#160;&#192; propos de ce site&#160;&#187;</a>"
+</ul>
+"<header role=""banner"">"
+"<div id=""wb-bnr"" class=""container"">"
+"<section id=""wb-lng"" class=""visible-md visible-lg text-right"">"
+"<h2 class=""wb-inv"">S&#233;lection de la langue</h2>"
+"<div class=""row"">"
+"<div class=""col-md-12"">"
+"<ul class=""list-inline margin-bottom-none"">"
+"<li><a lang=""en"" href=""https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1110013501&amp;request_locale=en"">English</a></li>"
+</div>
+</section>
+"<div class=""brand col-xs-8 col-sm-9 col-md-6"">"
+"<a href=""https://www.statcan.gc.ca/fr/debut"" property=""URL""><img src=""/t1/wet-boew4b/assets/sig-blk-fr.svg"" alt=""Statistique Canada""><span class=""wb-inv""> / <span lang=""en"">Statistics Canada</span></span></a>"
+"<section class=""wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs"" id=""wb-glb-mn"">"
+<h2>Recherche et menus</h2>
+"<ul class=""list-inline text-right chvrn"">"
+"<li><a href=""#mb-pnl"" title=""Recherche et menus"" aria-controls=""mb-pnl"" class=""overlay-lnk"" role=""button""><span class=""glyphicon glyphicon-search""><span class=""glyphicon glyphicon-th-list""><span class=""wb-inv"">Recherche et menus</span></span></span></a></li>"
+"<div id=""mb-pnl""></div>"
+"<section id=""wb-srch"" class=""col-xs-6 text-right visible-md visible-lg"">"
+"<h2 class=""wb-inv"">Recherche</h2>"
+"<form action=""https://www.statcan.gc.ca/recherche/resultats/site-recherche"" method=""get"" name=""cse-search-box"" role=""search"" class=""form-inline"">"
+"<div class=""form-group wb-srch-qry"">"
+"<label for=""wb-srch-q"" class=""wb-inv"">Recherchez le site Web</label>"
+"<input type=""hidden"" name=""fq"" value=""stclac:2"" />"
+"<input id=""wb-srch-q"" list=""wb-srch-q-ac"" class=""wb-srch-q form-control"" name=""q"" type=""search"" value="""" size=""27"" maxlength=""150"" placeholder=""Rechercher dans le site Web"">"
+"<datalist id=""wb-srch-q-ac"">"
+</datalist>
+"<div class=""form-group submit"">"
+"<button type=""submit"" id=""wb-srch-sub"" class=""btn btn-primary btn-small"" name=""wb-srch-sub""><span class=""glyphicon-search glyphicon""></span><span class=""wb-inv"">Recherche</span></button>"
+</form>
+"<nav role=""navigation"" id=""wb-sm"" class=""wb-menu visible-md visible-lg"" data-trgt=""mb-pnl"" data-ajax-replace=""/t1/wet-boew4b/ajax/sitemenu-fr.html"" typeof=""SiteNavigationElement"">"
+"	<h2 class=""wb-inv"">Menus des sujets</h2>"
+"	<div class=""container nvbar"">"
+"		<div class=""row"">"
+"			<ul class=""list-inline menu"">"
+"				<li><a href=""https://www150.statcan.gc.ca/n1/fr/sujets?MM=1"">Sujets</a></li>"
+"				<li><a href=""https://www150.statcan.gc.ca/n1/fr/type/donnees?MM=1"">Donn&eacute;es</a></li>"
+"				<li><a href=""https://www150.statcan.gc.ca/n1/fr/type/analyses?MM=1"">Analyses</a></li>"
+"				<li><a href=""https://www150.statcan.gc.ca/n1/fr/type/references?MM=1"">R&eacute;f&eacute;rences</a></li>"
+"				<li><a href=""https://www.statcan.gc.ca/fr/geographie?MM=1"">G&eacute;ographie</a></li>"
+"				<li><a href=""https://www.statcan.gc.ca/fr/recensement?MM=1"">Recensement</a></li>"
+"				<li><a href=""https://www.statcan.gc.ca/fr/enquetes?MM=1"">Enqu&ecirc;tes et programmes statistiques</a></li>"
+"				<li><a href=""https://www.statcan.gc.ca/fr/apercu/statcan?MM=1"">&Agrave; propos de StatCan</a></li>"
+"				<li><a href=""https://www.canada.ca/fr.html"">Canada.ca</a></li>"
+			</ul>
+		</div>
+	</div>
+</nav>
+"<nav role=""navigation"" id=""wb-bc"" class="""" property=""breadcrumb"">"
+"<div class=""container"">"
+"<div class=""row""><ol class=""breadcrumb"">"
+"        <li><a href=""https://www150.statcan.gc.ca/n1/fr"" rel='up'>Accueil</a></li>"
+"            <li><a href=""https://www150.statcan.gc.ca/n1/fr/type/donnees?MM=1#tableaux"" rel='up'>Donn&eacute;es</a></li>"
+        </ol>
+</header>
+"<main role=""main"" property=""mainContentOfPage"" class=""container""><style type=""text/css"">"
+    .tv-loader {
+        width		:	100%;
+        height		: 	100%;
+        position	:   absolute;
+        top			:	0px;
+        left		:	0px;
+    }
+    .tv-loader .tv-loader-image {
+        margin		:	0;
+        padding		:	0;
+        /*background-size:  30px 30px;*/
+        position	:	absolute;
+        z-index		:	999;
+</style>
+"<div id=""tv-loader"" class=""tv-loader"">"
+"    <div class=""tv-loader-image"" >"
+    </div>
+<script>
+        $('#tv-loader').fadeOut(1000);
+    })
+    $(document).ready(function () {
+"        $("".tbl-loader"").click(function (event) {"
+            $('#tv-loader').show();
+        });
+    });
+</script>
+"<script type=""text/javascript"">"
+  $(document).ready(function () {
+    $('#close-alert-security-btn').click(function (e) {
+     var url = '/tbl1/fr/tv!closeSecurityBanner-nonTraduit.action';
+      $.ajax({
+"          console.log(""an error was occurred"" + textStatus);"
+        }
+      });
+//
+      e.preventDefault();
+      $('#securityBanner').remove();
+  });
+    let action = 'tv';
+    viewObjects = {};
+"<h1 id=""wb-cont"" style=""margin-top: 0em;"">"
+"<section id=""correctionNotes"" class=""mfp-hide modal-dialog modal-content overlay-def"">"
+"        <header class=""modal-header"">"
+"            <h2 class=""modal-title"">Corrections de tableau</h2>"
+        </header>
+"        <div class=""modal-body"">"
+"            <ul class=""list-unstyled lst-spcd"">"
+                    <li>
+                        <strong>Date de correction :</strong>
+                        2020-02-24<ul>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+    </section>
+"<div class=""clearfix"">"
+"    <div class=""row"">"
+"        <div class=""col-md-8 mrgn-btm-0 mrgn-lft-0 divLeft"">"
+"            <div class=""font-small color-medium line-height-medium pull-left"">"
+"                <p class=""viewSubtitle"">"
+                    Fréquence :&nbsp;Annuelle</p>
+                    Tableau&nbsp;:
+                    11-10-0135-01
+                        (anciennement CANSIM&nbsp;206-0041)
+                    </p>
+                    Date de diffusion&nbsp;:
+                    2025-05-01</p>
+    <em>G&eacute;ographie&nbsp;:</em>
+"<p class=""viewSubtitle"">"
+    </p>
+        </div>
+"        <div class=""col-md-4 mrgn-btm-0 mrgn-lft-0 divRight"">"
+"            <div class=""pull-right"">"
+"                <div row class=""font-small color-medium line-height-medium"" style=""text-align: right;"">"
+                    <p>
+"                        <a href=""https://www.statcan.gc.ca/fra/apercu/siteweb-aide"">"
+"                            <span class=""glyphicon glyphicon-question-sign""></span>"
+                            Aide</a>
+                </div>
+"    <button type=""button"" class=""btn btn-default bookmarktooltip tooltipstered"" id=""bookmarktooltip"">"
+"        <i class=""fa fa-bookmark""></i>"
+        Enregistrer mes personnalisations</button>
+</p>
+<!-- Add content to the popup -->
+"<div style="""">"
+"    <div id=""bookmark-content"" class=""bookmark-content"" style=""display: none;"">"
+"        <div class=""input-group"">"
+"            <input id=""bookmarkUrl"" type=""text"" style=""margin-bottom: 0.5em;"" class=""form-control"" value=""""/>"
+"            <span class=""input-group-btn"">"
+"                <button class=""btn bookmarkBtn"" data-clipboard-action=""copy"" data-clipboard-target=""#bookmarkUrl"">"
+"                    <i class=""fa fa-copy""></i>"
+                </button>
+            </span>
+<script type='text/javascript'>
+        $('#bookmarkUrl').val(document.URL);
+        $('.bookmarktooltip').tooltipster({
+            maxWidth: 500
+        new ClipboardJS('.bookmarkBtn');
+        $('#bookmarktooltip').click();
+        $('.bookmarktooltip').tooltipster('hide');
+    function reloadSaveMySelections(bookmarkUrl) {
+        // reload bookmark info.
+"        $("".bookmarktooltip"").tooltipster('destroy');"
+        // remove duplicated characters.
+        let bookmarkUrlValue = window.location.origin + pathname + bookmarkUrl;
+"        $("".bookmarktooltip"").tooltipster({"
+"            content: '<div class=""input-group""><input id=""bookmarkUrl"" type=""text"" style=""margin-bottom: 0.5em;""'+"
+"                ' class=""form-control"" value=""'+ bookmarkUrlValue + '""/>' +"
+"                '<span class=""input-group-btn""><button class=""btn bookmarkBtn"" data-clipboard-action=""copy"" data-clipboard-target=""#bookmarkUrl"">' +"
+"                '<i class=""fa fa-copy""></i></button></span></div>'"
+        return bookmarkUrlValue;
+"<link rel=""stylesheet"" href=""resources/js/support/tooltip/tooltipster.bundle.min.css"" />"
+"<link rel=""stylesheet"" href=""resources/js/support/tooltip/tooltipster-sideTip-light.min.css"" />"
+"<script src=""resources/js/support/tooltip/tooltipster.bundle.min.js""></script>"
+"<script src=""resources/js/support/tooltip/clipboard.min.js""></script></div>"
+"<form id=""viewForm"" name=""simpleView"" action=""/t1/tbl1/fr/tv.action"" method=""get"" class=""form-horizontal background-light"" style=""margin-bottom: 1em;"">"
+"<input aria-hidden=""true"" type=""hidden"" value='1110013501' name=""pid"" id=""pid""/>"
+"    <div id=""errorMsg"" class=""hide"">"
+"        <div class=""module-alert span-8"">"
+"            <div class=""errorMessage indent-medium margin-right-medium"">"
+                <ul>
+"                    <li id=""errorMsgText""></li>"
+"    <link rel=""stylesheet"" type=""text/css"" href=""resources/css/simpleView/timeFrame3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.css"">"
+"<script src=""resources/js/simpleView/timeFrame3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js""></script>"
+"<details open=""open"">"
+"    <summary class=""forH3FontSize"">"
+        Personnaliser le tableau</summary>
+"    <div class = ""row"">"
+"        <div class=""float-left"">"
+"                <div class=""col-md-4 dropDownList-padding-0"">"
+"                    <link href=""resources/js/support/select2/select2.min.css"" rel=""stylesheet"" />"
+"<link href=""resources/js/select2/select2Util3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.css"" rel=""stylesheet"" />"
+"<script src=""resources/js/support/select2/select2.min.js""></script>"
+"<script src=""resources/js/select2/select2Util3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js""></script>"
+"<script src=""resources/js/simpleView/dropdownLists3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js""></script>"
+"<div class = ""tv-sp-dropdowns-container"" id=""dropdowns-container"">"
+"    <div class=""col-md-12 mrgn-btm-0 mrgn-lft-0 dropDownList-padding-0"" style=""margin-bottom:0.5em;"">"
+"            <label class=""pickMembersLabel"" for=""pickMembers[0]"""
+"                   title=""G&eacute;ographie"">"
+                G&eacute;ographie :
+                </label>
+            <!-- dropdown menus-->
+"            <select id=""dropDownInput0"""
+"                    class=""form-control form-input form-inline"""
+"                    name=""pickMembers[0]"""
+"                    style=""width:95%;margin-right:0.5em;height:2.3em;border-radius:3px"""
+"                    title=""Menu d&eacute;roulant pour g&eacute;ographie"">"
+            </select>
+    </div></div>
+"        <div class = ""tv-sp-timeFrame-container"" id=""timeFrameContainer"">"
+"                <div class=""form-inline"">"
+"                    <label for=""timeFrame"">"
+                        P&eacute;riode de r&eacute;f&eacute;rence</label>
+"                    <div id=""timeFrame"">"
+"                        <label for=""startYear"" style=""display:inline"" >"
+    de :</label>
+"<select name=""cubeTimeFrame.startYear"" id=""startYear"" class=""form-control"">"
+"    <option value=""1976"">1976</option>"
+"    <option value=""1977"">1977</option>"
+"    <option value=""1978"">1978</option>"
+"    <option value=""1979"">1979</option>"
+"    <option value=""1980"">1980</option>"
+"    <option value=""1981"">1981</option>"
+"    <option value=""1982"">1982</option>"
+"    <option value=""1983"">1983</option>"
+"    <option value=""1984"">1984</option>"
+"    <option value=""1985"">1985</option>"
+"    <option value=""1986"">1986</option>"
+"    <option value=""1987"">1987</option>"
+"    <option value=""1988"">1988</option>"
+"    <option value=""1989"">1989</option>"
+"    <option value=""1990"">1990</option>"
+"    <option value=""1991"">1991</option>"
+"    <option value=""1992"">1992</option>"
+"    <option value=""1993"">1993</option>"
+"    <option value=""1994"">1994</option>"
+"    <option value=""1995"">1995</option>"
+"    <option value=""1996"">1996</option>"
+"    <option value=""1997"">1997</option>"
+"    <option value=""1998"">1998</option>"
+"    <option value=""1999"">1999</option>"
+"    <option value=""2000"">2000</option>"
+"    <option value=""2001"">2001</option>"
+"    <option value=""2002"">2002</option>"
+"    <option value=""2003"">2003</option>"
+"    <option value=""2004"">2004</option>"
+"    <option value=""2005"">2005</option>"
+"    <option value=""2006"">2006</option>"
+"    <option value=""2007"">2007</option>"
+"    <option value=""2008"">2008</option>"
+"    <option value=""2009"">2009</option>"
+"    <option value=""2010"">2010</option>"
+"    <option value=""2011"">2011</option>"
+"    <option value=""2012"">2012</option>"
+"    <option value=""2013"">2013</option>"
+"    <option value=""2014"">2014</option>"
+"    <option value=""2015"">2015</option>"
+"    <option value=""2016"">2016</option>"
+"    <option value=""2017"">2017</option>"
+"    <option value=""2018"">2018</option>"
+"    <option value=""2019"">2019</option>"
+"    <option value=""2020"">2020</option>"
+"    <option value=""2021"">2021</option>"
+"    <option value=""2022"" selected=""selected"">2022</option>"
+"    <option value=""2023"">2023</option>"
+</select>
+"<label for=""endYear"" style=""display:inline"">"
+    &agrave; :</label>
+"<select name=""cubeTimeFrame.endYear"" id=""endYear"" class=""form-control"">"
+"    <option value=""2022"">2022</option>"
+"    <option value=""2023"" selected=""selected"">2023</option>"
+"            <input type=""hidden"" id= ""refPeriods"" name=""referencePeriods"" value=""""/>"
+"    <div class = ""row tv-sp-applyButton-container"">"
+"        <div class=""col-md-9  mrgn-lft-0 divLeft"">"
+"            <button id=""applyButton"" type=""button"" class=""btn btn-primary tbl-loader"">"
+                Appliquer</button>
+</details>
+"<script src=""resources/js/custom/vue.min.js""></script>"
+"    <div class=""clear""></div>"
+"<div class=""pull-right"" hidden id=""downloadButton"" style=""margin-bottom: 0.5em"">"
+"    <a href=""/t1/tbl1/fr/cv.action?pid=1110013501"" class=""btn btn-primary ui-link tbl-loader"" title=""Utiliser l'ensemble de données pour ajouter ou enlever des données"" role=""button""><i class=""fa fa-pencil""></i>"
+"        Ajouter ou enlever des donn&eacute;es</a><a href=""#centred-popup"" style=""text-decoration:none"" aria-controls=""centred-popup"" class=""wb-lbx"""
+"       role=""button"" aria-label=""Aide pour ajouter ou enlever des données "">"
+"        <span style=""margin-top:0.5em;color:gray;"" class=""glyphicon glyphicon-info-sign"" aria-hidden=""true"">"
+        </span>
+    </a>
+    <!-- i ball popup -->
+"    <section id=""centred-popup"" class=""mfp-hide modal-dialog modal-content overlay-def"">"
+"            <h2 class=""modal-title"">"
+                Aide pour ajouter ou enlever des donn&eacute;es </h2>
+            S&eacute;lectionner les &eacute;l&eacute;ments pour cr&eacute;er votre tableau personnalis&eacute;.</div>
+    <!--
+Download overlay:
+Must have ID called.
+Must be included to page its used on.
+Explanation:
+Displays an overlay with options regarding downloads of table viewer files.
+Also displays the Download button.
+-->
+<!-- Download button -->
+"<a id=""downloadOverlayLink"" aria-controls=""centred-popup"" onclick=""openDownloadOverlay();"""
+"   class=""btn btn-default"" style=""margin-top: 0.25em; margin-left: 1em;"""
+"   role=""button"""
+"   title=""Options de t&eacute;l&eacute;chargement"">"
+"    <span class=""glyphicon glyphicon-save""></span>"
+    Options de t&eacute;l&eacute;chargement</a>
+"<section id=""downloadButtonOverlay"" class=""mfp-hide modal-dialog modal-content overlay-def"">"
+"    <header class=""modal-header"">"
+"        <h2 class=""modal-title"">"
+            Options de téléchargement</h2>
+    </header>
+"    <div class=""modal-body"">"
+"        <div class=""row"" style=""padding-left: 15px"">"
+"            <div class=""btn-group-vertical col-xs-12"" role=""group"">"
+"                <div class=""row"">"
+"                    <a id=""downloadAsDisplay"" href=""#?pid=11100135&file=1110013501-fra.csv"" class=""btn btn-default col-xs-11"" title=""11100135 Télécharger les données telles qu'affichées"" data-gc-analytics-download=""statcan""><div class=""row"" style=""display:inline-flex; width:105%"">"
+"                            <div class=""col-xs-2"" style=""margin-top: 4px; width:12.5%; padding-right: 45px"">"
+"                                <span class=""fa fa-file fa-4x"" aria-hidden=""true""></span>"
+                            </div>
+"                            <div class=""col-xs-10"" style=""padding-top:5px; margin-left: 15px"">"
+"                                <div class=""row"">"
+"                                    <h3 class=""pull-left"" style=""margin-top: 9px; margin-bottom: 9px; margin-left:5px"">"
+                                            CSV</h3>
+                                </div>
+"                                <div class=""row"" id = ""csvSizeLabel"">"
+"                                    <p class=""pull-left"" style=""margin-bottom: 9px; margin-left:5px; text-align:left"">"
+                                            Télécharger les données telles qu'affichées&nbsp;{{ csvSize }}ko.
+                                    </p>
+                        </div></a></div>
+"                    <a id=""downloadWithoutSymbols"" href=""#?pid=11100135&file=1110013501-sanssymbole.csv"" class=""btn btn-default col-xs-11"" title=""11100135 Télécharger les données telles qu'affichées (sauf les symboles qui les accompagnent)"" data-gc-analytics-download=""statcan""><div class=""row"" style=""display:inline-flex; width:105%"">"
+                                                Télécharger les données telles qu'affichées<br/>(sauf les symboles qui les accompagnent).
+                                        </p>
+                                    </div>
+"                    <a id=""downloadSymbolsSeparate"" href=""#?pid=11100135&file=1110013501-symbolessepares.csv"" class=""btn btn-default col-xs-11"" title=""11100135 Télécharger les données telles qu'affichées (symboles séparés)"" data-gc-analytics-download=""statcan""><div class=""row"" style=""display:inline-flex; width:105%"">"
+                                                Télécharger les données telles qu'affichées<br/>(symboles séparés).
+"                <div class=""row"" id=""downloadSelectedData"">"
+"                        <a id=""downloadDbLoading"" href=""/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=1110013501&amp;latestN=2&amp;startDate=&amp;endDate=&amp;csvLocale=fr&amp;selectedMembers=%5B%5B%5D%2C%5B1%2C2%2C3%2C4%2C13%2C16%2C19%2C20%2C21%2C26%2C29%2C32%5D%2C%5B6%5D%2C%5B2%5D%5D&amp;checkedLevels=0D1%2C0D2%2C0D3"" class=""btn btn-default col-xs-11"" title=""11100135 Télécharger les données sélectionnées (pour le chargement de la base de données)"" data-gc-analytics-download=""statcan""><div class=""row"" style=""display:inline-flex; width:105%"">"
+"                                    <p id=""dbLoadingDataTitle"" class=""pull-left"" style=""margin-bottom: 9px; margin-left:5px; text-align:left"">"
+                                            Télécharger les données sélectionnées&nbsp;(pour le chargement de la base de données).
+"                                    <p id=""divErrorMessage""></p>"
+"                    <a href=""/t1/tbl1/fr/dtl!downloadCubeMetaData-nonTraduit.action?pid=1110013501&amp;csvLocale=fr"" class=""btn btn-default col-xs-11"" title=""11100135 Télécharger les informations de métadonnées de cube"" data-gc-analytics-download=""statcan""><div class=""row"" style=""display:inline-flex; width:105%"">"
+"                        <a data-gc-analytics-download='statcan' href=""https://www150.statcan.gc.ca/n1/tbl/csv/11100135-fra.zip"""
+"                           class=""btn btn-default col-xs-11"" title=""11100135Télécharger le tableau au complet"">"
+"                            <div class=""row"" style=""display:inline-flex; width:105%"">"
+"                                <div class=""col-xs-2"" style=""margin-top: 4px; width:12.5%; padding-right: 45px"">"
+"                                    <span class=""fa fa-file fa-4x"" aria-hidden=""true""></span>"
+"                                <div class=""col-xs-10"" style=""padding-top:5px; margin-left: 15px"">"
+"                                    <div class=""row"">"
+"                                        <h3 class=""pull-left"" style=""margin-top: 9px; margin-bottom: 9px; margin-left:5px"">"
+                                                CSV</h3>
+"                                        <p class=""pull-left"" style=""margin-bottom: 9px; margin-left:5px; text-align:left"">"
+                                            Télécharger le tableau au complet
+                                            </p>
+                        </a>
+                    </div>
+"                    <div class=""row"">"
+"                            <a data-gc-analytics-download='statcan' href=""https://www150.statcan.gc.ca/n1/tbl/sdmx/11100135-SDMX.zip"" class=""btn btn-default col-xs-11"""
+"                               title=""11100135Télécharger le tableau au complet"">"
+"                                <div class=""row"" style=""display:inline-flex; width:105%"">"
+"                                    <div class=""col-xs-2"" style=""margin-top: 4px; width:12.5%; padding-right: 45px"">"
+"                                        <span class=""fa fa-file fa-4x"" aria-hidden=""true""></span>"
+"                                    <div class=""col-xs-10"" style=""padding-top:5px; margin-left: 15px"">"
+"                                        <div class=""row"">"
+"                                            <h3 class=""pull-left"" style=""margin-top: 9px; margin-bottom: 9px; margin-left:5px; text-align:left"">"
+                                                SDMX</h3>
+                                        </div>
+"                                            <p class=""pull-left"" style=""margin-bottom: 9px; margin-left:5px; text-align:left"">T&eacute;l&eacute;charger le tableau au complet.</p>"
+                            </a>
+                        </div>
+"        <div class=""row"" style=""padding-left:15px"">"
+            Autres options pour acc&eacute;der aux donn&eacute;es :&nbsp;
+"            <a href=""http://www.statcan.gc.ca/fra/developpeurs?HPA=1"" title=""Développeurs"" target=""blank"">D&eacute;veloppeurs</a></div>"
+        // Multiple each dimension's member length
+        var dimNum = selectedMembers.length;
+        var memMultiple = 1;
+        for (var i = 0; i < dimNum; i++) {
+            memMultiple *= selectedMembers[i].length;
+        var numRefPeriods;
+        if (refPeriodObject.latestN != 0) {
+            numRefPeriods = refPeriodObject.latestN;
+        else {
+            // Get the ref start and end
+            var startDate = new Date(refPeriodObject.startDate);
+            var endDate = new Date(refPeriodObject.endDate);
+            startDate.setTime( startDate.getTime() + startDate.getTimezoneOffset()*60*1000 );
+            endDate.setTime( endDate.getTime() + endDate.getTimezoneOffset()*60*1000 );
+            // get the right interval and divider for each type of frequency
+            var frequencyValue = 12;
+        // calcualte the size estimate for the db downloading CSV file
+        var sizeOfEstimate = memMultiple * numRefPeriods * 200 / 1000 ;
+        var sizeInKB = sizeOfEstimate.toFixed(2);
+        return sizeInKB;
+    // Setup Vue instance to set the CSV download as display file size
+    let csvSizeLine = new Vue({
+        data: {
+"            csvSize: ""0"""
+"        $(""#downloadButton"").show();"
+        // Handle the hyperlink click event
+"        $(""#downloadAsDisplay"").click(function (event) {"
+"        $(""#downloadWithoutSymbols"").click(function (event) {"
+"        $(""#downloadSymbolsSeparate"").click(function (event) {"
+"        $(""#download"").click(function (event) {"
+            var selectedMember;
+"            if (typeof action !== 'undefined' && action === ""cv"") {"
+"                // console.log(""Action Name is "" + action);"
+                refPeriodObject = getCvRefPeriodInISOformat();
+                selectedMember = JSON.parse(getJsTreeCheckedIds());
+            }
+            else
+            {
+                // Multiple each dimension's member length
+"                refPeriodObject.startDate = ""2022-01-01"";"
+"                refPeriodObject.endDate = ""2023-01-01"";"
+            // put the size in the anchor element
+"            var loadingText = ""Télécharger les données sélectionnées"";"
+"        $(""#downloadSelectedData"").click(function (event) {"
+            var isIE = false || !!document.documentMode;
+            var urlLength = 275
+            if (isIE && urlLength > 2083) {
+    function openDownloadOverlay() {
+            [
+                {
+"                    type: ""inline"""
+                }
+"                ""Image 1"""
+            ]
+        ]);
+"<div class=""clear""></div><p class=""viewSubtitle"">"
+"        Vous n'avez pas trouv&eacute; ce que vous cherchiez ?<a href=""#relatedTables"" aria-controls=""centred-popup"" class=""wb-lbx"" role=""button"">"
+"    <section id=""relatedTables"" class=""mfp-hide modal-dialog modal-content overlay-def"">"
+"            <label class=""control-label""><strong>"
+                    Vue(s) alternative(s):</strong></label>
+                        <li>
+                            <!-- TODO bechric Could make this a custom tag and add it to tableviewer.tld if warranted.  But seems negligible for now. -->
+"                            <a href=""https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1110013502"">Pourcentage de personnes à faible revenu selon le sexe (11-10-0135-02)</a>"
+                            <br>
+                            <em>Fr&eacute;quence :</em> Annuelle</li>
+                    </ul>
+"<link rel=""stylesheet"" href=""resources/font-awesome/css/font-awesome.min.css"" />"
+"<link rel=""stylesheet"" href=""resources/css/custom/simpleTable.css"" />"
+"<script src=""resources/js/simpleTable/simpleTableUtil3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js""></script>"
+"<div class=""span-8"" id=""viewHtml"">"
+"    <div style=""display: flex; flex-direction: row;"">"
+"        <div style=""padding: 15px;"">"
+"            Affichage  <span id=""simpleRowCount""></span> &eacute;l&eacute;ments</div>"
+"        <div style=""display: flex; flex-direction: row;"">"
+"            <div><input style=""width: 250px;"" type=""text"" id=""simpleFilter"" class=""form-control""></div>"
+"            <div style=""padding-top: 7px;"">"
+"                <button id=""simpleFilterButton"" class=""btn  btn-sm"">"
+                    Filtrer</button>
+            <div>
+"                <button id=""resetDataButton"" class=""btn btn-primary btn-sm"" style=""margin-left: 5px;"">"
+                    R&eacute;initialiser</button>
+"            <div id=""viewDataFilter"" style=""padding: 15px;"" class=""hidden"">"
+"                <span class=""fa fa-exclamation-triangle text-warning fa-lg""></span>"
+"                <span class=""bg-warning"">"
+                    Aucun résultat trouvé.</span>
+"    <div class=""tableContainer"">"
+"        <div id=""cubeSimpleTable"" class=""cubeSimpleTable"">"
+"            <table class=""pub-table simpleTable dataTable"" id=""simpleTable"">"
+"                <thead id=""simpleTableHeader"" class=""simpleTableHeader""></thead>"
+"                <tbody id=""simpleTableBody"" class=""simpleTableBody""></tbody>"
+            </table>
+"    <div class=""errorMessage indent-medium margin-right-medium module-alert span-8"" id=""error-message-no-data"" hidden>"
+"        <span v-html=""errorText""></span>"
+"    <div id=""symbolLegend""></div>"
+    <br>
+"    <div id=""abbreviationsLink""></div>"
+"    <br><strong style=""visibility: hidden;height: 0px;"">Notes : </strong><br>"
+"    <div id=""simpleFootnotes"" style=""visibility: hidden;height: 0px;""></div>"
+    // These variables are defined in simpleTableUtil.js
+"    separatorText = "";"";"
+"    footnoteLabel = ""Renvois:"";"
+"    tableCorrectionLabel = ""Corrections de tableau"";"
+"    correctionFootnoteLabel = ""Corrections"";"
+"    informationLabel = ""Renseignements"";"
+"    symbolColumnText = ""Symbole"";"
+"    sortIconsTitleAsc = ""activer pour trier la colonne ascendante"";"
+"    sortIconsTitleDesc = ""activer pour trier la colonne décroissant"";"
+"    symbolLabel = ""Légende des symboles :"";"
+"    abbreviationsLinkText = ""Liste d'abréviations et d'acronymes retrouvés dans plusieurs produits du recensement."";"
+"    abbreviationsNotes = ""Remarques sur les abréviations :"";"
+"    footNoteTitle = ""Note de bas de page "";"
+    viewDisplayType = 1;
+    hideRefPeriod = false;
+"    flowDataEmptyErrorMessage = ""Il n'y a pas de données pour les membres qui ont été sélectionnés."";"
+"    percentageChangeUOMLabel = ""Variation en pourcentage"";"
+"        tableContainerElement = $("".tableContainer"").clone();"
+        setContainerDimensions();
+    let errMsgNoData = new Vue({
+"            errorText: """""
+"</script><div id=""citeInfo"">"
+<strong>Comment citer le produit :</strong>
+Statistique Canada.
+"<a href=""/t1/tbl1/fr/tv.action?pid=1110013501""><span>Tableau</span>"
+        11-10-0135-01&nbsp;
+"<div id=""doiInfo"">"
+    <strong><span>DOI :</span></strong>
+"        <a href="" https://doi.org/10.25318/1110013501-fra""><span> https://doi.org/10.25318/1110013501-fra</span></a><script type=""application/ld+json"">"
+    {
+"        ""publisher"": {"
+"<div class=""clear""></div>"
+<br/>
+"<div class=""panel-pane pane-ndm-crosswalk mrgn-bttm-lg""><div class=""pane-content""><div class=""""><h2>Information connexe</h2><details><summary>Source (Enquêtes et programmes statistiques)</summary><div class=""item-list""><ul><li><a href=""http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&amp;SDDS=3502"" title=""Enquête sur les finances des consommateurs"">Enquête sur les finances des consommateurs</a></li>"
+"<li><a href=""http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&amp;SDDS=3889"" title=""Enquête sur la dynamique du travail et du revenu"">Enquête sur la dynamique du travail et du revenu</a></li>"
+"<li><a href=""http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&amp;SDDS=5200"" title=""Enquête canadienne sur le revenu"">Enquête canadienne sur le revenu</a></li>"
+"</ul></div></details><details><summary>Produits connexes</summary><h3>Données</h3><div class=""item-list""><ul><li>Tableaux : <a href=""https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1110013502"" title=""Pourcentage de personnes à faible revenu selon le sexe"">Pourcentage de personnes à faible revenu selon le sexe</a></li>"
+"</ul></div><h3>Analyses</h3><div class=""item-list""><ul><li>Stats en bref : <a href=""https://www150.statcan.gc.ca/n1/daily-quotidien/250501/dq250501b-fra.htm"" title=""Enquête canadienne sur le revenu 2023"">Enquête canadienne sur le revenu 2023</a></li>"
+"</ul></div><h3>Mots-clés</h3><div class=""item-list""><ul><li><a href=""https://www150.statcan.gc.ca/n1/fr/metadonnee?keywords_terms=donnees_municipales_et_locales"" rel=""nofollow"">Données municipales et locales</a></li>"
+</ul></div></details></div></div></div></form>
+    let contextPath = '/tbl1';
+"<div class=""pagedetails"">"
+"	<dl id=""wb-dtmd"">"
+		<dt>Date de modification&#160;:&#32;</dt>
+"		<dd><time property=""dateModified"">2025-06-28</time></dd>"
+	</dl>
+"</main><footer id=""wb-info"">"
+"	<h2 class=""wb-inv"">À propos de ce site</h2>"
+"	<div class=""gc-contextual"">"
+"		<div class=""container"">"
+			<nav>
+				<h3>Statistique Canada</h3>
+"				<ul class=""list-unstyled colcount-sm-2 colcount-md-3"">"
+"					<li><a href=""https://www.statcan.gc.ca/fr/reference/centreref/index"">Contactez StatCan</a></li>"
+"					<li><a href=""https://www.statcan.gc.ca/fr/confiance"">Centre de confiance</a></li>"
+				</ul>
+			</nav>
+"	<div class=""gc-main-footer"">"
+				<h3>Gouvernement du Canada</h3>
+"			<ul class=""list-unstyled colcount-sm-2 colcount-md-3"">"
+"					<li><a href=""https://www.canada.ca/fr/contact.html"">Toutes les coordonnées</a></li>"
+"				<li><a href=""https://www.canada.ca/fr/gouvernement/min.html"">Ministères et organismes</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/gouvernement/systeme.html"">À propos du gouvernement</a></li>"
+"				<h4><span class=""wb-inv"">Thèmes et sujets</span></h4>"
+"					<li><a href=""https://www.canada.ca/fr/services/emplois.html"">Emplois</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/immigration-citoyennete.html"">Immigration et citoyenneté</a></li>"
+"					<li><a href=""https://voyage.gc.ca/"">Voyage et tourisme</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/entreprises.html"">Entreprises</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/prestations.html"">Prestations</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/sante.html"">Santé</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/impots.html"">Impôts</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/environnement.html"">Environnement et ressources naturelles</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/defense.html"">Sécurité nationale et défense</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/transport.html"">Transport et infrastructure</a></li>"
+"					<li><a href=""https://www.international.gc.ca/world-monde/index.aspx?lang=fra"">Le Canada et le monde</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/finance.html"">Argent et finance</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/science.html"">Science et innovation</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/autochtones.html"">Autochtones</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/veterans.html"">Vétérans et militaires</a></li>"
+"					<li><a href=""https://www.canada.ca/fr/services/jeunesse.html"">Jeunesse</a></li>"
+		</nav>
+"	<div class=""gc-sub-footer"">"
+"		<div class=""container d-flex align-items-center"">"
+"				<h3 class=""wb-inv"">Organisation du gouvernement du Canada</h3>"
+					<ul>
+"						<li><a href=""https://www.canada.ca/fr/sociaux.html"">Médias sociaux</a></li>"
+"						<li><a href=""https://www.canada.ca/fr/mobile.html"">Applications mobiles</a></li>"
+"						<li><a href=""https://www.canada.ca/fr/gouvernement/a-propos.html"">À propos de Canada.ca</a></li>"
+"					<li><a href=""https://www.statcan.gc.ca/fr/reference/avis"">Avis</a></li>"
+"					<li><a href=""https://www.statcan.gc.ca/fr/reference/privee"">Confidentialité</a></li>"
+					</ul>
+				</nav>
+"			<div class=""wtrmrk align-self-end"">"
+"				<img src=""/t1/wet-boew4b/assets/wmms-blk.svg"" alt=""Symbole du gouvernement du Canada"" />"
+			</div>
+</footer>
+<!--[if gte IE 9 | !IE ]><!-->
+"<script src=""/t1/wet-boew4b/js/wet-boew.min.js""></script>"
+"<script src=""/t1/wet-boew4b/js/theme.min.js""></script>"
+<!--<![endif]-->
+<!--[if lt IE 9]>
+"<script src=""/t1/wet-boew4b/js/ie8-wet-boew2.min.js""></script>"
+<![endif]-->
+<!-- LiveZilla Script BEGIN -->
+"<script type=""text/javascript"" id=""0671342afd1f122f4891265fc94236c1"" src=""https://www.statcan.gc.ca/livechat/script.php?id=0671342afd1f122f4891265fc94236c1"" defer></script> "
+<!-- LiveZilla Script END --> 
+<!-- InvitationManager -->
+"<script src=""/t1/wet-boew4b/invitation-manager/Overlay.js""></script>"
+"<script src=""/t1/wet-boew4b/invitation-manager/InvitationManager.js""></script>"
+<!-- End InvitationManager -->
+"<script type=""text/javascript"">_satellite.pageBottom();</script>"
+</body>
+</html>

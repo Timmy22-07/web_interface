@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr" dir="ltr"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <base href="https://www150.statcan.gc.ca/t1/tbl1/" />
+
+    <title>
+        Revenu disponible ajusté des ménages, Canada, provinces et territoires, annuel</title>
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
+    <meta name="description" content="Revenu disponible des ménages ajusté annuel, y compris les transferts sociaux en nature." />
+        <meta name="keywords" content="" />
+    <meta name="dcterms.title" content="Revenu disponible ajusté des ménages, Canada, provinces et territoires, annuel"/>
+    <meta name="dcterms.language" title="ISO639-2/T" content="fra" />
+    <meta name="dcterms.issued" title="W3CDTF" content="2019-04-17" />
+        <meta name="dcterms.modified" title="W3CDTF" content="2025-04-14" />
+    <meta name="dcterms.subject" title="gcstc" content="nul" />
+    <meta name="dcterms.creator" content="Gouvernement du Canada, Statistique Canada" />
+    <meta name="robots" content="index,nofollow,noarchive" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta property="dcterms:service" content="StatCan"/>
+    <meta property="dcterms:accessRights" content="2"/>
+
+    <link rel="canonical" href="https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=3610061201" />
+
+    <link href="/t1/wet-boew4b/assets/favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="/t1/wet-boew4b/css/wet-boew.min.css">
+    <script src="/t1/wet-boew4b/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/t1/wet-boew4b/css/theme.min.css">
+    <link rel="stylesheet" href="/t1/wet-boew4b/css/statcan.css">
+
+    <!--[if lt IE 9]>
+    <link href="/t1/wet-boew4b/assets/favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" href="/t1/wet-boew4b/css/ie8-wet-boew.min.css" />
+    <![endif]-->
+
+    <link rel="stylesheet" href="/t1/wet-boew4b/invitation-manager/Overlay.css">
+
+    <noscript><link rel="stylesheet" href="/t1/wet-boew4b/css/noscript.min.css" /></noscript>
+    <script src="https://assets.adobedtm.com/be5dfd287373/8cdb3d539c44/launch-6df9e9b447f9.min.js" crossorigin="anonymous"></script>
+    <script>dataLayer1 = [];</script>
+    <script src="resources/js/support/lodash/lodash.min.js"></script>
+
+    <script src="resources/js/custom/jsDate.js"></script>
+    <script src="resources/js/applyButton3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js" type="text/javascript"></script>
+    <script src="resources/js/sharedJS3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js" type="text/javascript"></script>
+
+    <script src="resources/js/dataTable/jquery.dataTables.min.js"></script>
+    <script src="resources/js/dataTable/plugins/natural.sorting.js"></script>
+    <script src="resources/js/dataTable/plugins/formatted-numbers.js"></script>
+    <link href="resources/css/custom/tabs.css" rel="stylesheet" />
+    <link href="resources/css/custom/correction.css" rel="stylesheet" />
+    <link href="resources/css/pubs3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="resources/css/general.css"  rel="stylesheet" />
+    <link href="resources/font-awesome/css/font-awesome.min.css"  rel="stylesheet" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body vocab="http://schema.org/" typeof="WebPage">
+<ul id="wb-tphp">
+<li class="wb-slc">
+<a class="wb-sl" href="#wb-cont">Passer au contenu principal</a>
+</li>
+<li class="wb-slc visible-sm visible-md visible-lg">
+<a class="wb-sl" href="#wb-info">Passer &#224; &#171;&#160;&#192; propos de ce site&#160;&#187;</a>
+</li>
+</ul>
+<header role="banner">
+<div id="wb-bnr" class="container">
+<section id="wb-lng" class="visible-md visible-lg text-right">
+<h2 class="wb-inv">S&#233;lection de la langue</h2>
+<div class="row">
+<div class="col-md-12">
+<ul class="list-inline margin-bottom-none">
+<li><a lang="en" href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3610061201&amp;request_locale=en">English</a></li>
+</ul>
+</div>
+</div>
+</section>
+<div class="row">
+<div class="brand col-xs-8 col-sm-9 col-md-6">
+<a href="https://www.statcan.gc.ca/fr/debut" property="URL"><img src="/t1/wet-boew4b/assets/sig-blk-fr.svg" alt="Statistique Canada"><span class="wb-inv"> / <span lang="en">Statistics Canada</span></span></a>
+</div>
+<section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
+<h2>Recherche et menus</h2>
+<ul class="list-inline text-right chvrn">
+<li><a href="#mb-pnl" title="Recherche et menus" aria-controls="mb-pnl" class="overlay-lnk" role="button"><span class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">Recherche et menus</span></span></span></a></li>
+</ul>
+<div id="mb-pnl"></div>
+</section>
+
+<section id="wb-srch" class="col-xs-6 text-right visible-md visible-lg">
+<h2 class="wb-inv">Recherche</h2>
+<form action="https://www.statcan.gc.ca/recherche/resultats/site-recherche" method="get" name="cse-search-box" role="search" class="form-inline">
+<div class="form-group wb-srch-qry">
+<label for="wb-srch-q" class="wb-inv">Recherchez le site Web</label>
+<input type="hidden" name="fq" value="stclac:2" />
+<input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" type="search" value="" size="27" maxlength="150" placeholder="Rechercher dans le site Web">
+<datalist id="wb-srch-q-ac">
+</datalist>
+</div>
+<div class="form-group submit">
+<button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span class="glyphicon-search glyphicon"></span><span class="wb-inv">Recherche</span></button>
+</div>
+</form>
+</section>
+</div>
+</div>
+
+<nav role="navigation" id="wb-sm" class="wb-menu visible-md visible-lg" data-trgt="mb-pnl" data-ajax-replace="/t1/wet-boew4b/ajax/sitemenu-fr.html" typeof="SiteNavigationElement">
+	<h2 class="wb-inv">Menus des sujets</h2>
+	<div class="container nvbar">
+		<div class="row">
+			<ul class="list-inline menu">
+				<li><a href="https://www150.statcan.gc.ca/n1/fr/sujets?MM=1">Sujets</a></li>
+				<li><a href="https://www150.statcan.gc.ca/n1/fr/type/donnees?MM=1">Donn&eacute;es</a></li>
+				<li><a href="https://www150.statcan.gc.ca/n1/fr/type/analyses?MM=1">Analyses</a></li>
+				<li><a href="https://www150.statcan.gc.ca/n1/fr/type/references?MM=1">R&eacute;f&eacute;rences</a></li>
+				<li><a href="https://www.statcan.gc.ca/fr/geographie?MM=1">G&eacute;ographie</a></li>
+				<li><a href="https://www.statcan.gc.ca/fr/recensement?MM=1">Recensement</a></li>
+				<li><a href="https://www.statcan.gc.ca/fr/enquetes?MM=1">Enqu&ecirc;tes et programmes statistiques</a></li>
+				<li><a href="https://www.statcan.gc.ca/fr/apercu/statcan?MM=1">&Agrave; propos de StatCan</a></li>
+				<li><a href="https://www.canada.ca/fr.html">Canada.ca</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<nav role="navigation" id="wb-bc" class="" property="breadcrumb">
+<div class="container">
+<div class="row"><ol class="breadcrumb">
+        <li><a href="https://www150.statcan.gc.ca/n1/fr" rel='up'>Accueil</a></li>
+            <li><a href="https://www150.statcan.gc.ca/n1/fr/type/donnees?MM=1#tableaux" rel='up'>Donn&eacute;es</a></li>
+        </ol>
+</div>
+</div>
+</nav>
+</header>
+
+<main role="main" property="mainContentOfPage" class="container"><style type="text/css">
+    .tv-loader {
+        width		:	100%;
+        height		: 	100%;
+        position	:   absolute;
+        top			:	0px;
+        left		:	0px;
+
+    }
+
+    .tv-loader .tv-loader-image {
+        width		:	100%;
+        height		: 	100%;
+        margin		:	0;
+        padding		:	0;
+        background	: 	rgba(255,255,255,0.5) url('resources/css/BigLoader.gif') no-repeat center top;
+        /*background-size:  30px 30px;*/
+        position	:	absolute;
+        z-index		:	999;
+    }
+</style>
+
+<div id="tv-loader" class="tv-loader">
+    <div class="tv-loader-image" >
+    </div>
+</div>
+
+<script>
+    $(window).on('load', function(){
+        $('#tv-loader').fadeOut(1000);
+    })
+
+    $(document).ready(function () {
+        $(".tbl-loader").click(function (event) {
+            $('#tv-loader').show();
+        });
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#close-alert-security-btn').click(function (e) {
+     var url = '/tbl1/fr/tv!closeSecurityBanner-nonTraduit.action';
+      $.ajax({
+        url: url,
+        type: 'GET',
+        async : false,
+        cache: false,
+        success: function (data, textStatus, jqXHR) {
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log("an error was occurred" + textStatus);
+        }
+      });
+//
+      e.preventDefault();
+      $('#securityBanner').remove();
+
+
+    })
+  });
+</script>
+<script>
+    let action = 'tv';
+    viewObjects = {};
+</script>
+
+<h1 id="wb-cont" style="margin-top: 0em;">
+    Revenu disponible ajust&eacute; des m&eacute;nages, Canada, provinces et territoires, annuel (x 1 000 000)</h1>
+<div class="clearfix">
+    <div class="row">
+        <div class="col-md-8 mrgn-btm-0 mrgn-lft-0 divLeft">
+            <div class="font-small color-medium line-height-medium pull-left">
+                <p class="viewSubtitle">
+                    Fréquence :&nbsp;Annuelle</p>
+                <p class="viewSubtitle">
+                    Tableau&nbsp;:
+                    36-10-0612-01</p>
+                <p class="viewSubtitle">
+                    Date de diffusion&nbsp;:
+                    2025-04-14</p>
+                <p class="viewSubtitle">
+    <em>G&eacute;ographie&nbsp;:</em>
+        Canada, Province ou territoire</p>
+<p class="viewSubtitle">
+    </p>
+<p class="viewSubtitle">
+    </p>
+
+</div>
+        </div>
+        <div class="col-md-4 mrgn-btm-0 mrgn-lft-0 divRight">
+            <div class="pull-right">
+                <div row class="font-small color-medium line-height-medium" style="text-align: right;">
+                    <p>
+                        <a href="https://www.statcan.gc.ca/fra/apercu/siteweb-aide">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            Aide</a>
+                    </p>
+                </div>
+                    <p>
+    <button type="button" class="btn btn-default bookmarktooltip tooltipstered" id="bookmarktooltip">
+        <i class="fa fa-bookmark"></i>
+        Enregistrer mes personnalisations</button>
+</p>
+
+<!-- Add content to the popup -->
+<div style="">
+    <div id="bookmark-content" class="bookmark-content" style="display: none;">
+        <div class="input-group">
+            <input id="bookmarkUrl" type="text" style="margin-bottom: 0.5em;" class="form-control" value=""/>
+            <span class="input-group-btn">
+                <button class="btn bookmarkBtn" data-clipboard-action="copy" data-clipboard-target="#bookmarkUrl">
+                    <i class="fa fa-copy"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+    $(document).ready(function () {
+
+        
+        $('#bookmarkUrl').val(document.URL);
+
+        $('.bookmarktooltip').tooltipster({
+            contentAsHTML: 'true',
+            theme: 'tooltipster-light',
+            trigger: 'click',
+            side: 'bottom',
+            interactive: true,
+            content: $( this ).find( '.bookmark-content' ).show(),
+            maxWidth: 500
+        });
+        new ClipboardJS('.bookmarkBtn');
+        $('#bookmarktooltip').click();
+        $('.bookmarktooltip').tooltipster('hide');
+
+    });
+
+    function reloadSaveMySelections(bookmarkUrl) {
+        // reload bookmark info.
+        $(".bookmarktooltip").tooltipster('destroy');
+        // remove duplicated characters.
+        let pathname = window.location.pathname.replace("cv!recreate.action", "");
+        pathname = pathname.replace("cv.action", "");
+        pathname = pathname.replace("cv", "");
+        let bookmarkUrlValue = window.location.origin + pathname + bookmarkUrl;
+        new ClipboardJS('.bookmarkBtn');
+        $(".bookmarktooltip").tooltipster({
+            contentAsHTML: 'true',
+            theme: 'tooltipster-light',
+            trigger: 'click',
+            side: 'bottom',
+            interactive: true,
+            maxWidth: 500,
+            content: '<div class="input-group"><input id="bookmarkUrl" type="text" style="margin-bottom: 0.5em;"'+
+                ' class="form-control" value="'+ bookmarkUrlValue + '"/>' +
+                '<span class="input-group-btn"><button class="btn bookmarkBtn" data-clipboard-action="copy" data-clipboard-target="#bookmarkUrl">' +
+                '<i class="fa fa-copy"></i></button></span></div>'
+        });
+        new ClipboardJS('.bookmarkBtn');
+        return bookmarkUrlValue;
+    }
+
+</script>
+<link rel="stylesheet" href="resources/js/support/tooltip/tooltipster.bundle.min.css" />
+<link rel="stylesheet" href="resources/js/support/tooltip/tooltipster-sideTip-light.min.css" />
+<script src="resources/js/support/tooltip/tooltipster.bundle.min.js"></script>
+<script src="resources/js/support/tooltip/clipboard.min.js"></script></div>
+        </div>
+    </div>
+</div>
+<form id="viewForm" name="simpleView" action="/t1/tbl1/fr/tv.action" method="get" class="form-horizontal background-light" style="margin-bottom: 1em;">
+<input aria-hidden="true" type="hidden" value='3610061201' name="pid" id="pid"/>
+    <div id="errorMsg" class="hide">
+        <div class="module-alert span-8">
+            <div class="errorMessage indent-medium margin-right-medium">
+                <ul>
+                    <li id="errorMsgText"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" type="text/css" href="resources/css/simpleView/timeFrame3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.css">
+<script src="resources/js/simpleView/timeFrame3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js"></script>
+<details open="open">
+    <summary class="forH3FontSize">
+        Personnaliser le tableau</summary>
+
+    <div class = "row">
+        <div class="float-left">
+                <div class="col-md-4 dropDownList-padding-0">
+                    <link href="resources/js/support/select2/select2.min.css" rel="stylesheet" />
+<link href="resources/js/select2/select2Util3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.css" rel="stylesheet" />
+<script src="resources/js/support/select2/select2.min.js"></script>
+<script src="resources/js/select2/select2Util3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js"></script>
+<script src="resources/js/simpleView/dropdownLists3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js"></script>
+<script>viewObjects["dropdowns"] = [{"selectedOptionIndex":0,"dropDownOptions":[{"id":"1.1","text":"Canada"},{"id":"1.2","text":"Terre-Neuve-et-Labrador"},{"id":"1.3","text":"Île-du-Prince-Édouard"},{"id":"1.4","text":"Nouvelle-Écosse"},{"id":"1.5","text":"Nouveau-Brunswick"},{"id":"1.6","text":"Québec"},{"id":"1.7","text":"Ontario"},{"id":"1.8","text":"Manitoba"},{"id":"1.9","text":"Saskatchewan"},{"id":"1.10","text":"Alberta"},{"id":"1.11","text":"Colombie-Britannique"},{"id":"1.12","text":"Yukon"},{"id":"1.13","text":"Territoires du Nord-Ouest"},{"id":"1.14","text":"Nunavut"},{"id":"1.15","text":"Extérieur du Canada"}]}];</script>
+
+
+<div class = "tv-sp-dropdowns-container" id="dropdowns-container">
+    <div class="col-md-12 mrgn-btm-0 mrgn-lft-0 dropDownList-padding-0" style="margin-bottom:0.5em;">
+            <label class="pickMembersLabel" for="pickMembers[0]"
+                   title="G&eacute;ographie">
+                G&eacute;ographie :
+                </label>
+            <!-- dropdown menus-->
+            <select id="dropDownInput0"
+                    class="form-control form-input form-inline"
+                    name="pickMembers[0]"
+                    style="width:95%;margin-right:0.5em;height:2.3em;border-radius:3px"
+                    title="Menu d&eacute;roulant pour g&eacute;ographie">
+            </select>
+        </div>
+    </div></div>
+            </div>
+        <div class = "tv-sp-timeFrame-container" id="timeFrameContainer">
+                <div class="form-inline">
+                    <label for="timeFrame">
+                        P&eacute;riode de r&eacute;f&eacute;rence</label>
+                    <div id="timeFrame">
+                        <label for="startYear" style="display:inline" >
+    de :</label>
+
+<select name="cubeTimeFrame.startYear" id="startYear" class="form-control">
+    <option value="2008">2008</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>
+    <option value="2011">2011</option>
+    <option value="2012">2012</option>
+    <option value="2013">2013</option>
+    <option value="2014">2014</option>
+    <option value="2015">2015</option>
+    <option value="2016">2016</option>
+    <option value="2017">2017</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+    <option value="2020" selected="selected">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+
+
+</select>
+
+<label for="endYear" style="display:inline">
+    &agrave; :</label>
+
+<select name="cubeTimeFrame.endYear" id="endYear" class="form-control">
+    <option value="2008">2008</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>
+    <option value="2011">2011</option>
+    <option value="2012">2012</option>
+    <option value="2013">2013</option>
+    <option value="2014">2014</option>
+    <option value="2015">2015</option>
+    <option value="2016">2016</option>
+    <option value="2017">2017</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024" selected="selected">2024</option>
+
+
+</select>
+
+</div>
+                </div>
+            </div>
+            <input type="hidden" id= "refPeriods" name="referencePeriods" value=""/>
+        </div>
+
+    <div class = "row tv-sp-applyButton-container">
+        <div class="col-md-9  mrgn-lft-0 divLeft">
+            <button id="applyButton" type="button" class="btn btn-primary tbl-loader">
+                Appliquer</button>
+        </div>
+    </div>
+</details>
+<script src="resources/js/custom/vue.min.js"></script>
+
+    <div class="clear"></div>
+<div class="pull-right" hidden id="downloadButton" style="margin-bottom: 0.5em">
+    <a href="/t1/tbl1/fr/cv.action?pid=3610061201" class="btn btn-primary ui-link tbl-loader" title="Utiliser l'ensemble de données pour ajouter ou enlever des données" role="button"><i class="fa fa-pencil"></i>
+        Ajouter ou enlever des donn&eacute;es</a><a href="#centred-popup" style="text-decoration:none" aria-controls="centred-popup" class="wb-lbx"
+       role="button" aria-label="Aide pour ajouter ou enlever des données ">
+        <span style="margin-top:0.5em;color:gray;" class="glyphicon glyphicon-info-sign" aria-hidden="true">
+        </span>
+    </a>
+
+    <!-- i ball popup -->
+    <section id="centred-popup" class="mfp-hide modal-dialog modal-content overlay-def">
+        <header class="modal-header">
+            <h2 class="modal-title">
+                Aide pour ajouter ou enlever des donn&eacute;es </h2>
+        </header>
+        <div class="modal-body">
+            S&eacute;lectionner les &eacute;l&eacute;ments pour cr&eacute;er votre tableau personnalis&eacute;.</div>
+    </section>
+
+    <!--
+Download overlay:
+Must have ID called.
+Must be included to page its used on.
+
+Explanation:
+Displays an overlay with options regarding downloads of table viewer files.
+Also displays the Download button.
+-->
+
+<!-- Download button -->
+<a id="downloadOverlayLink" aria-controls="centred-popup" onclick="openDownloadOverlay();"
+   class="btn btn-default" style="margin-top: 0.25em; margin-left: 1em;"
+   role="button"
+   title="Options de t&eacute;l&eacute;chargement">
+    <span class="glyphicon glyphicon-save"></span>
+    Options de t&eacute;l&eacute;chargement</a>
+
+<section id="downloadButtonOverlay" class="mfp-hide modal-dialog modal-content overlay-def">
+    <header class="modal-header">
+        <h2 class="modal-title">
+            Options de téléchargement</h2>
+    </header>
+    <div class="modal-body">
+        <div class="row" style="padding-left: 15px">
+            <div class="btn-group-vertical col-xs-12" role="group">
+                <div class="row">
+                    <a id="downloadAsDisplay" href="#?pid=36100612&file=3610061201-fra.csv" class="btn btn-default col-xs-11" title="36100612 Télécharger les données telles qu'affichées" data-gc-analytics-download="statcan"><div class="row" style="display:inline-flex; width:105%">
+                            <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                <div class="row">
+                                    <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px">
+                                            CSV</h3>
+                                </div>
+                                <div class="row" id = "csvSizeLabel">
+                                    <p class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">
+                                            Télécharger les données telles qu'affichées&nbsp;{{ csvSize }}ko.
+                                    </p>
+                                </div>
+                            </div>
+                        </div></a></div>
+
+                <div class="row">
+                    <a id="downloadWithoutSymbols" href="#?pid=36100612&file=3610061201-sanssymbole.csv" class="btn btn-default col-xs-11" title="36100612 Télécharger les données telles qu'affichées (sauf les symboles qui les accompagnent)" data-gc-analytics-download="statcan"><div class="row" style="display:inline-flex; width:105%">
+                            <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                <div class="row">
+                                    <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px">
+                                            CSV</h3>
+                                </div>
+                                <div class="row">
+                                    <p class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">
+                                                Télécharger les données telles qu'affichées<br/>(sauf les symboles qui les accompagnent).
+                                        </p>
+                                    </div>
+                            </div>
+                        </div></a></div>
+
+                <div class="row">
+                    <a id="downloadSymbolsSeparate" href="#?pid=36100612&file=3610061201-symbolessepares.csv" class="btn btn-default col-xs-11" title="36100612 Télécharger les données telles qu'affichées (symboles séparés)" data-gc-analytics-download="statcan"><div class="row" style="display:inline-flex; width:105%">
+                            <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                <div class="row">
+                                    <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px">
+                                            CSV</h3>
+                                </div>
+                                <div class="row">
+                                    <p class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">
+                                                Télécharger les données telles qu'affichées<br/>(symboles séparés).
+                                        </p>
+                                    </div>
+                            </div>
+                        </div></a></div>
+
+                <div class="row" id="downloadSelectedData">
+                        <a id="downloadDbLoading" href="/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=3610061201&amp;latestN=5&amp;startDate=&amp;endDate=&amp;csvLocale=fr&amp;selectedMembers=%5B%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%5D%5D&amp;checkedLevels=" class="btn btn-default col-xs-11" title="36100612 Télécharger les données sélectionnées (pour le chargement de la base de données)" data-gc-analytics-download="statcan"><div class="row" style="display:inline-flex; width:105%">
+                            <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                <div class="row">
+                                    <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px">
+                                            CSV</h3>
+                                </div>
+                                <div class="row">
+                                    <p id="dbLoadingDataTitle" class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">
+                                            Télécharger les données sélectionnées&nbsp;(pour le chargement de la base de données).
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p id="divErrorMessage"></p>
+                                </div>
+                            </div>
+                        </div></a></div>
+
+                <div class="row">
+                    <a href="/t1/tbl1/fr/dtl!downloadCubeMetaData-nonTraduit.action?pid=3610061201&amp;csvLocale=fr" class="btn btn-default col-xs-11" title="36100612 Télécharger les informations de métadonnées de cube" data-gc-analytics-download="statcan"><div class="row" style="display:inline-flex; width:105%">
+                            <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                <div class="row">
+                                    <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px">
+                                            CSV</h3>
+                                </div>
+                                <div class="row">
+                                    <p class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">
+                                            Télécharger les informations de métadonnées de cube, ~50ko.
+                                    </p>
+                                </div>
+                            </div>
+                        </div></a></div>
+
+                <div class="row">
+                        <a data-gc-analytics-download='statcan' href="https://www150.statcan.gc.ca/n1/tbl/csv/36100612-fra.zip"
+                           class="btn btn-default col-xs-11" title="36100612Télécharger le tableau au complet">
+                            <div class="row" style="display:inline-flex; width:105%">
+                                <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                    <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                    <div class="row">
+                                        <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px">
+                                                CSV</h3>
+                                    </div>
+                                    <div class="row">
+                                        <p class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">
+                                            Télécharger le tableau au complet
+                                                « Revenu disponible ajusté des ménages, Canada, provinces et territoires, annuel ».
+                                            </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="row">
+                            <a data-gc-analytics-download='statcan' href="https://www150.statcan.gc.ca/n1/tbl/sdmx/36100612-SDMX.zip" class="btn btn-default col-xs-11"
+                               title="36100612Télécharger le tableau au complet">
+                                <div class="row" style="display:inline-flex; width:105%">
+                                    <div class="col-xs-2" style="margin-top: 4px; width:12.5%; padding-right: 45px">
+                                        <span class="fa fa-file fa-4x" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-xs-10" style="padding-top:5px; margin-left: 15px">
+                                        <div class="row">
+                                            <h3 class="pull-left" style="margin-top: 9px; margin-bottom: 9px; margin-left:5px; text-align:left">
+                                                SDMX</h3>
+                                        </div>
+                                        <div class="row">
+                                            <p class="pull-left" style="margin-bottom: 9px; margin-left:5px; text-align:left">T&eacute;l&eacute;charger le tableau au complet.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+        </div>
+        <div class="row" style="padding-left:15px">
+            Autres options pour acc&eacute;der aux donn&eacute;es :&nbsp;
+            <a href="http://www.statcan.gc.ca/fra/developpeurs?HPA=1" title="Développeurs" target="blank">D&eacute;veloppeurs</a></div>
+    </div>
+</section>
+
+<script type='text/javascript'>
+    function calculateDbLoadingFileSize(selectedMembers, refPeriodObject) {
+        // Multiple each dimension's member length
+        var dimNum = selectedMembers.length;
+        var memMultiple = 1;
+        for (var i = 0; i < dimNum; i++) {
+            memMultiple *= selectedMembers[i].length;
+        }
+
+        var numRefPeriods;
+        if (refPeriodObject.latestN != 0) {
+            numRefPeriods = refPeriodObject.latestN;
+        }
+        else {
+            // Get the ref start and end
+            var startDate = new Date(refPeriodObject.startDate);
+            var endDate = new Date(refPeriodObject.endDate);
+            startDate.setTime( startDate.getTime() + startDate.getTimezoneOffset()*60*1000 );
+            endDate.setTime( endDate.getTime() + endDate.getTimezoneOffset()*60*1000 );
+
+            // get the right interval and divider for each type of frequency
+            var frequencyValue = 12;
+            numRefPeriods = numberOfReferencePeriods(startDate, endDate, frequencyValue)
+        }
+
+        // calcualte the size estimate for the db downloading CSV file
+        var sizeOfEstimate = memMultiple * numRefPeriods * 200 / 1000 ;
+        var sizeInKB = sizeOfEstimate.toFixed(2);
+
+        return sizeInKB;
+    }
+
+    // Setup Vue instance to set the CSV download as display file size
+    let csvSizeLine = new Vue({
+        el: "#csvSizeLabel",
+        data: {
+            csvSize: "0"
+        }
+    });
+
+
+    $(document).ready(function () {
+        // When the page is ready, show the download link
+        $("#downloadButton").show();
+
+        // Handle the hyperlink click event
+        $("#downloadAsDisplay").click(function (event) {
+            exportSimpleTableCSV.apply(this, [event, '3610061201-fra.csv', false, false]);
+        });
+
+        $("#downloadWithoutSymbols").click(function (event) {
+            exportSimpleTableCSV.apply(this, [event, '3610061201-sanssymbole.csv', true, false]);
+        });
+
+        $("#downloadSymbolsSeparate").click(function (event) {
+            exportSimpleTableCSV.apply(this, [event, '3610061201-symbolessepares.csv', false, true]);
+        });
+
+        $("#download").click(function (event) {
+            var selectedMember;
+            var refPeriodObject = {latestN: 0, startDate: "", endDate: ""};
+
+            if (typeof action !== 'undefined' && action === "cv") {
+                // console.log("Action Name is " + action);
+                refPeriodObject = getCvRefPeriodInISOformat();
+                selectedMember = JSON.parse(getJsTreeCheckedIds());
+            }
+            else
+            {
+                // Multiple each dimension's member length
+                selectedMember = [[1],[1,2,3,4,5,6,7]];
+                refPeriodObject.startDate = "2020-01-01";
+                refPeriodObject.endDate = "2024-01-01";
+            }
+            var sizeInKB = calculateDbLoadingFileSize(selectedMember, refPeriodObject);
+            // put the size in the anchor element
+            var loadingText = "Télécharger les données sélectionnées";
+            $("a#downloadDbLoading p").text(loadingText + ", " + sizeInKB + "kB.")
+        });
+
+        $("#downloadSelectedData").click(function (event) {
+
+            var isIE = false || !!document.documentMode;
+            var urlLength = 213
+
+            if (isIE && urlLength > 2083) {
+                $("#divErrorMessage").text('IE ne peut executer votre requete, SVP essayer un autre navigateur.');
+                $("#divErrorMessage").css('color', 'red');
+            }
+        });
+
+    });
+
+    function openDownloadOverlay() {
+        $(document).trigger("open.wb-lbx", [
+            [
+                {
+                    src: "#downloadButtonOverlay",
+                    type: "inline"
+                }
+            ],
+            false,
+            [
+                "Image 1"
+            ]
+        ]);
+    }
+
+</script>
+</div>
+<div class="clear"></div><link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="resources/css/custom/simpleTable.css" />
+
+<script src="resources/js/simpleTable/simpleTableUtil3214fafd2f5d7a3d073f01cdd3fffb1f78181db1.js"></script>
+
+<div class="span-8" id="viewHtml">
+
+    <div style="display: flex; flex-direction: row;">
+        <div style="padding: 15px;">
+            Affichage  <span id="simpleRowCount"></span> &eacute;l&eacute;ments</div>
+        <div style="display: flex; flex-direction: row;">
+            <div><input style="width: 250px;" type="text" id="simpleFilter" class="form-control"></div>
+            <div style="padding-top: 7px;">
+                <button id="simpleFilterButton" class="btn  btn-sm">
+                    Filtrer</button>
+            </div>
+            <div>
+                <button id="resetDataButton" class="btn btn-primary btn-sm" style="margin-left: 5px;">
+                    R&eacute;initialiser</button>
+            </div>
+            <div id="viewDataFilter" style="padding: 15px;" class="hidden">
+                <span class="fa fa-exclamation-triangle text-warning fa-lg"></span>
+                <span class="bg-warning">
+                    Aucun résultat trouvé.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tableContainer">
+        <div id="cubeSimpleTable" class="cubeSimpleTable">
+            <table class="pub-table simpleTable dataTable" id="simpleTable">
+                <thead id="simpleTableHeader" class="simpleTableHeader"></thead>
+                <tbody id="simpleTableBody" class="simpleTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="errorMessage indent-medium margin-right-medium module-alert span-8" id="error-message-no-data" hidden>
+        <span v-html="errorText"></span>
+    </div>
+    <div id="symbolLegend"></div>
+    <br>
+
+    <div id="abbreviationsLink"></div>
+    <br>
+
+    <br><strong style="visibility: hidden;height: 0px;">Notes : </strong><br>
+    <div id="simpleFootnotes" style="visibility: hidden;height: 0px;"></div>
+</div>
+
+<script>
+    // These variables are defined in simpleTableUtil.js
+    tableTitle = "Revenu disponible ajusté des ménages, Canada, provinces et territoires, annuel (x 1 000 000)";
+    separatorText = ";";
+    footnoteLabel = "Renvois:";
+    tableCorrectionLabel = "Corrections de tableau";
+    correctionFootnoteLabel = "Corrections";
+    informationLabel = "Renseignements";
+    symbolColumnText = "Symbole";
+    sortIconsTitleAsc = "activer pour trier la colonne ascendante";
+    sortIconsTitleDesc = "activer pour trier la colonne décroissant";
+    symbolLabel = "Légende des symboles :";
+    abbreviationsLinkText = "Liste d'abréviations et d'acronymes retrouvés dans plusieurs produits du recensement.";
+    abbreviationsNotes = "Remarques sur les abréviations :";
+    footNoteTitle = "Note de bas de page ";
+    viewDisplayType = 1;
+    hideRefPeriod = false;
+    flowDataEmptyErrorMessage = "Il n'y a pas de données pour les membres qui ont été sélectionnés.";
+    percentageChangeUOMLabel = "Variation en pourcentage";
+
+    $(document).ready(function () {
+        tableContainerElement = $(".tableContainer").clone();
+        prepareTable({"headers":{"columnHeaders":[{"name":"Géographie","meta":{"hasUOM":false,"intraSort":[],"isGeoType":true,"memberId":0,"parentId":0,"isReferencePeriod":false},"values":[{"value":"Canada","meta":{"hasUOM":false,"intraSort":[],"footnotes":["1"],"scalarFactorDesc":"","mapLink":" <a href=\"https://www150.statcan.gc.ca/g1/datatomap/index.html?language=FR&action=wf_identify&value={'layers':[{'values':['2016A000011124'],'id':'A0000'}]}\"target=\"_blank\" title=\"La carte suivante s'ouvrira dans un nouvel onglet ou une nouvelle fenêtre\">(carte)</a>","memberId":1,"parentId":0}}]},{"name":"Période de référence","meta":{"hasUOM":false,"intraSort":[],"isGeoType":false,"memberId":0,"parentId":0,"isReferencePeriod":true},"values":[{"value":"2020","meta":{"hasUOM":false,"intraSort":[],"mapLink":" ","memberId":20200101,"parentId":0}},{"value":"2021","meta":{"hasUOM":false,"intraSort":[],"mapLink":" ","memberId":20210101,"parentId":0}},{"value":"2022","meta":{"hasUOM":false,"intraSort":[],"mapLink":" ","memberId":20220101,"parentId":0}},{"value":"2023","meta":{"hasUOM":false,"intraSort":[],"mapLink":" ","memberId":20230101,"parentId":0}},{"value":"2024","meta":{"hasUOM":false,"intraSort":[],"mapLink":" ","memberId":20240101,"parentId":0}}]}],"rowHeaders":[{"value":"Estimates","meta":{"hasUOM":true,"intraSort":["Revenu disponible des ménages","Plus : transferts sociaux en nature","Égale : revenu disponible ajusté des ménages","Revenu disponible ajusté des ménages","Moins : consommation finale effective des ménages","Plus : variation des droits de pension","Égale : épargne net des ménages"],"memberId":0,"parentId":0,"isReferencePeriod":false}}]},"rows":[{"values":[{"value":"Revenu disponible des ménages","meta":{"intraSort":[],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":1,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"1387661.0","meta":{"formattedValue":"1 387 661","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1431275.0","meta":{"formattedValue":"1 431 275","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1508581.0","meta":{"formattedValue":"1 508 581","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1588839.0","meta":{"formattedValue":"1 588 839","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1709311.0","meta":{"formattedValue":"1 709 311","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]},{"values":[{"value":"Plus : transferts sociaux en nature","meta":{"intraSort":[],"footnotes":["2"],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":2,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"369730.0","meta":{"formattedValue":"369 730","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"401574.0","meta":{"formattedValue":"401 574","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"430987.0","meta":{"formattedValue":"430 987","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"456267.0","meta":{"formattedValue":"456 267","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"490670.0","meta":{"formattedValue":"490 670","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]},{"values":[{"value":"Égale : revenu disponible ajusté des ménages","meta":{"intraSort":[],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":3,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"1757391.0","meta":{"formattedValue":"1 757 391","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1832849.0","meta":{"formattedValue":"1 832 849","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1939568.0","meta":{"formattedValue":"1 939 568","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"2045106.0","meta":{"formattedValue":"2 045 106","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"2199981.0","meta":{"formattedValue":"2 199 981","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]},{"values":[{"value":"Revenu disponible ajusté des ménages","meta":{"intraSort":[],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":7,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"1757391.0","meta":{"formattedValue":"1 757 391","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1832849.0","meta":{"formattedValue":"1 832 849","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1939568.0","meta":{"formattedValue":"1 939 568","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"2045106.0","meta":{"formattedValue":"2 045 106","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"2199981.0","meta":{"formattedValue":"2 199 981","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]},{"values":[{"value":"Moins : consommation finale effective des ménages","meta":{"intraSort":[],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":4,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"1595726.0","meta":{"formattedValue":"1 595 726","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1737931.0","meta":{"formattedValue":"1 737 931","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"1919862.0","meta":{"formattedValue":"1 919 862","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"2028370.0","meta":{"formattedValue":"2 028 370","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"2143296.0","meta":{"formattedValue":"2 143 296","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]},{"values":[{"value":"Plus : variation des droits de pension","meta":{"intraSort":[],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":5,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"38999.0","meta":{"formattedValue":"38 999","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"42432.0","meta":{"formattedValue":"42 432","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"40585.0","meta":{"formattedValue":"40 585","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"42727.0","meta":{"formattedValue":"42 727","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"47345.0","meta":{"formattedValue":"47 345","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]},{"values":[{"value":"Égale : épargne net des ménages","meta":{"intraSort":[],"uom":"0","indentLevel":"0","scalarFactorDesc":"","mapLink":" ","memberId":6,"parentId":0,"isHeader":true,"isReferencePeriod":false}},{"value":"200664.0","meta":{"formattedValue":"200 664","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"137350.0","meta":{"formattedValue":"137 350","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"60291.0","meta":{"formattedValue":"60 291","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"59463.0","meta":{"formattedValue":"59 463","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}},{"value":"104030.0","meta":{"formattedValue":"104 030","intraSort":[],"uom":"0","reference":"","scalarFactorDesc":"6","memberId":0,"parentId":0}}]}],"footnotes":[{"id":"1","value":"Les données provinciales et territoriales ne sont pas disponibles pour la dernière année de référence.  À noter aussi que les totaux pour le Canada, les provinces et les territoires ne correspondent pas aux Comptes économiques provinciaux et territoriaux  (CÉPT) à certains moments de l'année, notamment suite à la relâche des CÉPT, généralement en novembre. Les estimations sont réalignés lorsque les données pour le Revenu disponible ajusté des ménages (RDAM) sont publiées, généralement en mars.","meta":{"intraSort":[],"memberId":0,"parentId":0}},{"id":"2","value":"Les transferts sociaux en nature correspondent aux dépenses de consommation individuelle des administrations publiques et des institutions sans but lucratif aux services des ménages.  Des données plus détaillées sont disponibles à partir du <a href=\"https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3610060901\">Tableau  36-10-0609-01 Consommation finale effective des ménages, Canada, provinciaux et territoriaux, annuel (x 1 000 000)</a>.","meta":{"intraSort":[],"memberId":0,"parentId":0}}],"correctionFootnotes":[],"legend":[],"uomLabels":[{"id":"0","value":"Dollars","meta":{"intraSort":[],"memberId":0,"parentId":0}}],"geoAttrIballs":[],"dimensionIndexForLockedLevel":null,"profileView":false,"viewSortable":false,"scrollable":false,"hasAbbreviationsLink":false,"abbreviationsLink":null,"footnoteRenewStartId":0,"rowMapForScalarFactor":{"1":" (x 1 000 000)","2":" (x 1 000 000)","3":" (x 1 000 000)","4":" (x 1 000 000)","5":" (x 1 000 000)","6":" (x 1 000 000)","7":" (x 1 000 000)"},"colMapForScalarFactor":{},"scalarFactorAtViewLevel":true});
+    });
+
+    window.addEventListener("resize", function() {
+        setContainerDimensions();
+    });
+
+    let errMsgNoData = new Vue({
+        el: "#error-message-no-data",
+        data: {
+            errorText: ""
+        }
+    });
+
+</script><div id="citeInfo">
+<strong>Comment citer le produit :</strong>
+
+
+
+Statistique Canada.
+<a href="/t1/tbl1/fr/tv.action?pid=3610061201"><span>Tableau</span>
+        36-10-0612-01&nbsp;
+        Revenu disponible ajust&eacute; des m&eacute;nages, Canada, provinces et territoires, annuel (x 1 000 000)</a></div>
+
+<div id="doiInfo">
+
+    <strong><span>DOI :</span></strong>
+        <a href=" https://doi.org/10.25318/3610061201-fra"><span> https://doi.org/10.25318/3610061201-fra</span></a><script type="application/ld+json">
+    {
+        "@context": "http://schema.org/",
+        "@type": "Dataset",
+        "@id": " https://doi.org/10.25318/3610061201-fra",
+        "name": "Revenu disponible ajusté des ménages, Canada, provinces et territoires, annuel (x 1 000 000)",
+        "alternateName": "3610061201",
+        "description": "Revenu disponible des ménages ajusté annuel, y compris les transferts sociaux en nature.",
+        "url": "www150.statcan.gc.ca/tbl1/fr/tv.action?pid=3610061201",
+        "sameAs": "www150.statcan.gc.ca/tbl1/en/tv.action?pid=3610061201",
+        "keywords": "",
+        "about": ["Comptes économiques", "Revenu des ménages"],
+        "isBasedOn": ["http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&SDDS=1901" ,"http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&SDDS=1902" ],
+        "datePublished": "2025-04-14",
+        "spatialCoverage": "Canada",
+        "publisher": {
+            "@type": "Organization",
+            "additionalType": "GovernmentOrganization",
+            "url": "http://www.statcan.gc.ca/fra/debut",
+            "name": "Gouvernement du Canada, Statistique Canada",
+            "sameAs":  ["https://en.wikipedia.org/wiki/Statistics_Canada", "https://twitter.com/statcan_fra", "https://www.facebook.com/StatisticsCanada/"]
+        }
+    }
+</script>
+</div>
+
+<div class="clear"></div>
+<br/>
+<div class="panel-pane pane-ndm-crosswalk mrgn-bttm-lg"><div class="pane-content"><div class=""><h2>Information connexe</h2><details><summary>Source (Enquêtes et programmes statistiques)</summary><div class="item-list"><ul><li><a href="http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&amp;SDDS=1901" title="Comptes nationaux du produit intérieur brut en termes de revenus et de dépenses">Comptes nationaux du produit intérieur brut en termes de revenus et de dépenses</a></li>
+<li><a href="http://www23.statcan.gc.ca/imdb/p2SV_f.pl?Function=getSurvey&amp;SDDS=1902" title="Comptes provinciaux et territoriaux du produit intérieur brut en termes de revenus et de dépenses">Comptes provinciaux et territoriaux du produit intérieur brut en termes de revenus et de dépenses</a></li>
+</ul></div></details><details><summary>Produits connexes</summary><h3>Analyses</h3><div class="item-list"><ul><li>Stats en bref : <a href="https://www150.statcan.gc.ca/n1/daily-quotidien/250414/dq250414a-fra.htm" title="Comptes économiques du secteur des ménages canadiens répartis selon le revenu, la consommation, l'épargne et le patrimoine quatrième trimestre de 2024">Comptes économiques du secteur des ménages canadiens répartis selon le revenu, la consommation, l'épargne et le patrimoine quatrième trimestre de 2024</a></li>
+<li>Articles et rapports : <a href="https://www150.statcan.gc.ca/n1/pub/62f0014m/62f0014m2022011-fra.htm" title="Fluctuations des prix tout au long de la chaîne d’approvisionnement : bois d’œuvre de résineux">Fluctuations des prix tout au long de la chaîne d’approvisionnement : bois d’œuvre de résineux</a></li>
+</ul></div></details><details><summary>Sujets et mots-clés</summary><h3>Sujets</h3><div class="item-list"><ul><li><a href="https://www.statcan.gc.ca/fr/sujets-debut/comptes_economiques" title="Comptes économiques">Comptes économiques</a><ul></ul></li>
+<li><a href="https://www.statcan.gc.ca/fr/sujets-debut/revenu_pensions_depenses_et_richesse" title="Revenu, pensions, dépenses et richesse">Revenu, pensions, dépenses et richesse</a><ul><li><a href="https://www150.statcan.gc.ca/n1/fr/sujets/revenu_pensions_depenses_et_richesse/revenu_des_menages_des_familles_et_des_particuliers" title="Revenu des ménages, des familles et des particuliers">Revenu des ménages, des familles et des particuliers</a><ul><li><a href="https://www150.statcan.gc.ca/n1/fr/sujets/revenu_pensions_depenses_et_richesse/revenu_des_menages_des_familles_et_des_particuliers/revenu_des_menages" title="Revenu des ménages">Revenu des ménages</a></li></ul></li></ul></li>
+</ul></div></details></div></div></div></form>
+
+
+<script type="text/javascript">
+    let contextPath = '/tbl1';
+</script>
+<div class="pagedetails">
+	<dl id="wb-dtmd">
+		<dt>Date de modification&#160;:&#32;</dt>
+		<dd><time property="dateModified">2025-06-28</time></dd>
+	</dl>
+</div>
+</main><footer id="wb-info">
+	<h2 class="wb-inv">À propos de ce site</h2>
+	<div class="gc-contextual">
+		<div class="container">
+			<nav>
+				<h3>Statistique Canada</h3>
+				<ul class="list-unstyled colcount-sm-2 colcount-md-3">
+					<li><a href="https://www.statcan.gc.ca/fr/reference/centreref/index">Contactez StatCan</a></li>
+					<li><a href="https://www.statcan.gc.ca/fr/confiance">Centre de confiance</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<div class="gc-main-footer">
+		<div class="container">
+			<nav>
+				<h3>Gouvernement du Canada</h3>
+			<ul class="list-unstyled colcount-sm-2 colcount-md-3">
+					<li><a href="https://www.canada.ca/fr/contact.html">Toutes les coordonnées</a></li>
+				<li><a href="https://www.canada.ca/fr/gouvernement/min.html">Ministères et organismes</a></li>
+					<li><a href="https://www.canada.ca/fr/gouvernement/systeme.html">À propos du gouvernement</a></li>
+				</ul>
+				<h4><span class="wb-inv">Thèmes et sujets</span></h4>
+				<ul class="list-unstyled colcount-sm-2 colcount-md-3">
+					<li><a href="https://www.canada.ca/fr/services/emplois.html">Emplois</a></li>
+					<li><a href="https://www.canada.ca/fr/services/immigration-citoyennete.html">Immigration et citoyenneté</a></li>
+					<li><a href="https://voyage.gc.ca/">Voyage et tourisme</a></li>
+					<li><a href="https://www.canada.ca/fr/services/entreprises.html">Entreprises</a></li>
+					<li><a href="https://www.canada.ca/fr/services/prestations.html">Prestations</a></li>
+					<li><a href="https://www.canada.ca/fr/services/sante.html">Santé</a></li>
+					<li><a href="https://www.canada.ca/fr/services/impots.html">Impôts</a></li>
+					<li><a href="https://www.canada.ca/fr/services/environnement.html">Environnement et ressources naturelles</a></li>
+					<li><a href="https://www.canada.ca/fr/services/defense.html">Sécurité nationale et défense</a></li>
+					<li><a href="https://www.canada.ca/fr/services/culture.html">Culture, histoire et sport</a></li>
+					<li><a href="https://www.canada.ca/fr/services/police.html">Services de police, justice et urgences</a></li>
+					<li><a href="https://www.canada.ca/fr/services/transport.html">Transport et infrastructure</a></li>
+					<li><a href="https://www.international.gc.ca/world-monde/index.aspx?lang=fra">Le Canada et le monde</a></li>
+					<li><a href="https://www.canada.ca/fr/services/finance.html">Argent et finance</a></li>
+					<li><a href="https://www.canada.ca/fr/services/science.html">Science et innovation</a></li>
+					<li><a href="https://www.canada.ca/fr/services/autochtones.html">Autochtones</a></li>
+					<li><a href="https://www.canada.ca/fr/services/veterans.html">Vétérans et militaires</a></li>
+					<li><a href="https://www.canada.ca/fr/services/jeunesse.html">Jeunesse</a></li>
+			</ul>
+		</nav>
+	</div>
+	</div>
+	<div class="gc-sub-footer">
+		<div class="container d-flex align-items-center">
+			<nav>
+				<h3 class="wb-inv">Organisation du gouvernement du Canada</h3>
+					<ul>
+						<li><a href="https://www.canada.ca/fr/sociaux.html">Médias sociaux</a></li>
+						<li><a href="https://www.canada.ca/fr/mobile.html">Applications mobiles</a></li>
+						<li><a href="https://www.canada.ca/fr/gouvernement/a-propos.html">À propos de Canada.ca</a></li>
+					<li><a href="https://www.statcan.gc.ca/fr/reference/avis">Avis</a></li>
+					<li><a href="https://www.statcan.gc.ca/fr/reference/privee">Confidentialité</a></li>
+					</ul>
+				</nav>
+			<div class="wtrmrk align-self-end">
+				<img src="/t1/wet-boew4b/assets/wmms-blk.svg" alt="Symbole du gouvernement du Canada" />
+			</div>
+		</div>
+	</div>
+</footer>
+
+<!--[if gte IE 9 | !IE ]><!-->
+<script src="/t1/wet-boew4b/js/wet-boew.min.js"></script>
+<script src="/t1/wet-boew4b/js/theme.min.js"></script>
+<!--<![endif]-->
+<!--[if lt IE 9]>
+<script src="/t1/wet-boew4b/js/ie8-wet-boew2.min.js"></script>
+<![endif]-->
+<!-- LiveZilla Script BEGIN -->
+<script type="text/javascript">
+	var lz_data = {overwrite:false,language:'fr'};
+</script>
+<script type="text/javascript" id="0671342afd1f122f4891265fc94236c1" src="https://www.statcan.gc.ca/livechat/script.php?id=0671342afd1f122f4891265fc94236c1" defer></script> 
+<!-- LiveZilla Script END --> 
+<!-- InvitationManager -->
+<script src="/t1/wet-boew4b/invitation-manager/Overlay.js"></script>
+<script src="/t1/wet-boew4b/invitation-manager/InvitationManager.js"></script>
+<!-- End InvitationManager -->
+<script type="text/javascript">_satellite.pageBottom();</script>
+</body>
+</html>
