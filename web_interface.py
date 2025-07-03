@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import requests
 from pathlib import Path
 from io import BytesIO
 
@@ -43,7 +44,14 @@ if st.session_state.step == 0:
         url = st.text_input("Entrez l'URL du fichier :")
         if url:
             try:
-                df = pd.read_csv(url) if ".csv" in url else pd.read_excel(url)
+                response = requests.get(url)
+                response.raise_for_status()
+
+                if ".csv" in url or "csv" in response.headers.get("Content-Type", ""):
+                    df = pd.read_csv(BytesIO(response.content))
+                else:
+                    df = pd.read_excel(BytesIO(response.content), engine="openpyxl")
+
                 st.session_state.uploaded_file = BytesIO(df.to_csv(index=False).encode())
                 st.success("Fichier importé depuis l'URL ✅")
             except Exception as e:
@@ -65,7 +73,6 @@ elif st.session_state.step == 1:
         st.session_state.uploaded_file.seek(0)
         df = pd.read_excel(st.session_state.uploaded_file)
 
-    # Nettoyage de base : suppression colonnes vides et lignes entièrement vides
     df.dropna(axis=1, how="all", inplace=True)
     df.dropna(axis=0, how="all", inplace=True)
 
