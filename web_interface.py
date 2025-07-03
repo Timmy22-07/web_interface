@@ -3,66 +3,91 @@ from import_data import main as import_main
 from clean_data import main as clean_main
 from vizualisation import plot_data, load_cleaned_file
 from pathlib import Path
-import builtins
+import builtins, tempfile, os
 
-st.set_page_config(page_title="Interface Pipeline", layout="centered")
-st.title("📊 Traitement de données (.csv/.xlsx)")
+# ────────────────────────── CONFIG STREAMLIT ──────────────────────────
+st.set_page_config(page_title="Pipeline de données", layout="centered")
+st.title("📊 Traitement de données (.csv / .xlsx)")
 
-st.markdown("""
-Bienvenue sur votre interface de traitement de données.
-Téléversez un fichier local **ou** fournissez un lien direct Statistique Canada / autre pour démarrer.
-""")
+st.markdown(
+    """
+Téléversez un fichier local **ou** collez un lien (Statistique Canada ou autre).
+Le pipeline exécute : **Importation → Nettoyage → Visualisation**.
+"""
+)
 
+# ──────────────────────────── ÉTAT AVANCEMENT ─────────────────────────
 step = st.session_state.get("step", 0)
 
+# ────────────────────────────── ÉTAPE 1 ───────────────────────────────
 if step == 0:
-    st.subheader("Étape 1 : Importation")
-    input_type = st.radio("Choisissez la source de vos données :", ["Fichier local", "Lien URL"])
+    st.subheader("Étape 1 : Importation")
+    input_type = st.radio("Source des données :", ["Fichier local", "Lien URL"], horizontal=True)
 
+    # -------- FICHIER LOCAL --------
     if input_type == "Fichier local":
-        uploaded_file = st.file_uploader("Importez votre fichier (.csv ou .xlsx)", type=["csv", "xlsx"])
-        if uploaded_file and st.button("Importer le fichier"):
-            with open("temp_user_file.csv", "wb") as f:
-                f.write(uploaded_file.read())
-            builtins.input = lambda prompt='': "temp_user_file.csv"
+        uploaded = st.file_uploader("Importez votre fichier", type=["csv", "xlsx", "xls"], help="200 Mo max.")
+        if uploaded and st.button("🚚 Importer le fichier"):
+            suffix = Path(uploaded.name).suffix or ".csv"
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                tmp.write(uploaded.read())
+                tmp_path = tmp.name
+            # injection dans import_main()
+            old_input = builtins.input
+            builtins.input = lambda prompt='': tmp_path
             path = import_main()
-            builtins.input = input
+            builtins.input = old_input
+
             if path:
+                st.success("✅ Fichier importé !")
                 st.session_state["step"] = 1
-                st.experimental_rerun()
+                st.rerun()
+            else:
+                st.error("❌ Importation échouée.")
+
+    # -------- LIEN URL --------
     else:
-        url_input = st.text_input("Entrez le lien vers le fichier (.csv ou .xlsx)")
-        if st.button("Importer depuis l'URL") and url_input:
-            builtins.input = lambda prompt='': url_input
+        url = st.text_input("Collez le lien direct (.csv/.xlsx ou lien StatCan)")
+        if st.button("🌐 Importer depuis l'URL") and url:
+            old_input = builtins.input
+            builtins.input = lambda prompt='': url
             path = import_main()
-            builtins.input = input
+            builtins.input = old_input
+
             if path:
+                st.success("✅ Fichier importé !")
                 st.session_state["step"] = 1
-                st.experimental_rerun()
+                st.rerun()
+            else:
+                st.error("❌ Importation échouée – vérifie le lien.")
 
+# ────────────────────────────── ÉTAPE 2 ───────────────────────────────
 elif step == 1:
-    st.subheader("Étape 2 : Nettoyage des données")
-    if st.button("Nettoyer les données"):
+    st.subheader("Étape 2 : Nettoyage des données")
+    if st.button("🧹 Nettoyer les données"):
         try:
-            path = clean_main()
-            if path:
-                st.session_state["step"] = 2
-                st.experimental_rerun()
+            cleaned_path = clean_main()
+            st.success("✅ Nettoyage terminé : " + str(cleaned_path))
+            st.session_state["step"] = 2
+            st.session_state["cleaned_path"] = str(cleaned_path)
+            st.rerun()
         except Exception as e:
-            st.error(f"Erreur lors du nettoyage : {e}")
+            st.error(f"Erreur lors du nettoyage : {e}")
 
+# ────────────────────────────── ÉTAPE 3 ───────────────────────────────
 elif step == 2:
-    st.subheader("Étape 3 : Visualisation")
-    try:
-        last_file = Path(clean_main()).stem.replace("_cleaned", "")
-        df = load_cleaned_file(last_file)
+    st.subheader("Étape 3 : Visualisation")
+    cleaned_path = Path(st.session_state.get("cleaned_path", ""))
+    if cleaned_path.exists():
+        file_key = cleaned_path.stem.replace("_cleaned", "")
+        df = load_cleaned_file(file_key)
         if df is not None:
             plot_data(df)
-            st.success("✅ Visualisation terminée.")
-    except Exception as e:
-        st.error(f"Erreur lors de la visualisation : {e}")
+            st.success("🎉 Visualisation terminée.")
+    else:
+        st.error("Fichier nettoyé introuvable.")
 
-    if st.button("Recommencer depuis le début"):
-        for key in list(st.session_state.keys()):
-            del st.session_state[key]
-        st.experimental_rerun()
+    st.markdown("---")
+    if st.button("🔄 Recommencer depuis le début"):
+        st.session_state.clear()
+        st.rerun()
