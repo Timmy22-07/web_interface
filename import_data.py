@@ -1,6 +1,5 @@
 import os, re, json, shutil, requests, chardet
 from urllib.parse import urlparse
-from pathlib import Path
 
 RAW_DIR = "data/raw"
 DICT_PATH = "data/dictionary.json"
@@ -23,14 +22,13 @@ def slugify(text: str) -> str:
 
 def detect_encoding(path: str) -> str:
     with open(path, "rb") as f:
-        return chardet.detect(f.read(10000)).get("encoding", "utf-8")
+        return chardet.detect(f.read(1000)).get("encoding", "utf-8")
 
 def is_url(path: str) -> bool:
     return path.startswith("http://") or path.startswith("https://")
 
 # ---------- ajout d'un fichier ----------
 def add_one_file(source: str) -> str | None:
-    ensure_dirs()
     with open(DICT_PATH, "r", encoding="utf-8") as f:
         dico = json.load(f)
 
@@ -46,17 +44,8 @@ def add_one_file(source: str) -> str | None:
 
     try:
         if is_url(source):
-            # Vérifie extension valide
-            if not any(ext in source.lower() for ext in [".csv", ".xlsx", ".xls"]):
-                raise ValueError("URL non valide (doit se terminer par .csv, .xlsx ou .xls)")
-
-            # Vérifie que ce n’est pas un lien dynamique comme StatCan (action?pid=)
-            if "action?" in source:
-                raise ValueError("Lien dynamique détecté. Merci de télécharger le fichier manuellement.")
-
-            r = requests.get(source, timeout=10)
+            r = requests.get(source, timeout=30)
             r.raise_for_status()
-
             with open(raw_path, "wb") as f_out:
                 f_out.write(r.content)
         else:
@@ -64,11 +53,10 @@ def add_one_file(source: str) -> str | None:
                 print("❌ Fichier local introuvable.")
                 return None
             shutil.copy(source, raw_path)
-
         print(f"✅ Sauvegardé sous {raw_path}")
     except Exception as e:
         print("❌ Erreur de transfert :", e)
-        raise e  # Propagation utile pour affichage dans l’interface
+        return None
 
     enc = detect_encoding(raw_path)
 
@@ -96,6 +84,6 @@ def main() -> str:
     print("\n🎉 Import terminé.")
     return last_path if last_path else ""
 
-# ---------- exécution directe ----------
+# ---------- mode exécution directe ----------
 if __name__ == "__main__":
     main()
