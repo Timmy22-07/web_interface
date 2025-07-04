@@ -1,14 +1,14 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 c) ──────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 d) ──────────────────────────
 """
 Interface Streamlit en 3 étapes :
 1️⃣ Importation (local / URL)  → `data/raw/`
 2️⃣ Nettoyage (clean_data.main) → `data/cleaned/`
 3️⃣ Visualisation (vizualisation.plot_data)
 
-🔄 **Révision c**
-• Ajout d’un bloc `try / except` autour de l’appel `add_one_file()` pour les importations **par URL** : capture et affiche toute erreur réseau / I/O au lieu de faire planter l’app.
-• Affichage du `traceback` simplifié avec `st.exception(e)` pour aider au debug.
-• Aucune autre logique modifiée (nom interne toujours choisi par l’utilisateur ou déduit du nom de fichier / URL si champ vide).
+🔄 **Révision d**
+• Suppression du dictionnaire (dictionary.json) utilisé dans add_one_file → plus de dépendance à un historique de noms.
+• Importation par URL encapsulée dans un `try / except` global pour éviter tout crash cloud.
+• Traçage renforcé pour aider au débogage sans casser l’application.
 """
 from __future__ import annotations
 
@@ -68,6 +68,10 @@ if step == 0:
                     tmp_path = tmp.name
                 try:
                     saved = add_one_file(tmp_path, final_name=internal, interactive=False)
+                except Exception as e:
+                    saved = None
+                    st.error("❌ Erreur inattendue lors de l'import local.")
+                    st.exception(e)
                 finally:
                     os.unlink(tmp_path)
 
@@ -84,24 +88,24 @@ if step == 0:
         fname = st.text_input("Nom interne (obligatoire si vous souhaitez un nom précis)")
 
         if st.button("🌐 Importer depuis l’URL") and url:
-            base = Path(url.split("?")[0]).stem  # enlève la querystring éventuelle
-            internal = slugify(fname) if fname else slugify(base)
-            if not internal:
-                st.error("❌ Impossible de déduire un nom interne — renseignez le champ.")
-            else:
-                try:
-                    saved = add_one_file(url, final_name=internal, interactive=False)
-                except Exception as e:
-                    saved = None
-                    st.error("❌ Erreur lors du téléchargement ou de l’enregistrement du fichier.")
-                    st.exception(e)  # affiche stack‑trace simplifiée dans Streamlit
-
-                if saved:
-                    st.success(f"✅ Importé : {saved}")
-                    st.session_state.step = 1
-                    st.rerun()
+            try:
+                base = Path(url.split("?")[0]).stem
+                internal = slugify(fname) if fname else slugify(base)
+                if not internal:
+                    st.error("❌ Impossible de déduire un nom interne — renseignez le champ.")
                 else:
-                    st.error(f"❌ Le nom interne ‘{internal}’ est déjà utilisé ou l’import a échoué.")
+                    saved = add_one_file(url, final_name=internal, interactive=False)
+            except Exception as e:
+                saved = None
+                st.error("❌ Erreur lors du téléchargement ou de l’enregistrement du fichier.")
+                st.exception(e)
+
+            if saved:
+                st.success(f"✅ Importé : {saved}")
+                st.session_state.step = 1
+                st.rerun()
+            else:
+                st.error(f"❌ Le nom interne ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
 # ──────────────────────────── ÉTAPE 2 : NETTOYAGE ─────────────────────────────
 elif step == 1:
