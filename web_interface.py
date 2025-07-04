@@ -33,8 +33,10 @@ if step == 0:
                 tmp_path = tmp.name
             old_input = builtins.input
             builtins.input = lambda prompt='': tmp_path
-            path = import_main()
-            builtins.input = old_input
+            try:
+                path = import_main()
+            finally:
+                builtins.input = old_input
 
             if path:
                 st.success("✅ Fichier importé !")
@@ -48,8 +50,10 @@ if step == 0:
         if st.button("🌐 Importer depuis l'URL") and url:
             old_input = builtins.input
             builtins.input = lambda prompt='': url
-            path = import_main()
-            builtins.input = old_input
+            try:
+                path = import_main()
+            finally:
+                builtins.input = old_input
 
             if path:
                 st.success("✅ Fichier importé !")
@@ -61,7 +65,7 @@ if step == 0:
 # ────────────────────────────── ÉTAPE 2 ───────────────────────────────
 elif step == 1:
     st.subheader("🧹 Étape 2 : Nettoyage des données")
-    if st.button("Nettoyer les données"):
+    if st.button("🧼 Nettoyer les données"):
         try:
             with st.spinner("Nettoyage en cours..."):
                 cleaned_path = clean_main()
