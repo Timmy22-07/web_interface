@@ -1,9 +1,10 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 m) ───────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 n) ───────────────────────────
 """
 Analytix – pipeline : Import → Nettoyage → Visualisation
 Ajouts :
 • Bouton de téléchargement du fichier importé
 • Bouton de téléchargement du fichier nettoyé
+• Bouton de téléchargement du graphique généré
 """
 from __future__ import annotations
 
@@ -13,7 +14,7 @@ import streamlit as st
 
 from import_data import add_one_file
 from clean_data import main as clean_main
-from vizualisation import plot_data, load_cleaned_file
+from vizualisation import plot_data, load_cleaned_file, get_last_figure
 
 # ────────────────────── Helpers ──────────────────────
 SLUG_RE = re.compile(r"[^a-z0-9]+")
@@ -26,7 +27,7 @@ st.caption("Importez, nettoyez et explorez vos données en trois clics.")
 
 st.markdown(
     """
-1. **Importation** d’un fichier .csv ou .xlsx localement ou à partir d'un lien.
+1. **Importation** d’un fichier local ou d’un lien (doit mener à un fichier .csv ou .xlsx).
 2. **Nettoyage** automatique du fichier importé.
 3. **Visualisation** sous forme de graphiques interactifs.
 
@@ -121,7 +122,12 @@ with tab_viz:
             df = load_cleaned_file(cleaned_path.stem.replace("_cleaned", ""))
             if df is not None:
                 st.sidebar.info("📌 Paramètres du graphique")
-                plot_data(df)
+                fig = plot_data(df)
+                if fig:
+                    from io import BytesIO
+                    buf = BytesIO()
+                    fig.savefig(buf, format="png")
+                    st.download_button("📸 Télécharger le graphique", data=buf.getvalue(), file_name="graphique.png", mime="image/png")
             else:
                 st.error("🚫 Impossible de charger le fichier nettoyé.")
         else:
