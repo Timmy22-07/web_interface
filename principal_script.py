@@ -3,6 +3,7 @@ from clean_data import main as clean_main
 from vizualisation import plot_data, load_cleaned_file
 from rich.console import Console
 from pathlib import Path
+import builtins
 
 console = Console()
 
@@ -12,8 +13,7 @@ def confirm_step(message):
 
 def run_pipeline():
     console.rule("[bold blue]Étape 1 - Importation[/]")
-    print("Importer un [1] fichier local ou [2] depuis une URL ? [1/2] (1): ", end="")
-    source_type = input().strip()
+    source_type = input("Importer un [1] fichier local ou [2] depuis une URL ? [1/2] (1): ").strip()
     source_type = source_type if source_type in ["1", "2"] else "1"
 
     if source_type == "1":
@@ -21,10 +21,10 @@ def run_pipeline():
     else:
         sources = input("Lien vers le fichier (.csv|.xlsx): ").strip()
 
-    # injection directe dans input() de import_main
-    import builtins
+    # Substitution du input temporaire
     old_input = builtins.input
-    builtins.input = lambda prompt='': sources if 'liens' in prompt else old_input(prompt)
+    builtins.input = lambda prompt='': sources if "Lien(s)" in prompt or "Chemin" in prompt else old_input(prompt)
+
     try:
         last_import_path = import_main()
     finally:
@@ -40,7 +40,7 @@ def run_pipeline():
 
     console.rule("[bold green]Étape 2 - Nettoyage[/]")
     try:
-        cleaned_path = clean_main()  # nettoie le dernier fichier importé
+        cleaned_path = clean_main()
     except Exception as e:
         print("❌ Erreur lors du nettoyage :", e)
         return
