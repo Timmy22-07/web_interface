@@ -9,6 +9,7 @@ Nouveautés de la version **k**
 • Correction du passage entre les étapes via boutons
 • Texte d’introduction retravaillé pour l’utilisateur final
 • Remplacement de st.experimental_rerun() par st.rerun()
+• Affichage de suggestions d’étape suivante après chaque action
 """
 from __future__ import annotations
 
@@ -84,6 +85,7 @@ with tabs[0]:
 
                 if saved:
                     st.success(f"✅ Fichier importé : {saved}")
+                    st.info("ℹ️ Vous pouvez maintenant passer à l'étape de **Nettoyage**.")
                     st.session_state.step = 1
                     st.rerun()
                 else:
@@ -108,6 +110,7 @@ with tabs[0]:
 
             if saved:
                 st.success(f"✅ Fichier importé : {saved}")
+                st.info("ℹ️ Vous pouvez maintenant passer à l'étape de **Nettoyage**.")
                 st.session_state.step = 1
                 st.rerun()
             else:
@@ -121,6 +124,7 @@ with tabs[1]:
             with st.spinner("Nettoyage en cours…"):
                 cleaned_path = clean_main()
             st.success(f"✅ Nettoyage terminé : {cleaned_path}")
+            st.info("ℹ️ Vous pouvez maintenant passer à l'étape de **Visualisation**.")
             st.session_state.cleaned_path = str(cleaned_path)
             st.session_state.step = 2
             st.rerun()
@@ -144,7 +148,7 @@ with tabs[2]:
         else:
             st.error("🚫 Fichier nettoyé introuvable.")
 
-        if st.button("🔁 Recommencer depuis le début"):
+        if st.button("🔁 Retour à l'importation"):
             st.session_state.step = 0
             st.session_state.cleaned_path = ""
             st.rerun()
