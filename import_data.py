@@ -1,3 +1,4 @@
+# import_data.py
 import os, json, re, shutil, requests, chardet
 from pathlib import Path
 from typing import List, Union
@@ -6,47 +7,36 @@ RAW_DIR        = Path("data/raw")
 DICT_PATH      = Path("data/dictionary.json")
 ML_DIR         = Path("ml_data")
 ML_FILE        = ML_DIR / "training_data.csv"
-LAST_FILE_PATH = Path("data/last_imported.txt")  # mémorise le dernier import
+LAST_FILE_PATH = Path("data/last_imported.txt")
 
-# ─────────────────────────── utilitaires ────────────────────────────
-
+# ───────────────────────── utilitaires ──────────────────────────
 def ensure_dirs() -> None:
     for d in (RAW_DIR, ML_DIR):
         d.mkdir(parents=True, exist_ok=True)
-    if not DICT_PATH.exists():
-        DICT_PATH.write_text("{}", encoding="utf-8")
+    DICT_PATH.write_text("{}", encoding="utf-8") if not DICT_PATH.exists() else None
 
-def slugify(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")
+slugify   = lambda txt: re.sub(r"[^a-z0-9]+", "_", txt.lower()).strip("_")
+is_url    = lambda p: p.startswith(("http://", "https://"))
+detect_encoding = lambda p: chardet.detect(p.read_bytes()[:1_000]).get("encoding", "utf-8")
 
-def detect_encoding(path: Path) -> str:
-    with path.open("rb") as f:
-        return chardet.detect(f.read(1000)).get("encoding", "utf-8")
+# ─────────────────────── cœur : import d’un fichier ───────────────────────
+def add_one_file(source: str, *, final_name: str | None = None) -> str | None:
+    """Copie/télécharge *source* dans `data/raw` et met à jour le dictionnaire."""
 
-def is_url(path: str) -> bool:
-    return path.startswith(("http://", "https://"))
+    dico: dict = json.loads(DICT_PATH.read_text(encoding="utf-8"))
 
-# ────────────────────── ajout d’un fichier ──────────────────────────
-
-def add_one_file(source: str, final_name: str | None = None) -> str | None:
-    """Télécharge ou copie `source` dans data/raw/ et met à jour le dictionnaire."""
-    with DICT_PATH.open("r", encoding="utf-8") as f:
-        dico = json.load(f)
-
-    # ─── Gestion du nom unique ──────────────────────
-    if final_name:
-        final_name = slugify(final_name)
+    # nom automatique si absent
+    if not final_name:
+        stem = Path(source).stem or source.split("/")[-1][:50]
+        final_name = slugify(stem)
         if final_name in dico:
-            print(f"⚠️ Le nom '{final_name}' existe déjà.")
-            return None
-    else:
-        while True:
-            name_input = input("📝 Nom pour ce fichier : ").strip()
-            final_name = slugify(name_input)
-            if final_name in dico:
-                print("⚠️ Nom déjà utilisé, choisis-en un autre.")
-            elif final_name:
-                break
+            idx = 1
+            while f"{final_name}_{idx}" in dico:
+                idx += 1
+            final_name = f"{final_name}_{idx}"
+    elif final_name in dico:
+        print(f"⚠️ Le nom « {final_name} » existe déjà.")
+        return None
 
     raw_path = RAW_DIR / f"{final_name}.csv"
 
@@ -54,38 +44,53 @@ def add_one_file(source: str, final_name: str | None = None) -> str | None:
         if is_url(source):
             r = requests.get(source, timeout=30, allow_redirects=True)
             r.raise_for_status()
-            with raw_path.open("wb") as f_out:
-                f_out.write(r.content)
+            # petite vérif : si c’est HTML on prévient
+            if "text/html" in r.headers.get("Content-Type", ""):
+                print("⚠️ L’URL ne renvoie pas un fichier direct (contenu HTML détecté).")
+                return None
+            raw_path.write_bytes(r.content)
         else:
-            src_path = Path(source)
-            if not src_path.exists():
+            src = Path(source)
+            if not src.exists():
                 print("❌ Fichier local introuvable.")
                 return None
-            shutil.copy2(src_path, raw_path)
-        print(f"✅ Fichier sauvegardé : {raw_path}")
+            shutil.copy2(src, raw_path)
+
+        print(f"✅ Fichier enregistré : {raw_path}")
     except Exception as e:
-        print("❌ Erreur de téléchargement/copie :", e)
+        print("❌ Échec du téléchargement/de la copie :", e)
         return None
 
+    # mise à jour du dictionnaire
     dico[final_name] = {
         "source": source,
-        "path": str(raw_path),
+        "path"  : str(raw_path),
         "encoding": detect_encoding(raw_path),
     }
     DICT_PATH.write_text(json.dumps(dico, indent=4, ensure_ascii=False), encoding="utf-8")
-
-    with ML_FILE.open("a", encoding="utf-8") as f:
-        f.write(f"{source},{final_name}\n")
-
+    ML_FILE.write_text(f"{source},{final_name}\n", encoding="utf-8", errors="ignore", append=True)
     LAST_FILE_PATH.write_text(final_name, encoding="utf-8")
+
     return str(raw_path)
 
-# ────────────────────── programme principal (CLI/API) ───────────────
+# ───────────────────── fonction publique main() ────────────────────
+def main(
+    sources: Union[str, List[str], None] = None,
+    *,
+    auto_name: str | None = None,
+) -> str:
+    """
+    Importe un ou plusieurs fichiers, retourne le chemin du dernier.
 
-def main(sources: Union[str, List[str], None] = None, *, auto_name: str | None = None) -> str:
-    """Importe un ou plusieurs fichiers puis renvoie le chemin du dernier importé."""
+    - `sources` :
+        * None  → invite utilisateur (une seule fois).
+        * str   → ‘a.csv, https://…b.xlsx’
+        * list  → ['a.csv', 'b.xlsx']
+    - `auto_name` : nom imposé (utile pour appels programmatiques).
+    """
     ensure_dirs()
 
+    # prépare la liste de sources
     if sources is None:
         raw = input("Lien(s) ou chemin(s) (séparés par virgule) :\n> ")
         sources_list = [s.strip() for s in raw.split(",") if s.strip()]
@@ -98,13 +103,14 @@ def main(sources: Union[str, List[str], None] = None, *, auto_name: str | None =
         print("❌ Aucune source fournie.")
         return ""
 
-    last_path = None
+    last_path = ""
     for i, src in enumerate(sources_list, 1):
-        print(f"\n— Import {i}/{len(sources_list)} —")
-        last_path = add_one_file(src, final_name=auto_name)
+        print(f"─ Import {i}/{len(sources_list)} ─")
+        last_path = add_one_file(src, final_name=auto_name) or last_path
 
-    print("\n🎉 Import terminé.")
-    return last_path or ""
+    print("🎉 Import terminé.")
+    return last_path
 
+# ───────────────────────── exécution directe ───────────────────────
 if __name__ == "__main__":
     main()
