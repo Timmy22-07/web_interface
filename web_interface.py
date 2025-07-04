@@ -1,14 +1,13 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 h) ──────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 i) ──────────────────────────
 """
-Analytix : Importez → Nettoyez → Visualisez
+Analytix : Analysez vos données facilement
 --------------------------------------------------
-Interface Streamlit modernisée pour explorer facilement des fichiers CSV ou Excel.
+Interface Streamlit modernisée pour importer, nettoyer et explorer vos données CSV ou Excel.
 
-Nouveautés de la version **h**
-• Nouveau titre + sous-titre professionnel
-• Explication centralisée claire et simple à lire
-• Navigation par onglets avec `st.tabs()` (UX améliorée)
-• Messages visuels cohérents et texte unifié
+Nouveautés de la version **i**
+• Nouveau texte d’explication plus clair pour les utilisateurs
+• Retrait de la mention « Compatible : Statistique Canada… »
+• Ajout d’un bouton pour passer à l’onglet suivant après chaque étape
 """
 from __future__ import annotations
 
@@ -26,24 +25,22 @@ from vizualisation import plot_data, load_cleaned_file
 SLUG_RE = re.compile(r"[^a-z0-9]+")
 
 def slugify(txt: str) -> str:
-    """Nettoie un texte pour servir de slug/nom de fichier."""
     return SLUG_RE.sub("_", txt.lower()).strip("_")
 
 # ─────────────────────────── CONFIG STREAMLIT ─────────────────────────────────
 st.set_page_config(page_title="Analytix – Analyse de données", layout="centered")
 st.title("📊 Analytix")
-st.caption("Importez, nettoyez et explorez vos données économiques ou statistiques.")
+st.caption("Analysez vos données rapidement et efficacement")
 
 st.markdown(
     """
-Bienvenue sur **Analytix**, une interface rapide pour traiter vos fichiers de données.  
-Voici comment cela fonctionne :
+Bienvenue sur **Analytix**, une interface rapide pour explorer vos fichiers de données.
 
-1. Importez un fichier depuis votre ordinateur ou un lien (.csv, .xlsx).
-2. Nettoyez automatiquement les colonnes (types, doublons, valeurs manquantes).
-3. Visualisez vos données sous forme de graphiques clairs et interactifs.
+1. Importation d’un fichier depuis votre ordinateur ou un lien (ce lien doit mener à un fichier .csv, .xlsx).
+2. Nettoyage automatique du fichier importé.
+3. Visualisation des données sous forme de graphiques clairs et interactifs.
 
-*Conseil :* vous pouvez nommer vos fichiers pour les retrouver facilement.
+*Conseil :* vous pouvez nommer vos fichiers pour les retrouver facilement. Si vous les importez localement (depuos votre ordinateur), ce n'est pas la peine de les nommer.
     """,
     unsafe_allow_html=True,
 )
@@ -53,7 +50,6 @@ with st.expander("ℹ️ Aide / Formats acceptés"):
         """
         - Formats supportés : `.csv`, `.xlsx`, `.xls`
         - Limite recommandée : **200 Mo**
-        - Compatible : Statistique Canada, Banque mondiale, etc.
         """
     )
 
@@ -89,12 +85,14 @@ with tab1:
 
                 if saved:
                     st.success(f"✅ Fichier importé : {saved}")
+                    if st.button("➡️ Passer au nettoyage"):
+                        st.experimental_set_query_params(tab="2")
                 else:
                     st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
     else:
-        url = st.text_input("Lien vers un fichier de données")
-        fname = st.text_input("Nom personnalisé pour ce fichier (facultatif)")
+        url = st.text_input("Veuillez entrer un lien vers un fichier (.csv, .xlsx, .xls)")
+        fname = st.text_input("Veuillez choisir un nom pour votre fichier (facultatif)")
 
         if st.button("🌐 Importer depuis le lien") and url:
             try:
@@ -111,17 +109,21 @@ with tab1:
 
             if saved:
                 st.success(f"✅ Fichier importé : {saved}")
+                if st.button("➡️ Passer au nettoyage"):
+                    st.experimental_set_query_params(tab="2")
             else:
                 st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
 # ──────────────────────────── ÉTAPE 2 : NETTOYAGE ─────────────────────────────
 with tab2:
-    st.subheader("🧹 Nettoyage automatique des colonnes")
+    st.subheader("🧹 Nettoyage automatique du fichier")
     if st.button("🧼 Lancer le nettoyage"):
         with st.spinner("Nettoyage en cours…"):
             cleaned_path = clean_main()
         st.success(f"✅ Nettoyage terminé : {cleaned_path}")
         st.session_state.cleaned_path = str(cleaned_path)
+        if st.button("➡️ Passer à la visualisation"):
+            st.experimental_set_query_params(tab="3")
 
 # ──────────────────────────── ÉTAPE 3 : VISUALISATION ─────────────────────────
 with tab3:
