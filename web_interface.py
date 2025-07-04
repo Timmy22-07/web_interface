@@ -1,13 +1,13 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 i) ──────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 j) ──────────────────────────
 """
-Analytix : Analysez vos données facilement
+Analytix : Analysez vos données rapidement
 --------------------------------------------------
 Interface Streamlit modernisée pour importer, nettoyer et explorer vos données CSV ou Excel.
 
-Nouveautés de la version **i**
-• Nouveau texte d’explication plus clair pour les utilisateurs
-• Retrait de la mention « Compatible : Statistique Canada… »
-• Ajout d’un bouton pour passer à l’onglet suivant après chaque étape
+Nouveautés de la version **j**
+• Retour à une logique par étapes (plus d'onglets)
+• Texte d’introduction simplifié et professionnel
+• Ajout d’un bouton après chaque étape pour avancer dans le flux
 """
 from __future__ import annotations
 
@@ -34,31 +34,26 @@ st.caption("Analysez vos données rapidement et efficacement")
 
 st.markdown(
     """
-Bienvenue sur **Analytix**, une interface rapide pour explorer vos fichiers de données.
+Bienvenue sur **Analytix**, votre assistant d’analyse de données. 
 
 1. Importation d’un fichier depuis votre ordinateur ou un lien (ce lien doit mener à un fichier .csv, .xlsx).
 2. Nettoyage automatique du fichier importé.
 3. Visualisation des données sous forme de graphiques clairs et interactifs.
 
-*Conseil :* vous pouvez nommer vos fichiers pour les retrouver facilement. Si vous les importez localement (depuos votre ordinateur), ce n'est pas la peine de les nommer.
+*Conseil :* Vous pouvez nommer vos fichiers pour les retrouver facilement. Si vous les importez localement (depuis votre ordinateur), ce n'est pas la peine de les nommer.
     """,
     unsafe_allow_html=True,
 )
 
-with st.expander("ℹ️ Aide / Formats acceptés"):
-    st.markdown(
-        """
-        - Formats supportés : `.csv`, `.xlsx`, `.xls`
-        - Limite recommandée : **200 Mo**
-        """
-    )
+# ──────────────────────────────── ÉTATS ───────────────────────────────────────
+st.session_state.setdefault("step", 0)
+st.session_state.setdefault("cleaned_path", "")
 
-# ──────────────────────────── ONGLET PRINCIPAL ───────────────────────────────
-tab1, tab2, tab3 = st.tabs(["1️⃣ Importation", "2️⃣ Nettoyage", "3️⃣ Visualisation"])
+step = st.session_state.step
 
-# ──────────────────────────── ÉTAPE 1 : IMPORTATION ───────────────────────────
-with tab1:
-    st.subheader("🟢 Importer un fichier")
+# ──────────────────────────── ÉTAPE 1 : IMPORTATION ───────────────────────────
+if step == 0:
+    st.subheader("🟢 Étape 1 : Importer un fichier")
     src_type = st.radio("Source des données :", ["Fichier local", "Lien URL"], horizontal=True)
 
     if src_type == "Fichier local":
@@ -86,7 +81,8 @@ with tab1:
                 if saved:
                     st.success(f"✅ Fichier importé : {saved}")
                     if st.button("➡️ Passer au nettoyage"):
-                        st.experimental_set_query_params(tab="2")
+                        st.session_state.step = 1
+                        st.rerun()
                 else:
                     st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
@@ -110,35 +106,40 @@ with tab1:
             if saved:
                 st.success(f"✅ Fichier importé : {saved}")
                 if st.button("➡️ Passer au nettoyage"):
-                    st.experimental_set_query_params(tab="2")
+                    st.session_state.step = 1
+                    st.rerun()
             else:
                 st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
-# ──────────────────────────── ÉTAPE 2 : NETTOYAGE ─────────────────────────────
-with tab2:
-    st.subheader("🧹 Nettoyage automatique du fichier")
+# ───────────────────────────── ÉTAPE 2 : NETTOYAGE ────────────────────────────
+elif step == 1:
+    st.subheader("🧹 Étape 2 : Nettoyage automatique du fichier")
     if st.button("🧼 Lancer le nettoyage"):
         with st.spinner("Nettoyage en cours…"):
             cleaned_path = clean_main()
         st.success(f"✅ Nettoyage terminé : {cleaned_path}")
         st.session_state.cleaned_path = str(cleaned_path)
         if st.button("➡️ Passer à la visualisation"):
-            st.experimental_set_query_params(tab="3")
+            st.session_state.step = 2
+            st.rerun()
 
-# ──────────────────────────── ÉTAPE 3 : VISUALISATION ─────────────────────────
-with tab3:
-    st.subheader("📈 Exploration graphique des données")
-    if "cleaned_path" not in st.session_state:
-        st.warning("⚠️ Veuillez d’abord importer et nettoyer un fichier.")
-    else:
-        cleaned_path = Path(st.session_state.cleaned_path)
-        if cleaned_path.exists():
-            st.session_state["__in_streamlit"] = True
-            df = load_cleaned_file(cleaned_path.stem.replace("_cleaned", ""))
-            if df is not None:
-                st.sidebar.info("📌 Paramètres du graphique")
-                plot_data(df)
-            else:
-                st.error("🚫 Impossible de charger le fichier nettoyé.")
+# ───────────────────────────── ÉTAPE 3 : VISUALISATION ────────────────────────
+elif step == 2:
+    st.subheader("📈 Étape 3 : Visualisation des données")
+    cleaned_path = Path(st.session_state.cleaned_path)
+
+    if cleaned_path.exists():
+        st.session_state["__in_streamlit"] = True
+        df = load_cleaned_file(cleaned_path.stem.replace("_cleaned", ""))
+        if df is not None:
+            st.sidebar.info("📌 Paramètres du graphique")
+            plot_data(df)
         else:
-            st.error("🚫 Fichier nettoyé introuvable.")
+            st.error("🚫 Impossible de charger le fichier nettoyé.")
+    else:
+        st.error("🚫 Fichier nettoyé introuvable.")
+
+    if st.button("🔁 Recommencer depuis le début"):
+        st.session_state.step = 0
+        st.session_state.cleaned_path = ""
+        st.rerun()
