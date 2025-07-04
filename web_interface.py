@@ -1,16 +1,14 @@
-# ─────────────────────────── web_interface.py  (v2025-07-04 b) ──────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 c) ──────────────────────────
 """
 Interface Streamlit en 3 étapes :
 1️⃣ Importation (local / URL)  → `data/raw/`
 2️⃣ Nettoyage (clean_data.main) → `data/cleaned/`
 3️⃣ Visualisation (vizualisation.plot_data)
 
-⚙️ Modifications demandées :
-• L’utilisateur choisit **toujours** le nom interne ; plus d’auto‑génération incrémentale.
-• Si le champ « Nom interne » est vide → on **utilise le nom de fichier** / la partie finale de l’URL (slugifiée).
-• S’il existe déjà dans `dictionary.json`, on lève une erreur explicite et on affiche un message.
-• Suppression de tout appel superflu à `st.experimental_rerun()`.
-• Aucune boucle d’incrémentation automatique (_foo_2, _foo_3_) : le contrôle reste à l’utilisateur.
+🔄 **Révision c**
+• Ajout d’un bloc `try / except` autour de l’appel `add_one_file()` pour les importations **par URL** : capture et affiche toute erreur réseau / I/O au lieu de faire planter l’app.
+• Affichage du `traceback` simplifié avec `st.exception(e)` pour aider au debug.
+• Aucune autre logique modifiée (nom interne toujours choisi par l’utilisateur ou déduit du nom de fichier / URL si champ vide).
 """
 from __future__ import annotations
 
@@ -27,11 +25,9 @@ from vizualisation import plot_data, load_cleaned_file
 # ────────────────────────────── OUTILS ─────────────────────────────────────────
 SLUG_RE = re.compile(r"[^a-z0-9]+")
 
-
 def slugify(txt: str) -> str:
-    """Minimal : garde lettres/ chiffres, remplace le reste par _ et strip."""
+    """Minimal : garde lettres/chiffres, remplace le reste par _ et strip."""
     return SLUG_RE.sub("_", txt.lower()).strip("_")
-
 
 # ─────────────────────────── CONFIG STREAMLIT ─────────────────────────────────
 st.set_page_config(page_title="Pipeline de données", layout="centered")
@@ -58,16 +54,14 @@ if step == 0:
 
     # ——— Import local ————————————————————————————————————————————————
     if src_type == "Fichier local":
-        uploaded = st.file_uploader("Importez votre fichier", type=["csv", "xlsx", "xls"], help="200 Mo max.")
+        uploaded = st.file_uploader("Importez votre fichier", type=["csv", "xlsx", "xls"], help="200 Mo max.")
         fname = st.text_input("Nom interne (obligatoire si différent du nom du fichier)")
 
         if uploaded and st.button("🚚 Importer"):
-            # Détermination du nom interne
             internal = slugify(fname) if fname else slugify(Path(uploaded.name).stem)
             if not internal:
                 st.error("❌ Impossible de déduire un nom interne — renseignez le champ.")
             else:
-                # Stockage temporaire pour passer un Path à add_one_file()
                 suffix = Path(uploaded.name).suffix or ".csv"
                 with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                     tmp.write(uploaded.read())
@@ -78,7 +72,7 @@ if step == 0:
                     os.unlink(tmp_path)
 
                 if saved:
-                    st.success(f"✅ Importé : {saved}")
+                    st.success(f"✅ Importé : {saved}")
                     st.session_state.step = 1
                     st.rerun()
                 else:
@@ -95,9 +89,15 @@ if step == 0:
             if not internal:
                 st.error("❌ Impossible de déduire un nom interne — renseignez le champ.")
             else:
-                saved = add_one_file(url, final_name=internal, interactive=False)
+                try:
+                    saved = add_one_file(url, final_name=internal, interactive=False)
+                except Exception as e:
+                    saved = None
+                    st.error("❌ Erreur lors du téléchargement ou de l’enregistrement du fichier.")
+                    st.exception(e)  # affiche stack‑trace simplifiée dans Streamlit
+
                 if saved:
-                    st.success(f"✅ Importé : {saved}")
+                    st.success(f"✅ Importé : {saved}")
                     st.session_state.step = 1
                     st.rerun()
                 else:
@@ -108,8 +108,8 @@ elif step == 1:
     st.subheader("🧹 Étape 2 : Nettoyage des données")
     if st.button("🧼 Lancer le nettoyage"):
         with st.spinner("Nettoyage en cours…"):
-            cleaned_path = clean_main()  # dépile le dernier importé
-        st.success(f"✅ Nettoyage terminé : {cleaned_path}")
+            cleaned_path = clean_main()
+        st.success(f"✅ Nettoyage terminé : {cleaned_path}")
         st.session_state.cleaned_path = str(cleaned_path)
         st.session_state.step = 2
         st.rerun()
@@ -124,7 +124,7 @@ elif step == 2:
     cleaned_path = Path(st.session_state.cleaned_path)
 
     if cleaned_path.exists():
-        st.session_state["__in_streamlit"] = True  # informe vizualisation.py
+        st.session_state["__in_streamlit"] = True
         df = load_cleaned_file(cleaned_path.stem.replace("_cleaned", ""))
         if df is not None:
             st.sidebar.info("📌 Sélectionnez les paramètres du graphique dans la barre latérale.")
