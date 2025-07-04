@@ -1,4 +1,4 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 k) ──────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 k) ───────────────────────────
 """
 Analytix : Analysez vos données rapidement
 --------------------------------------------------
@@ -8,6 +8,7 @@ Nouveautés de la version **k**
 • Retour des onglets pour une navigation claire
 • Correction du passage entre les étapes via boutons
 • Texte d’introduction retravaillé pour l’utilisateur final
+• Remplacement de st.experimental_rerun() par st.rerun()
 """
 from __future__ import annotations
 
@@ -21,13 +22,13 @@ from import_data import add_one_file
 from clean_data import main as clean_main
 from vizualisation import plot_data, load_cleaned_file
 
-# ────────────────────────────── OUTILS ─────────────────────────────────────────
+# ─────────────────── OUTILS ───────────────────────────
 SLUG_RE = re.compile(r"[^a-z0-9]+")
 
 def slugify(txt: str) -> str:
     return SLUG_RE.sub("_", txt.lower()).strip("_")
 
-# ─────────────────────────── CONFIG STREAMLIT ─────────────────────────────────
+# ──────────────── CONFIG STREAMLIT ────────────────
 st.set_page_config(page_title="Analytix – Analyse de données", layout="centered")
 st.title("📊 Analytix")
 st.caption("Analysez vos données rapidement et efficacement")
@@ -45,16 +46,16 @@ Bienvenue sur **Analytix**, votre assistant d’analyse de données.
     unsafe_allow_html=True,
 )
 
-# ──────────────────────────────── ÉTATS ───────────────────────────────────────
+# ────────────────────────── ÉTATS ──────────────────────────
 st.session_state.setdefault("step", 0)
 st.session_state.setdefault("cleaned_path", "")
 
 step = st.session_state.step
 
-# ──────────────────────────── ONGLET INTERFACE ───────────────────────────────
-tabs = st.tabs(["📥 Importation", "🧼 Nettoyage", "📊 Visualisation"])
+# ──────────────── ONGLET INTERFACE ────────────────
+tabs = st.tabs(["📥 Importation", "🣜 Nettoyage", "📊 Visualisation"])
 
-# ──────────────────────────── ÉTAPE 1 : IMPORTATION ───────────────────────────
+# ─────────────── ÉTAPE 1 : IMPORTATION ───────────────
 with tabs[0]:
     st.subheader("📥 Importation d’un fichier")
     src_type = st.radio("Source des données :", ["Fichier local", "Lien URL"], horizontal=True)
@@ -84,7 +85,7 @@ with tabs[0]:
                 if saved:
                     st.success(f"✅ Fichier importé : {saved}")
                     st.session_state.step = 1
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
@@ -108,13 +109,13 @@ with tabs[0]:
             if saved:
                 st.success(f"✅ Fichier importé : {saved}")
                 st.session_state.step = 1
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
-# ───────────────────────────── ÉTAPE 2 : NETTOYAGE ────────────────────────────
+# ─────────────── ÉTAPE 2 : NETTOYAGE ───────────────
 with tabs[1]:
-    st.subheader("🧼 Nettoyage automatique du fichier")
+    st.subheader("🣜 Nettoyage automatique du fichier")
     if step >= 1:
         if st.button("🧹 Lancer le nettoyage"):
             with st.spinner("Nettoyage en cours…"):
@@ -122,11 +123,11 @@ with tabs[1]:
             st.success(f"✅ Nettoyage terminé : {cleaned_path}")
             st.session_state.cleaned_path = str(cleaned_path)
             st.session_state.step = 2
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.warning("⛔ Importez un fichier avant de lancer le nettoyage.")
 
-# ───────────────────────────── ÉTAPE 3 : VISUALISATION ────────────────────────
+# ─────────────── ÉTAPE 3 : VISUALISATION ───────────────
 with tabs[2]:
     st.subheader("📊 Visualisation des données")
     if step >= 2:
@@ -146,6 +147,6 @@ with tabs[2]:
         if st.button("🔁 Recommencer depuis le début"):
             st.session_state.step = 0
             st.session_state.cleaned_path = ""
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.warning("⛔ Nettoyez un fichier avant de visualiser les données.")
