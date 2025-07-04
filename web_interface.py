@@ -52,7 +52,7 @@ Le but est de simplifier l’accès et l’exploration des données brutes, grâ
 >
 > 💡 Vos suggestions : **abadjiflinmi@gmail.com**
 
-Projet porté par **Timothée ABADJI**, Université d’Ottawa.
+Projet porté par **Timothée ABADJI**, étudiant en mathématiques financières et économie à l'université d’Ottawa.
 
 Merci de votre intérêt. Bonne exploration !
 """, unsafe_allow_html=True)
@@ -72,6 +72,8 @@ with tab_guide:
     st.image("assets/statcan_download_button.png", caption="Choix du format CSV", use_container_width=True)
     st.markdown("""
 4. Importez ce fichier via l’onglet **Importation** (ou collez l’URL directe).
+
+**Notez que tout ceci à été conçu pour fonctionner principalement avec des fichiers et url provenant du site officiel de Statistiques Canada. Cependant, il est possible que cette interface fonctionne aussi avec des urls et des fichiers ne provenant pas de Statistiques Canada, mais cela n'est pas toujours garanti.
 
 ---
 ### 🚀 Démarrer
