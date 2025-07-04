@@ -1,8 +1,7 @@
-# ───────────────────────── web_interface.py (v2025‑07‑05 a) ─────────────────────────
+# ───────────────────────── web_interface.py (v2025‑07‑05 b) ─────────────────────────
 """
 Analytix – Import → Nettoyage → Visualisation
-+ Onglet d’accueil intégré (bilingue FR‑EN)
-+ Boutons de téléchargement (fichier importé, nettoyé, graphique PNG)
+Accueil en français uniquement + téléchargements
 """
 from __future__ import annotations
 
@@ -16,62 +15,54 @@ from import_data import add_one_file
 from clean_data import main as clean_main
 from vizualisation import plot_data, load_cleaned_file
 
-# ───────────────────── Helpers ──────────────────────
+# ─────────────── Helpers ───────────────
 SLUG_RE = re.compile(r"[^a-z0-9]+")
 slugify = lambda txt: SLUG_RE.sub("_", txt.lower()).strip("_")
 
-# ────────────────── Config générale ─────────────────
-st.set_page_config(page_title="Analytix – Data Pipeline", layout="centered")
+# ─────────── Config générale ───────────
+st.set_page_config(page_title="Analytix – Pipeline de données", layout="centered")
 st.title("📊 Analytix")
-st.caption("Import • Nettoie • Visualise vos données en quelques clics")
+st.caption("Importez, nettoyez et visualisez vos données en quelques clics")
 
-# ──────────────── States / Drapeaux ────────────────
+# ──────────── States ────────────
 st.session_state.setdefault("step", 0)  # 0=import,1=clean,2=viz
 step = st.session_state.step
 st.session_state.setdefault("imported_name", "")
 st.session_state.setdefault("cleaned_name", "")
 
-# ─────────────────── Onglets ────────────────────────
+# ─────────────── Onglets ───────────────
 TAB_LABELS = ["🏠 Accueil", "📥 Importation", "🧽 Nettoyage", "📊 Visualisation"]
 (tab_home, tab_import, tab_clean, tab_viz) = st.tabs(TAB_LABELS)
 
-# ╭──────────────────────────────────────────╮
-# │                ONGLET HOME               │
-# ╰──────────────────────────────────────────╯
+# ╭───────────────────── Accueil ─────────────────────╮
 with tab_home:
     st.markdown("""
-### 🧠 À propos | About
-Le **Pouls Financier du Canada** est un outil open‑source permettant d’**Importer**, **Nettoyer** et **Visualiser** des données économiques (principalement issues de **Statistique Canada**).
-
-The **Financial Pulse of Canada** is an open‑source tool to **Import**, **Clean**, and **Visualize** economic data (mainly from **Statistics Canada**).
+### 🧠 À propos
+Le **Pouls Financier du Canada** est un outil open‑source permettant d’**Importer**, **Nettoyer** et **Visualiser** des données économiques, principalement issues de **Statistique Canada**.
 
 ---
-### 📥 Tutoriel StatCan | StatCan How‑to
+### 📥 Tutoriel StatCan
 1. Rendez‑vous sur un tableau, ex. : [36‑10‑0612‑01](https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=3610061201)  
-   Go to any StatCan table (example above).
-2. Cliquez sur **Options de téléchargement** | Click **Download options**
+2. Cliquez sur **Options de téléchargement** :
 """, unsafe_allow_html=True)
 
-    st.image("assets/statcan_choose_csv.png", caption="Options de téléchargement / Download options", use_column_width=True)
+    st.image("assets/statcan_choose_csv.png", caption="Options de téléchargement", use_container_width=True)
 
     st.markdown("""
-3. Sélectionnez **CSV – Télécharger les données sélectionnées**  
-   Choose **CSV – Download selected data**
+3. Sélectionnez **CSV – Télécharger les données sélectionnées** :
 """, unsafe_allow_html=True)
-    st.image("assets/statcan_download_button.png", caption="Choix du format CSV / Choose CSV", use_column_width=True)
+    st.image("assets/statcan_download_button.png", caption="Choix du format CSV", use_container_width=True)
 
     st.markdown("""
 4. Importez ce fichier via l’onglet **Importation** (ou collez l’URL directe).
 
 ---
-### 🚀 Démarrer | Get started
+### 🚀 Démarrer
 Vous pouvez maintenant passer à l’onglet **Importation** pour charger vos données.  
-You can now switch to **Importation** to load your data.
+Bonne exploration !
 """, unsafe_allow_html=True)
 
-# ╭──────────────────────────────────────────╮
-# │            ONGLET IMPORTATION            │
-# ╰──────────────────────────────────────────╯
+# ╭────────────────── Importation ───────────────────╮
 with tab_import:
     st.subheader("📥 Importation d’un fichier")
     src_type = st.radio("Source des données :", ["Fichier local", "Lien URL"], horizontal=True)
@@ -110,15 +101,12 @@ with tab_import:
             else:
                 st.error("🚫 Import échoué ou nom déjà utilisé.")
 
-    # Message persistant
     if st.session_state.imported_name:
-        st.success(f"✅ Fichier importé : {st.session_state.imported_name}")
+        st.success(f"✅ Fichier importé : {st.session_state.imported_name}")
         st.download_button("📥 Télécharger le fichier importé", open(f"data/raw/{st.session_state.imported_name}", "rb"), file_name=st.session_state.imported_name)
         st.info("ℹ️ Passez à l’onglet **Nettoyage**.")
 
-# ╭──────────────────────────────────────────╮
-# │             ONGLET NETTOYAGE             │
-# ╰──────────────────────────────────────────╯
+# ╭────────────────── Nettoyage ───────────────────╮
 with tab_clean:
     st.subheader("🧽 Nettoyage automatique du fichier")
     if step < 1:
@@ -132,13 +120,11 @@ with tab_clean:
             st.rerun()
 
         if st.session_state.cleaned_name:
-            st.success(f"✅ Nettoyage terminé : {st.session_state.cleaned_name}")
+            st.success(f"✅ Nettoyage terminé : {st.session_state.cleaned_name}")
             st.download_button("📥 Télécharger le fichier nettoyé", open(f"data/cleaned/{st.session_state.cleaned_name}", "rb"), file_name=st.session_state.cleaned_name)
             st.info("ℹ️ Passez à l’onglet **Visualisation**.")
 
-# ╭──────────────────────────────────────────╮
-# │           ONGLET VISUALISATION           │
-# ╰──────────────────────────────────────────╯
+# ╭────────────────── Visualisation ───────────────────╮
 with tab_viz:
     st.subheader("📊 Visualisation des données")
     if step < 2:
