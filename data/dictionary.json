@@ -125,5 +125,30 @@
         "source": "https://www150.statcan.gc.ca/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=3610061201&latestN=5&startDate=&endDate=&csvLocale=fr&selectedMembers=%5B%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%5D%5D&checkedLevels=",
         "path": "data/raw\\data_57.csv",
         "encoding": "UTF-8-SIG"
+    },
+    "data": {
+        "source": "https://www150.statcan.gc.ca/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=3610061201&latestN=5&startDate=&endDate=&csvLocale=fr&selectedMembers=%5B%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%5D%5D&checkedLevels=",
+        "path": "data/raw\\data.csv",
+        "encoding": "UTF-8-SIG"
+    },
+    "data_80": {
+        "source": "https://www150.statcan.gc.ca/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=3610061201&latestN=5&startDate=&endDate=&csvLocale=fr&selectedMembers=%5B%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%5D%5D&checkedLevels=",
+        "path": "data/raw\\data_80.csv",
+        "encoding": "UTF-8-SIG"
+    },
+    "data_90": {
+        "source": "https://www150.statcan.gc.ca/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=1110013501&latestN=2&startDate=&endDate=&csvLocale=fr&selectedMembers=%5B%5B%5D%2C%5B1%2C2%2C3%2C4%2C13%2C16%2C19%2C20%2C21%2C26%2C29%2C32%5D%2C%5B6%5D%2C%5B2%5D%5D&checkedLevels=0D1%2C0D2%2C0D3",
+        "path": "data/raw\\data_90.csv",
+        "encoding": "UTF-8-SIG"
+    },
+    "dataa": {
+        "source": "https://www150.statcan.gc.ca/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=1110013501&latestN=2&startDate=&endDate=&csvLocale=fr&selectedMembers=%5B%5B%5D%2C%5B1%2C2%2C3%2C4%2C13%2C16%2C19%2C20%2C21%2C26%2C29%2C32%5D%2C%5B6%5D%2C%5B2%5D%5D&checkedLevels=0D1%2C0D2%2C0D3",
+        "path": "data/raw\\dataa.csv",
+        "encoding": "UTF-8-SIG"
+    },
+    "dataaa": {
+        "source": "https://www150.statcan.gc.ca/t1/tbl1/fr/dtl!downloadDbLoadingData-nonTraduit.action?pid=1110013501&latestN=2&startDate=&endDate=&csvLocale=fr&selectedMembers=%5B%5B%5D%2C%5B1%2C2%2C3%2C4%2C13%2C16%2C19%2C20%2C21%2C26%2C29%2C32%5D%2C%5B6%5D%2C%5B2%5D%5D&checkedLevels=0D1%2C0D2%2C0D3",
+        "path": "data\\raw\\dataaa.csv",
+        "encoding": "UTF-8-SIG"
     }
 }
