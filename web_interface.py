@@ -27,11 +27,11 @@ st.caption("Importez, nettoyez et explorez vos données en trois clics.")
 
 st.markdown(
     """
-1. **Importation** d’un fichier local ou d’un lien (doit mener à un `.csv`, `.xlsx`).
+1. **Importation** d’un fichier .csv ou .xlsx localement ou à partir d'un lien.
 2. **Nettoyage** automatique du fichier importé.
 3. **Visualisation** sous forme de graphiques interactifs.
 
-*Conseil :* nommer un fichier n’est utile que pour les liens distants.
+*Conseil :* nommer un fichier n’est utile que pour les liens distants. Si vous les importez localement (depuis votre ordinateur), ce n'est pas la peine de les nommer.
     """,
     unsafe_allow_html=True,
 )
