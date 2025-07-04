@@ -1,14 +1,18 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 d) ──────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 g) ──────────────────────────
 """
-Interface Streamlit en 3 étapes :
-1️⃣ Importation (local / URL)  → `data/raw/`
-2️⃣ Nettoyage (clean_data.main) → `data/cleaned/`
-3️⃣ Visualisation (vizualisation.plot_data)
+Analytix : Importez → Nettoyez → Visualisez
+--------------------------------------------------
+Interface Streamlit minimaliste pour explorer rapidement des fichiers CSV ou Excel.
 
-🔄 **Révision d**
-• Suppression du dictionnaire (dictionary.json) utilisé dans add_one_file → plus de dépendance à un historique de noms.
-• Importation par URL encapsulée dans un `try / except` global pour éviter tout crash cloud.
-• Traçage renforcé pour aider au débogage sans casser l’application.
+Nouveautés de la version **g**
+• Branding complet "Analytix" (titre + accroche)                         
+• Libellés simplifiés et cohérents (nom de fichier, lien direct)          
+• Bloc d’explications clair + expander "Aide"                            
+• Messages harmonisés (icônes ✅ 🚫 ⚠️)                                    
+• Code encore basé sur le système `step` (plus rapide à intégrer).        
+
+NB : l’amélioration des statistiques (écart‑type, variance) sera faite dans
+`vizualisation.py` lors du prochain commit, pour ne pas mélanger les rôles.
 """
 from __future__ import annotations
 
@@ -26,20 +30,34 @@ from vizualisation import plot_data, load_cleaned_file
 SLUG_RE = re.compile(r"[^a-z0-9]+")
 
 def slugify(txt: str) -> str:
-    """Minimal : garde lettres/chiffres, remplace le reste par _ et strip."""
+    """Nettoie un texte pour servir de slug/nom de fichier."""
     return SLUG_RE.sub("_", txt.lower()).strip("_")
 
 # ─────────────────────────── CONFIG STREAMLIT ─────────────────────────────────
-st.set_page_config(page_title="Pipeline de données", layout="centered")
-st.title("📊 Traitement de données (.csv / .xlsx)")
+st.set_page_config(page_title="Analytix – Analyse de données", layout="centered")
+st.title("📊 Analytix – Analysez vos données intelligemment")
 
 st.markdown(
     """
-Téléversez un fichier local **ou** collez un lien (Statistique Canada ou autre).<br>
-Le pipeline exécute : **Importation → Nettoyage → Visualisation**.
+**Analytix** est un outil web qui transforme vos fichiers `.csv` ou `.xlsx` en graphiques interactifs en trois étapes :
+
+1. **Importer** un fichier local ou coller un **lien direct** vers un fichier.
+2. **Nettoyer** les données automatiquement (types, valeurs manquantes…).
+3. **Visualiser** vos variables grâce à un graphique dynamique.
+
+*Astuce :* si vous importez depuis un lien, vous pouvez donner un **nom personnalisé** à votre fichier (facultatif).
 """,
     unsafe_allow_html=True,
 )
+
+with st.expander("ℹ️ Formats acceptés / limites"):
+    st.markdown(
+        """
+        - Fichiers **`.csv`**, **`.xlsx`** ou **`.xls`**  
+        - Taille maximale recommandée : **200 Mo**  
+        - Fonctionne avec les exports **Statistique Canada**, Banque mondiale, etc.
+        """
+    )
 
 # ────────────────────────────── STATE ─────────────────────────────────────────
 st.session_state.setdefault("step", 0)
@@ -50,66 +68,66 @@ step = st.session_state.step
 # ──────────────────────────── ÉTAPE 1 : IMPORTATION ───────────────────────────
 if step == 0:
     st.subheader("🟢 Étape 1 : Importation")
-    src_type = st.radio("Source des données :", ["Fichier local", "Lien URL"], horizontal=True)
+    src_type = st.radio("Source de vos données :", ["Fichier local", "Lien URL"], horizontal=True)
 
     # ——— Import local ————————————————————————————————————————————————
     if src_type == "Fichier local":
-        uploaded = st.file_uploader("Importez votre fichier", type=["csv", "xlsx", "xls"], help="200 Mo max.")
-        fname = st.text_input("Nom interne (obligatoire si différent du nom du fichier)")
+        uploaded = st.file_uploader("Glissez‑déposez ou sélectionnez un fichier :", type=["csv", "xlsx", "xls"], help="Limite 200 Mo")
+        fname = st.text_input("Nom de votre fichier analysé (facultatif)")
 
-        if uploaded and st.button("🚚 Importer"):
+        if uploaded and st.button("🚚 Importer le fichier"):
             internal = slugify(fname) if fname else slugify(Path(uploaded.name).stem)
             if not internal:
-                st.error("❌ Impossible de déduire un nom interne — renseignez le champ.")
+                st.warning("⚠️ Veuillez renseigner un nom correct.")
             else:
                 suffix = Path(uploaded.name).suffix or ".csv"
                 with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                     tmp.write(uploaded.read())
                     tmp_path = tmp.name
                 try:
-                    saved = add_one_file(tmp_path, final_name=internal, interactive=False)
+                    saved = add_one_file(tmp_path, final_name=internal)
                 except Exception as e:
                     saved = None
-                    st.error("❌ Erreur inattendue lors de l'import local.")
+                    st.error("🚫 Erreur lors de l'import local.")
                     st.exception(e)
                 finally:
                     os.unlink(tmp_path)
 
                 if saved:
-                    st.success(f"✅ Importé : {saved}")
+                    st.success(f"✅ Fichier importé : {saved}")
                     st.session_state.step = 1
                     st.rerun()
                 else:
-                    st.error(f"❌ Le nom interne ‘{internal}’ est déjà utilisé ou l’import a échoué.")
+                    st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
     # ——— Import par URL ————————————————————————————————————————————————
     else:
-        url = st.text_input("Lien direct (.csv/.xlsx ou export StatCan)")
-        fname = st.text_input("Nom interne (obligatoire si vous souhaitez un nom précis)")
+        url = st.text_input("Lien vers un fichier .csv ou .xlsx")
+        fname = st.text_input("Nom de votre fichier analysé (facultatif)")
 
-        if st.button("🌐 Importer depuis l’URL") and url:
+        if st.button("🌐 Importer depuis le lien") and url:
             try:
                 base = Path(url.split("?")[0]).stem
                 internal = slugify(fname) if fname else slugify(base)
                 if not internal:
-                    st.error("❌ Impossible de déduire un nom interne — renseignez le champ.")
+                    st.warning("⚠️ Veuillez choisir un nom valide.")
                 else:
-                    saved = add_one_file(url, final_name=internal, interactive=False)
+                    saved = add_one_file(url, final_name=internal)
             except Exception as e:
                 saved = None
-                st.error("❌ Erreur lors du téléchargement ou de l’enregistrement du fichier.")
+                st.error("🚫 Échec du téléchargement ou de l’enregistrement.")
                 st.exception(e)
 
             if saved:
-                st.success(f"✅ Importé : {saved}")
+                st.success(f"✅ Fichier importé : {saved}")
                 st.session_state.step = 1
                 st.rerun()
             else:
-                st.error(f"❌ Le nom interne ‘{internal}’ est déjà utilisé ou l’import a échoué.")
+                st.error(f"🚫 Le nom ‘{internal}’ est déjà utilisé ou l’import a échoué.")
 
 # ──────────────────────────── ÉTAPE 2 : NETTOYAGE ─────────────────────────────
 elif step == 1:
-    st.subheader("🧹 Étape 2 : Nettoyage des données")
+    st.subheader("🧹 Étape 2 : Nettoyage automatique")
     if st.button("🧼 Lancer le nettoyage"):
         with st.spinner("Nettoyage en cours…"):
             cleaned_path = clean_main()
@@ -124,19 +142,19 @@ elif step == 1:
 
 # ──────────────────────────── ÉTAPE 3 : VISUALISATION ─────────────────────────
 elif step == 2:
-    st.subheader("📈 Étape 3 : Visualisation")
+    st.subheader("📈 Étape 3 : Visualisation interactive")
     cleaned_path = Path(st.session_state.cleaned_path)
 
     if cleaned_path.exists():
         st.session_state["__in_streamlit"] = True
         df = load_cleaned_file(cleaned_path.stem.replace("_cleaned", ""))
         if df is not None:
-            st.sidebar.info("📌 Sélectionnez les paramètres du graphique dans la barre latérale.")
+            st.sidebar.info("📌 Paramètres du graphique")
             plot_data(df)
         else:
-            st.error("❌ Impossible de charger le fichier nettoyé.")
+            st.error("🚫 Impossible de charger le fichier nettoyé.")
     else:
-        st.error("❌ Fichier nettoyé introuvable.")
+        st.error("🚫 Fichier nettoyé introuvable.")
 
     col1, col2 = st.columns(2)
     if col1.button("⬅️ Retour au nettoyage"):
