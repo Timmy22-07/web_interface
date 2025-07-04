@@ -1,116 +1,90 @@
-# import_data.py
-import os, json, re, shutil, requests, chardet
-from pathlib import Path
-from typing import List, Union
+import os, re, json, shutil, requests, chardet
+from urllib.parse import urlparse
 
-RAW_DIR        = Path("data/raw")
-DICT_PATH      = Path("data/dictionary.json")
-ML_DIR         = Path("ml_data")
-ML_FILE        = ML_DIR / "training_data.csv"
-LAST_FILE_PATH = Path("data/last_imported.txt")
+RAW_DIR  = "data/raw"
+DICT_PATH = "data/dictionary.json"
+ML_DIR  = "ml_data"
+ML_FILE = os.path.join(ML_DIR, "training_data.csv")
+LAST_FILE_PATH = "data/last_imported.txt"  # ✅ fichier mémoire
 
-# ───────────────────────── utilitaires ──────────────────────────
-def ensure_dirs() -> None:
+# ---------- utilitaires ----------
+def ensure_dirs():
     for d in (RAW_DIR, ML_DIR):
-        d.mkdir(parents=True, exist_ok=True)
-    DICT_PATH.write_text("{}", encoding="utf-8") if not DICT_PATH.exists() else None
+        os.makedirs(d, exist_ok=True)
+    if not os.path.exists(DICT_PATH):
+        with open(DICT_PATH, "w", encoding="utf-8") as f:
+            json.dump({}, f, indent=4)
 
-slugify   = lambda txt: re.sub(r"[^a-z0-9]+", "_", txt.lower()).strip("_")
-is_url    = lambda p: p.startswith(("http://", "https://"))
-detect_encoding = lambda p: chardet.detect(p.read_bytes()[:1_000]).get("encoding", "utf-8")
+def slugify(text: str) -> str:
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    return "_".join(text.split())
 
-# ─────────────────────── cœur : import d’un fichier ───────────────────────
-def add_one_file(source: str, *, final_name: str | None = None) -> str | None:
-    """Copie/télécharge *source* dans `data/raw` et met à jour le dictionnaire."""
+def detect_encoding(path: str) -> str:
+    with open(path, "rb") as f:
+        return chardet.detect(f.read(10000)).get("encoding", "utf-8")
 
-    dico: dict = json.loads(DICT_PATH.read_text(encoding="utf-8"))
+def is_url(path: str) -> bool:
+    return path.startswith("http://") or path.startswith("https://")
 
-    # nom automatique si absent
-    if not final_name:
-        stem = Path(source).stem or source.split("/")[-1][:50]
-        final_name = slugify(stem)
+# ---------- ajout d'un fichier ----------
+def add_one_file(source: str) -> str | None:
+    with open(DICT_PATH, "r", encoding="utf-8") as f:
+        dico = json.load(f)
+
+    while True:
+        name_input = input(f"\nEntrez un nom pour ce fichier : ").strip()
+        final_name = slugify(name_input)
         if final_name in dico:
-            idx = 1
-            while f"{final_name}_{idx}" in dico:
-                idx += 1
-            final_name = f"{final_name}_{idx}"
-    elif final_name in dico:
-        print(f"⚠️ Le nom « {final_name} » existe déjà.")
-        return None
+            print("⚠️ Ce nom existe déjà. Choisissez-en un autre.")
+        else:
+            break
 
-    raw_path = RAW_DIR / f"{final_name}.csv"
+    raw_path = os.path.join(RAW_DIR, f"{final_name}.csv")
 
     try:
         if is_url(source):
-            r = requests.get(source, timeout=30, allow_redirects=True)
+            r = requests.get(source, timeout=30)
             r.raise_for_status()
-            # petite vérif : si c’est HTML on prévient
-            if "text/html" in r.headers.get("Content-Type", ""):
-                print("⚠️ L’URL ne renvoie pas un fichier direct (contenu HTML détecté).")
-                return None
-            raw_path.write_bytes(r.content)
+            with open(raw_path, "wb") as f_out:
+                f_out.write(r.content)
         else:
-            src = Path(source)
-            if not src.exists():
+            if not os.path.exists(source):
                 print("❌ Fichier local introuvable.")
                 return None
-            shutil.copy2(src, raw_path)
-
-        print(f"✅ Fichier enregistré : {raw_path}")
+            shutil.copy(source, raw_path)
+        print(f"✅ Sauvegardé sous {raw_path}")
     except Exception as e:
-        print("❌ Échec du téléchargement/de la copie :", e)
+        print("❌ Erreur de transfert :", e)
         return None
 
-    # mise à jour du dictionnaire
-    dico[final_name] = {
-        "source": source,
-        "path"  : str(raw_path),
-        "encoding": detect_encoding(raw_path),
-    }
-    DICT_PATH.write_text(json.dumps(dico, indent=4, ensure_ascii=False), encoding="utf-8")
-    ML_FILE.write_text(f"{source},{final_name}\n", encoding="utf-8", errors="ignore", append=True)
-    LAST_FILE_PATH.write_text(final_name, encoding="utf-8")
+    enc = detect_encoding(raw_path)
 
-    return str(raw_path)
+    dico[final_name] = {"source": source, "path": raw_path, "encoding": enc}
+    with open(DICT_PATH, "w", encoding="utf-8") as f:
+        json.dump(dico, f, indent=4, ensure_ascii=False)
 
-# ───────────────────── fonction publique main() ────────────────────
-def main(
-    sources: Union[str, List[str], None] = None,
-    *,
-    auto_name: str | None = None,
-) -> str:
-    """
-    Importe un ou plusieurs fichiers, retourne le chemin du dernier.
+    with open(ML_FILE, "a", encoding="utf-8") as f:
+        f.write(f"{source},{final_name}\n")
 
-    - `sources` :
-        * None  → invite utilisateur (une seule fois).
-        * str   → ‘a.csv, https://…b.xlsx’
-        * list  → ['a.csv', 'b.xlsx']
-    - `auto_name` : nom imposé (utile pour appels programmatiques).
-    """
+    with open(LAST_FILE_PATH, "w", encoding="utf-8") as f:
+        f.write(final_name)
+
+    print(f"🗂️ Nom '{final_name}' ajouté au dictionnaire.")
+    return raw_path
+
+# ---------- pour appel depuis main_pipeline ----------
+def main() -> str:
     ensure_dirs()
+    sources = input("Entrez un ou plusieurs liens/fichiers séparés par virgule :\n> ").strip().split(",")
+    sources = [s.strip() for s in sources if s.strip()]
+    last_path = None
+    for src in sources:
+        last_path = add_one_file(src)
+    print("\n🎉 Import terminé.")
+    return last_path if last_path else ""
+    
 
-    # prépare la liste de sources
-    if sources is None:
-        raw = input("Lien(s) ou chemin(s) (séparés par virgule) :\n> ")
-        sources_list = [s.strip() for s in raw.split(",") if s.strip()]
-    elif isinstance(sources, str):
-        sources_list = [s.strip() for s in sources.split(",") if s.strip()]
-    else:
-        sources_list = [str(s).strip() for s in sources]
-
-    if not sources_list:
-        print("❌ Aucune source fournie.")
-        return ""
-
-    last_path = ""
-    for i, src in enumerate(sources_list, 1):
-        print(f"─ Import {i}/{len(sources_list)} ─")
-        last_path = add_one_file(src, final_name=auto_name) or last_path
-
-    print("🎉 Import terminé.")
-    return last_path
-
-# ───────────────────────── exécution directe ───────────────────────
+# ---------- mode exécution directe ----------
 if __name__ == "__main__":
     main()
