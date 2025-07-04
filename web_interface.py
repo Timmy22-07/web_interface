@@ -1,10 +1,9 @@
-# ─────────────────────────── web_interface.py  (v2025‑07‑04 l) ───────────────────────────
+# ─────────────────────────── web_interface.py  (v2025‑07‑04 m) ───────────────────────────
 """
 Analytix – pipeline : Import → Nettoyage → Visualisation
-Cette version corrige :
-• Emoji de l’onglet Nettoyage (🧽)                                  
-• Affichage du **nom** du fichier (pas le chemin) dans les messages
-• Plus besoin de cliquer deux fois (on rerun + messages persistants)
+Ajouts :
+• Bouton de téléchargement du fichier importé
+• Bouton de téléchargement du fichier nettoyé
 """
 from __future__ import annotations
 
@@ -88,6 +87,7 @@ with tab_import:
     # Message persistant après import
     if st.session_state.imported_name:
         st.success(f"✅ Fichier importé : {st.session_state.imported_name}")
+        st.download_button("📥 Télécharger le fichier importé", open(f"data/raw/{st.session_state.imported_name}", "rb"), file_name=st.session_state.imported_name)
         st.info("ℹ️ Passez à l’onglet **Nettoyage**.")
 
 # ─────────────────── Onglet Nettoyage ────────────────
@@ -106,6 +106,7 @@ with tab_clean:
         # message persistant
         if st.session_state.cleaned_name:
             st.success(f"✅ Nettoyage terminé : {st.session_state.cleaned_name}")
+            st.download_button("📥 Télécharger le fichier nettoyé", open(f"data/cleaned/{st.session_state.cleaned_name}", "rb"), file_name=st.session_state.cleaned_name)
             st.info("ℹ️ Passez à l’onglet **Visualisation**.")
 
 # ─────────────────── Onglet Visualisation ────────────
