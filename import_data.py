@@ -44,8 +44,19 @@ def add_one_file(source: str) -> str | None:
 
     try:
         if is_url(source):
-            r = requests.get(source, timeout=30)
+            headers = {
+                "User-Agent": "Mozilla/5.0",
+                "Accept": "text/csv,application/vnd.ms-excel"
+            }
+            r = requests.get(source, timeout=30, allow_redirects=True, headers=headers)
             r.raise_for_status()
+
+            content_type = r.headers.get("Content-Type", "")
+            if "text" not in content_type and "application" not in content_type:
+                print("❌ Le lien ne semble pas pointer vers un fichier téléchargeable.")
+                print(f"🔎 Content-Type détecté : {content_type}")
+                return None
+
             with open(raw_path, "wb") as f_out:
                 f_out.write(r.content)
         else:
@@ -53,6 +64,7 @@ def add_one_file(source: str) -> str | None:
                 print("❌ Fichier local introuvable.")
                 return None
             shutil.copy(source, raw_path)
+
         print(f"✅ Sauvegardé sous {raw_path}")
     except Exception as e:
         print("❌ Erreur de transfert :", e)
@@ -83,7 +95,6 @@ def main() -> str:
         last_path = add_one_file(src)
     print("\n🎉 Import terminé.")
     return last_path if last_path else ""
-    
 
 # ---------- mode exécution directe ----------
 if __name__ == "__main__":
