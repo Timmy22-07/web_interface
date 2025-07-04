@@ -1,6 +1,6 @@
-# ───────────────────────── web_interface.py (v2025‑07‑05 final) ─────────────────────────
+# ───────────────────────── web_interface.py (v2025‑07‑05 renamed) ─────────────────────────
 """
-Analytix – Import → Nettoyage → Visualisation
+Outil de visualisation de données (.csv & .xlsx) – Import → Nettoyage → Visualisation
 + Accueil enrichi (description du projet)
 + Nouvel onglet : Tutoriel (ancien contenu Accueil)
 + Boutons de téléchargement (fichier importé, nettoyé, graphique PNG)
@@ -22,9 +22,9 @@ SLUG_RE = re.compile(r"[^a-z0-9]+")
 slugify = lambda txt: SLUG_RE.sub("_", txt.lower()).strip("_")
 
 # ────────────────── Config générale ─────────────────
-st.set_page_config(page_title="Analytix – Data Pipeline", layout="centered")
-st.title("📊 Analytix")
-st.caption("Import • Nettoie • Visualise vos données en quelques clics")
+st.set_page_config(page_title="Outil de visualisation de données – Pipeline", layout="centered")
+st.title("📊 Outil de visualisation de données")
+st.caption("Importez (.csv / .xlsx), nettoyez et visualisez vos données en quelques clics")
 
 # ──────────────── States / Drapeaux ────────────────
 st.session_state.setdefault("step", 0)
@@ -41,18 +41,18 @@ with tab_home:
     st.markdown("""
 ### 🔍 À propos de ce projet
 
-**Analytix** est un outil open-source conçu pour **importer**, **nettoyer**, et **visualiser** des données économiques, avec une priorité donnée aux données publiques issues de **Statistique Canada**.
+Cet **outil de visualisation de données (.csv et .xlsx)** est open‑source et conçu pour **importer**, **nettoyer** et **visualiser** vos jeux de données, avec une priorité donnée aux exports publics de **Statistique Canada**.
 
-Le but de ce projet est de faciliter l’accès et l’analyse de données brutes, souvent difficiles à manipuler sans connaissances techniques. Grâce à une interface intuitive, vous pouvez :
-- Importer un fichier local ou via un lien (CSV ou Excel)
-- Nettoyer automatiquement les colonnes inutiles, incohérentes ou incomplètes
-- Visualiser les données sous forme de graphiques interactifs
+Le but est de simplifier l’accès et l’exploration des données brutes, grâce à une interface intuitive :
+- Importez un fichier local ou un lien (.csv / .xlsx)
+- Nettoyez automatiquement les colonnes inutiles ou incomplètes
+- Visualisez vos données sous forme de graphiques interactifs
 
-> 📌 Le projet est toujours en cours de développement. Il est possible que d'autres sources de données soient prises en charge dans le futur.
+> 📌 Projet toujours en développement : d’autres sources seront peut‑être prises en charge.
+>
+> 💡 Vos suggestions : **abadjiflinmi@gmail.com**
 
-> 💡 Vos suggestions sont les bienvenues à l’adresse suivante : **abadjiflinmi@gmail.com**
-
-Ce projet est porté par **Timothée ABADJI**, étudiant à l’Université d’Ottawa en mathématiques financières et économie.
+Projet porté par **Timothée ABADJI**, Université d’Ottawa.
 
 Merci de votre intérêt. Bonne exploration !
 """, unsafe_allow_html=True)
