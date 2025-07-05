@@ -1,4 +1,4 @@
-# ───────────────────────── vizualisation.py (v2025-07-05 bilingue) ─────────────────────────
+# ─────────────────────── vizualisation.py (v2025-07-05 bilingue) ───────────────────────
 """
 Visualisation interactive – version améliorée 🎨
 ------------------------------------------------
@@ -20,19 +20,14 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.ticker import FuncFormatter
 
-# Style par défaut inspiré de Tableau
 plt.style.use("seaborn-v0_8-darkgrid")
 
-# ───────────────────── Détection Streamlit ─────────────────────
 try:
     import streamlit as st
-
     _IN_STREAMLIT = True
 except ImportError:
     _IN_STREAMLIT = False
 
-# ─────────────── Dictionnaire de traduction ────────────────
-# ! Les chaînes FR d’origine sont reprises mot pour mot
 T = {
     "sidebar_header": ("🔧 Paramètres du graphe", "🔧 Graph parameters"),
     "x_col": ("Colonne X", "X column"),
@@ -51,24 +46,18 @@ T = {
 }
 
 def _t(key):
-    """Renvoie la version FR ou EN selon st.session_state.lang (par défaut FR)."""
     if not _IN_STREAMLIT or st.session_state.get("lang", "Français") == "Français":
         return T[key][0] if isinstance(T[key], tuple) else T[key]
     return T[key][1] if isinstance(T[key], tuple) else T[key]
 
-# ─────────────────────── Constantes ────────────────────────
 CLEANED_DIR = Path("data/cleaned")
-_last_fig = None  # pour export PNG via web_interface
+_last_fig = None
 
-# ──────────────────────────── API ────────────────────────────
 def get_last_figure():
-    """Retourne la dernière figure matplotlib générée."""
     return _last_fig
-
 
 def list_cleaned_files():
     return sorted(p for p in CLEANED_DIR.glob("*_cleaned.*") if p.suffix in {".csv", ".xlsx"})
-
 
 def load_cleaned_file(stem: str) -> Optional[pd.DataFrame]:
     for ext in (".xlsx", ".csv"):
@@ -79,9 +68,7 @@ def load_cleaned_file(stem: str) -> Optional[pd.DataFrame]:
         st.error(f"Fichier nettoyé introuvable : {stem}")
     return None
 
-
 def plot_data(df: pd.DataFrame):
-    """Affiche un graphique (Streamlit ou console)."""
     numeric_cols = df.select_dtypes("number").columns.tolist()
     if not numeric_cols:
         if _IN_STREAMLIT:
@@ -94,11 +81,9 @@ def plot_data(df: pd.DataFrame):
     _plot_console(df, numeric_cols)
     return None
 
-# ────────────────────────── Helpers ──────────────────────────
 def _fmt_thousands(x, _):
     return f"{int(x):,}".replace(",", " ")
 
-# ------------------------- Streamlit -------------------------
 def _plot_streamlit(df: pd.DataFrame, numeric_cols):
     global _last_fig
 
@@ -115,46 +100,19 @@ def _plot_streamlit(df: pd.DataFrame, numeric_cols):
     kinds_en = ["Line", "Scatter", "Histogram", "Bar", "3D"]
     kinds = kinds_fr if st.session_state.lang == "Français" else kinds_en
 
-    kind = st.sidebar.radio(
-        "Type de graphique",
-        kinds if z_col else kinds[:-1],  # sans 3D si pas de Z
-    )
+    kind = st.sidebar.radio("Type de graphique", kinds if z_col else kinds[:-1])
 
-    # Palette
     default_color = "#1f77b4"
     color_pick = st.sidebar.color_picker(_t("main_colour"), default_color)
 
-    # Statistiques descriptives
     st.sidebar.markdown(_t("stats_header"))
-    stats_fr = {
-        "count": "n",
-        "mean": "moyenne",
-        "median": "médiane",
-        "std": "écart-type",
-        "var": "variance",
-        "min": "min",
-        "max": "max",
-    }
-    stats_en = {
-        "count": "count",
-        "mean": "mean",
-        "median": "median",
-        "std": "std-dev",
-        "var": "variance",
-        "min": "min",
-        "max": "max",
-    }
+    stats_fr = {"count": "n", "mean": "moyenne", "median": "médiane", "std": "écart-type", "var": "variance", "min": "min", "max": "max"}
+    stats_en = {"count": "count", "mean": "mean", "median": "median", "std": "std-dev", "var": "variance", "min": "min", "max": "max"}
     mapper = stats_fr if st.session_state.lang == "Français" else stats_en
 
-    stats = (
-        df[y_col]
-        .agg(list(mapper.keys()))
-        .round(3)
-        .rename(index=mapper)
-    )
+    stats = df[y_col].agg(list(mapper.keys())).round(3).rename(index=mapper)
     st.sidebar.table(stats.to_frame(name=y_col))
 
-    # Construction du graphe
     kind_key = kinds_fr[kinds.index(kind)] if st.session_state.lang != "Français" else kind
     fig = _make_plot(df, x_col, y_col, z_col if kind_key == "3D" else None, kind_key, color_pick)
     _last_fig = fig
@@ -165,7 +123,6 @@ def _plot_streamlit(df: pd.DataFrame, numeric_cols):
 
     return fig
 
-# --------------------------- Console ---------------------------
 def _plot_console(df: pd.DataFrame, numeric_cols):
     import rich
     from rich.table import Table
@@ -188,15 +145,27 @@ def _plot_console(df: pd.DataFrame, numeric_cols):
     fig = _make_plot(df, x_col, y_col, None, "Ligne", "#1f77b4")
     plt.show()
 
-# ------------------------- Plot builder ------------------------
 def _make_plot(df, x_col, y_col, z_col, kind, color):
     mpl.rcParams.update({"font.size": 11, "axes.grid": True, "grid.alpha": 0.4, "figure.figsize": (9, 5)})
 
     if kind == "3D" and z_col:
+        data3d = (
+            df[[x_col, y_col, z_col]]
+            .apply(pd.to_numeric, errors="coerce")
+            .dropna()
+        )
+        if data3d.empty:
+            return plt.figure()
+
         from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
-        ax.scatter(df[x_col], df[y_col], df[z_col], color=color)
+        ax.scatter(
+            data3d[x_col],
+            data3d[y_col],
+            data3d[z_col],
+            color=color,
+        )
         ax.set_xlabel(x_col)
         ax.set_ylabel(y_col)
         ax.set_zlabel(z_col)
@@ -222,7 +191,6 @@ def _make_plot(df, x_col, y_col, z_col, kind, color):
     plt.tight_layout()
     return fig
 
-# ─────────────────────────── CLI ────────────────────────────
 if __name__ == "__main__":
     files = list_cleaned_files()
     if not files:
