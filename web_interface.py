@@ -77,8 +77,16 @@ with tab_guide:
         """### 📥 Tutoriel StatCan\n1. Ouvrez un tableau (ex. 36‑10‑0612‑01)\n2. Cliquez sur **Options de téléchargement**\n3. Choisissez **CSV – Télécharger**\n4. Importez le fichier via l’onglet Importation.\n""",
         """### 📥 StatCan tutorial\n1. Open any table (e.g., 36‑10‑0612‑01)\n2. Click **Download options**\n3. Select **CSV – Download**\n4. Import it via the Import tab.\n"""
     ))
-    st.image("assets/statcan_choose_csv.png", caption=_("Options de téléchargement", "Download options"), use_container_width=True)
-    st.image("assets/statcan_download_button.png", caption=_("Choix du CSV", "CSV choice"), use_container_width=True)
+    st.image(
+        "assets/statcan_choose_csv.png",
+        caption="Options de téléchargement" if st.session_state.lang == "Français" else "Download options",
+        use_container_width=True,
+    )
+    st.image(
+        "assets/statcan_download_button.png",
+        caption="Choix du format CSV" if st.session_state.lang == "Français" else "CSV format choice",
+        use_container_width=True,
+    )
 
 with tab_import:
     st.subheader("📥 " + _("import"))
