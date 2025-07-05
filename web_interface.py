@@ -1,30 +1,46 @@
-# ───────────────────────── web_interface.py (v2025‑07‑05 renamed) ─────────────────────────
-"""
-Outil de visualisation de données (.csv & .xlsx) – Import → Nettoyage → Visualisation
-+ Accueil enrichi (description du projet)
-+ Nouvel onglet : Tutoriel (ancien contenu Accueil)
-+ Boutons de téléchargement (fichier importé, nettoyé, graphique PNG)
-"""
-from __future__ import annotations
+# ─────────────────────────────────────────────────────────────────────────────
+# 🌐 web_interface.py – version bilingue FR/EN (2025‑07‑05)
+# ─────────────────────────────────────────────────────────────────────────────
+# Interface multilingue : FR / EN via menu latéral
+# + Accueil enrichi (description du projet)
+# + Onglet Tutoriel
+# + Boutons de téléchargement (importé, nettoyé, graphique)
 
+from __future__ import annotations
 import os, re, tempfile
 from io import BytesIO
 from pathlib import Path
-
 import streamlit as st
-
 from import_data import add_one_file
 from clean_data import main as clean_main
 from vizualisation import plot_data, load_cleaned_file
+
+# ────────────────────── Langues ───────────────────────
+LANGS = {"fr": "Français", "en": "English"}
+st.sidebar.selectbox("🌐 Choisissez la langue / Select language", list(LANGS.values()), index=0, key="lang")
+
+def _(fr, en): return fr if st.session_state.lang == "Français" else en
+
+def T(key):
+    labels = {
+        "app_title": _("Outil de visualisation de données", "Data Visualization Tool"),
+        "app_caption": _("Importez (.csv / .xlsx), nettoyez et visualisez vos données en quelques clics", "Import (.csv / .xlsx), clean and visualize your data in a few clicks"),
+        "tab_home": _("Accueil", "Home"),
+        "tab_guide": _("Tutoriel", "Tutorial"),
+        "tab_import": _("Importation", "Import"),
+        "tab_clean": _("Nettoyage", "Cleaning"),
+        "tab_viz": _("Visualisation", "Visualization"),
+    }
+    return labels.get(key, key)
 
 # ───────────────────── Helpers ──────────────────────
 SLUG_RE = re.compile(r"[^a-z0-9]+")
 slugify = lambda txt: SLUG_RE.sub("_", txt.lower()).strip("_")
 
 # ────────────────── Config générale ─────────────────
-st.set_page_config(page_title="Outil de visualisation de données – Pipeline", layout="centered")
-st.title("📊 Outil de visualisation de données")
-st.caption("Importez (.csv / .xlsx), nettoyez et visualisez vos données en quelques clics")
+st.set_page_config(page_title=T("app_title"), layout="centered")
+st.title("📊 " + T("app_title"))
+st.caption(T("app_caption"))
 
 # ──────────────── States / Drapeaux ────────────────
 st.session_state.setdefault("step", 0)
@@ -33,12 +49,19 @@ st.session_state.setdefault("imported_name", "")
 st.session_state.setdefault("cleaned_name", "")
 
 # ─────────────────── Onglets ────────────────────────
-TAB_LABELS = ["🏠 Accueil", "📖 Tutoriel", "📥 Importation", "🧽 Nettoyage", "📊 Visualisation"]
+TAB_LABELS = [
+    "🏠 " + T("tab_home"),
+    "📖 " + T("tab_guide"),
+    "📥 " + T("tab_import"),
+    "🧽 " + T("tab_clean"),
+    "📊 " + T("tab_viz")
+]
 (tab_home, tab_guide, tab_import, tab_clean, tab_viz) = st.tabs(TAB_LABELS)
 
-# ╭────────────────────── Accueil ──────────────────────╮
+# ╭────────────────────── Accueil / Home ──────────────────────╮
 with tab_home:
-    st.markdown("""
+    st.markdown(_(
+        """
 ### 🔍 À propos de ce projet
 
 Cet **outil de visualisation de données (.csv et .xlsx)** est open‑source et conçu pour **importer**, **nettoyer** et **visualiser** vos jeux de données, avec une priorité donnée aux exports publics de **Statistique Canada**.
@@ -55,30 +78,26 @@ Le but est de simplifier l’accès et l’exploration des données brutes, grâ
 Projet porté par **Timothée ABADJI**, étudiant en mathématiques financières et économie à l'université d’Ottawa.
 
 Merci de votre intérêt. Bonne exploration !
-""", unsafe_allow_html=True)
+""",
+        """
+### 🔍 About this project
 
-# ╭────────────────────── Tutoriel ──────────────────────╮
-with tab_guide:
-    st.markdown("""
-### 📥 Tutoriel StatCan
+This **data visualization tool (.csv and .xlsx)** is open-source and designed to **import**, **clean**, and **visualize** your datasets, with a focus on public exports from **Statistics Canada**.
 
-1. Rendez‑vous sur un tableau, ex. : [36‑10‑0612‑01](https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=3610061201)
-2. Cliquez sur **Options de téléchargement**
-""", unsafe_allow_html=True)
-    st.image("assets/statcan_choose_csv.png", caption="Options de téléchargement", use_container_width=True)
-    st.markdown("""
-3. Sélectionnez **CSV – Télécharger les données sélectionnées**
-""", unsafe_allow_html=True)
-    st.image("assets/statcan_download_button.png", caption="Choix du format CSV", use_container_width=True)
-    st.markdown("""
-4. Importez ce fichier via l’onglet **Importation** (ou collez l’URL directe).
+The goal is to simplify access to and exploration of raw data through an intuitive interface:
+- Import a local file or a link (.csv / .xlsx)
+- Automatically clean unnecessary or incomplete columns
+- Visualize your data using interactive charts
 
-**Notez que tout ceci à été conçu pour fonctionner principalement avec des fichiers et url provenant du site officiel de Statistiques Canada. Cependant, il est possible que cette interface fonctionne aussi avec des urls et des fichiers ne provenant pas de Statistiques Canada, mais cela n'est pas toujours garanti.**
+> 📌 Project still in development: more data sources may be supported in the future.
+>
+> 💡 Feedback welcome: **abadjiflinmi@gmail.com**
 
----
-### 🚀 Démarrer
-Vous pouvez maintenant passer à l’onglet **Importation** pour charger vos données.
-""", unsafe_allow_html=True)
+Project developed by **Timothée ABADJI**, a student in Financial Mathematics and Economics at the University of Ottawa.
+
+Thanks for your interest. Enjoy exploring!
+"""
+    ), unsafe_allow_html=True)
 
 # ╭────────────────────── Importation ──────────────────────╮
 with tab_import:
