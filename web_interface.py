@@ -114,7 +114,7 @@ Thank you for your interest. Happy exploring!
     "g_step3_en": "3. Select **CSV – Download selected data**",
     "g_step4_fr": """4. Importez ce fichier via l’onglet **Importation** (ou collez l’URL directe).
 
-**Notez que tout ceci à été conçu pour fonctionner principalement avec des fichiers et url provenant du site officiel de Statistiques Canada. Cependant, il est possible que cette interface fonctionne aussi avec des urls et des fichiers ne provenant pas de Statistiques Canada, mais cela n'est pas toujours garanti.**
+**Notez que tout ceci à été conçu pour fonctionner principalement avec des fichiers et URLs provenant du site officiel de Statistiques Canada. Cependant, il est possible que cette interface fonctionne aussi avec des urls et des fichiers ne provenant pas de Statistiques Canada, mais cela n'est pas toujours garanti.**
 
 ---
 ### 🚀 Démarrer
