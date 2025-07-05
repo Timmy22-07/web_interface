@@ -1,116 +1,96 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# 🌐 web_interface.py – version bilingue FR/EN (2025‑07‑05)
-# ─────────────────────────────────────────────────────────────────────────────
-# Interface multilingue : FR / EN via menu latéral
-# + Accueil enrichi (description du projet)
-# + Onglet Tutoriel
-# + Boutons de téléchargement (importé, nettoyé, graphique)
-
+# ───────────────────────── web_interface.py – bilingue FR/EN (v2025‑07‑05 final) ─────────────────────────
+"""
+Data Visualization Tool (.csv & .xlsx) ‑ Import → Clean → Visualize
+Version finale entièrement bilingue (FR/EN) avec pipeline complet :
+• Accueil, Tutoriel, Importation, Nettoyage, Visualisation
+• Sélecteur de langue
+• Téléchargement des fichiers (importé / nettoyé / graphique)
+"""
 from __future__ import annotations
+
 import os, re, tempfile
 from io import BytesIO
 from pathlib import Path
+
 import streamlit as st
+
 from import_data import add_one_file
 from clean_data import main as clean_main
 from vizualisation import plot_data, load_cleaned_file
 
-# ────────────────────── Langues ───────────────────────
+# ───────────────────────── Langues ─────────────────────────
 LANGS = {"fr": "Français", "en": "English"}
 st.sidebar.selectbox("🌐 Choisissez la langue / Select language", list(LANGS.values()), index=0, key="lang")
+TRANSLATE = {
+    "app_title": ("Outil de visualisation de données", "Data Visualization Tool"),
+    "app_caption": ("Importez (.csv / .xlsx), nettoyez et visualisez vos données en quelques clics", "Import (.csv / .xlsx), clean and visualize your data in a few clicks"),
+    "home": ("Accueil", "Home"),
+    "guide": ("Tutoriel", "Tutorial"),
+    "import": ("Importation", "Import"),
+    "clean": ("Nettoyage", "Cleaning"),
+    "viz": ("Visualisation", "Visualization"),
+    "src_local": ("Fichier local", "Local file"),
+    "src_url": ("Lien URL", "URL link"),
+    "upload_file": ("Fichier à importer :", "File to import :"),
+    "custom_name": ("Nom personnalisé (facultatif)", "Custom name (optional)"),
+    "btn_import": ("🚚 Importer", "🚚 Import"),
+    "btn_import_url": ("🌐 Importer depuis le lien", "🌐 Import from URL"),
+    "warn_valid_name": ("⚠️ Veuillez saisir un nom valide.", "⚠️ Please enter a valid name."),
+    "err_import": ("🚫 Import échoué ou nom déjà utilisé.", "🚫 Import failed or name already used."),
+    "file_imported": ("✅ Fichier importé :", "✅ File imported :"),
+    "download_raw": ("📥 Télécharger le fichier importé", "📥 Download imported file"),
+    "go_clean": ("ℹ️ Passez à l’onglet **Nettoyage**.", "ℹ️ Go to the **Cleaning** tab."),
+    "btn_clean": ("🧹 Lancer le nettoyage", "🧹 Start cleaning"),
+    "cleaning": ("Nettoyage en cours…", "Cleaning in progress…"),
+    "clean_done": ("✅ Nettoyage terminé :", "✅ Cleaning done :"),
+    "download_clean": ("📥 Télécharger le fichier nettoyé", "📥 Download cleaned file"),
+    "go_viz": ("ℹ️ Passez à l’onglet **Visualisation**.", "ℹ️ Go to the **Visualization** tab."),
+    "btn_viz_dl": ("📸 Télécharger le graphique", "📸 Download chart"),
+    "warn_import_first": ("⛔ Importez d’abord un fichier.", "⛔ Import a file first."),
+    "warn_clean_first": ("⛔ Nettoyez d’abord un fichier.", "⛔ Clean a file first."),
+    "err_load_clean": ("🚫 Impossible de charger le fichier nettoyé.", "🚫 Can't load cleaned file."),
+    "err_clean_missing": ("🚫 Fichier nettoyé introuvable.", "🚫 Cleaned file not found."),
+    "back_import": ("ℹ️ Vous pouvez revenir à l’onglet **Importation** pour analyser un autre fichier.", "ℹ️ You can return to the **Import** tab to analyze another file."),
+}
+_ = lambda key: TRANSLATE[key][0] if st.session_state.lang == "Français" else TRANSLATE[key][1]
 
-def _(fr, en): return fr if st.session_state.lang == "Français" else en
+st.set_page_config(page_title=_("app_title"), layout="centered")
+st.title("📊 " + _("app_title"))
+st.caption(_("app_caption"))
 
-def T(key):
-    labels = {
-        "app_title": _("Outil de visualisation de données", "Data Visualization Tool"),
-        "app_caption": _("Importez (.csv / .xlsx), nettoyez et visualisez vos données en quelques clics", "Import (.csv / .xlsx), clean and visualize your data in a few clicks"),
-        "tab_home": _("Accueil", "Home"),
-        "tab_guide": _("Tutoriel", "Tutorial"),
-        "tab_import": _("Importation", "Import"),
-        "tab_clean": _("Nettoyage", "Cleaning"),
-        "tab_viz": _("Visualisation", "Visualization"),
-    }
-    return labels.get(key, key)
-
-# ───────────────────── Helpers ──────────────────────
-SLUG_RE = re.compile(r"[^a-z0-9]+")
-slugify = lambda txt: SLUG_RE.sub("_", txt.lower()).strip("_")
-
-# ────────────────── Config générale ─────────────────
-st.set_page_config(page_title=T("app_title"), layout="centered")
-st.title("📊 " + T("app_title"))
-st.caption(T("app_caption"))
-
-# ──────────────── States / Drapeaux ────────────────
 st.session_state.setdefault("step", 0)
-step = st.session_state.step
 st.session_state.setdefault("imported_name", "")
 st.session_state.setdefault("cleaned_name", "")
+step = st.session_state.step
 
-# ─────────────────── Onglets ────────────────────────
-TAB_LABELS = [
-    "🏠 " + T("tab_home"),
-    "📖 " + T("tab_guide"),
-    "📥 " + T("tab_import"),
-    "🧽 " + T("tab_clean"),
-    "📊 " + T("tab_viz")
-]
-(tab_home, tab_guide, tab_import, tab_clean, tab_viz) = st.tabs(TAB_LABELS)
+TAB_LABELS = ["🏠 "+_("home"), "📖 "+_("guide"), "📥 "+_("import"), "🧽 "+_("clean"), "📊 "+_("viz")]
+tab_home, tab_guide, tab_import, tab_clean, tab_viz = st.tabs(TAB_LABELS)
 
-# ╭────────────────────── Accueil / Home ──────────────────────╮
 with tab_home:
     st.markdown(_(
-        """
-### 🔍 À propos de ce projet
-
-Cet **outil de visualisation de données (.csv et .xlsx)** est open‑source et conçu pour **importer**, **nettoyer** et **visualiser** vos jeux de données, avec une priorité donnée aux exports publics de **Statistique Canada**.
-
-Le but est de simplifier l’accès et l’exploration des données brutes, grâce à une interface intuitive :
-- Importez un fichier local ou un lien (.csv / .xlsx)
-- Nettoyez automatiquement les colonnes inutiles ou incomplètes
-- Visualisez vos données sous forme de graphiques interactifs
-
-> 📌 Projet toujours en développement : d’autres sources seront peut‑être prises en charge.
->
-> 💡 Vos suggestions : **abadjiflinmi@gmail.com**
-
-Projet porté par **Timothée ABADJI**, étudiant en mathématiques financières et économie à l'université d’Ottawa.
-
-Merci de votre intérêt. Bonne exploration !
-""",
-        """
-### 🔍 About this project
-
-This **data visualization tool (.csv and .xlsx)** is open-source and designed to **import**, **clean**, and **visualize** your datasets, with a focus on public exports from **Statistics Canada**.
-
-The goal is to simplify access to and exploration of raw data through an intuitive interface:
-- Import a local file or a link (.csv / .xlsx)
-- Automatically clean unnecessary or incomplete columns
-- Visualize your data using interactive charts
-
-> 📌 Project still in development: more data sources may be supported in the future.
->
-> 💡 Feedback welcome: **abadjiflinmi@gmail.com**
-
-Project developed by **Timothée ABADJI**, a student in Financial Mathematics and Economics at the University of Ottawa.
-
-Thanks for your interest. Enjoy exploring!
-"""
+        """### 🔍 À propos de ce projet\n\nCet outil open‑source permet d’**importer**, **nettoyer** et **visualiser** des données (.csv / .xlsx).\nIl vise à simplifier l’accès aux données brutes et leur exploration graphique.\n\n> 💡 Suggestions : abadjiflinmi@gmail.com\n""",
+        """### 🔍 About this project\n\nThis open‑source tool lets you **import**, **clean**, and **visualize** data (.csv / .xlsx).\nIt simplifies access to raw data and interactive exploration.\n\n> 💡 Feedback : abadjiflinmi@gmail.com\n"""
     ), unsafe_allow_html=True)
 
-# ╭────────────────────── Importation ──────────────────────╮
-with tab_import:
-    st.subheader("📥 Importation d’un fichier")
-    src_type = st.radio("Source des données :", ["Fichier local", "Lien URL"], horizontal=True)
+with tab_guide:
+    st.markdown(_(
+        """### 📥 Tutoriel StatCan\n1. Ouvrez un tableau (ex. 36‑10‑0612‑01)\n2. Cliquez sur **Options de téléchargement**\n3. Choisissez **CSV – Télécharger**\n4. Importez le fichier via l’onglet Importation.\n""",
+        """### 📥 StatCan tutorial\n1. Open any table (e.g., 36‑10‑0612‑01)\n2. Click **Download options**\n3. Select **CSV – Download**\n4. Import it via the Import tab.\n"""
+    ))
+    st.image("assets/statcan_choose_csv.png", caption=_("Options de téléchargement", "Download options"), use_container_width=True)
+    st.image("assets/statcan_download_button.png", caption=_("Choix du CSV", "CSV choice"), use_container_width=True)
 
-    if src_type == "Fichier local":
-        uploaded = st.file_uploader("Fichier à importer :", type=["csv", "xlsx", "xls"], help="200 Mo max")
-        fname = st.text_input("Nom personnalisé (facultatif)")
-        if uploaded and st.button("🚚 Importer"):
-            internal = slugify(fname) or slugify(Path(uploaded.name).stem)
+with tab_import:
+    st.subheader("📥 " + _("import"))
+    src_type = st.radio("Source des données / Data source:", [_("src_local"), _("src_url")], horizontal=True)
+
+    if src_type == _("src_local"):
+        uploaded = st.file_uploader(_("upload_file"), type=["csv", "xlsx", "xls"], help="200 Mo max")
+        fname = st.text_input(_("custom_name"))
+        if uploaded and st.button(_("btn_import")):
+            internal = re.sub(r"[^a-z0-9]+", "_", (fname or Path(uploaded.name).stem).lower()).strip("_")
             if not internal:
-                st.warning("⚠️ Veuillez saisir un nom valide.")
+                st.warning(_("warn_valid_name"))
             else:
                 suffix = Path(uploaded.name).suffix or ".csv"
                 with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
@@ -123,64 +103,61 @@ with tab_import:
                     st.session_state.step = 1
                     st.rerun()
                 else:
-                    st.error("🚫 Import échoué ou nom déjà utilisé.")
-
+                    st.error(_("err_import"))
     else:
-        url = st.text_input("Lien direct vers le fichier (.csv / .xlsx)")
-        fname = st.text_input("Nom personnalisé (facultatif)")
-        if st.button("🌐 Importer depuis le lien") and url:
-            internal = slugify(fname) or slugify(Path(url.split("?")[0]).stem)
+        url = st.text_input("URL")
+        fname = st.text_input(_("custom_name"))
+        if st.button(_("btn_import_url")) and url:
+            internal = re.sub(r"[^a-z0-9]+", "_", (fname or Path(url.split("?")[0]).stem).lower()).strip("_")
             saved = add_one_file(url, final_name=internal)
             if saved:
                 st.session_state.imported_name = Path(saved).name
                 st.session_state.step = 1
                 st.rerun()
             else:
-                st.error("🚫 Import échoué ou nom déjà utilisé.")
+                st.error(_("err_import"))
 
     if st.session_state.imported_name:
-        st.success(f"✅ Fichier importé : {st.session_state.imported_name}")
-        st.download_button("📥 Télécharger le fichier importé", open(f"data/raw/{st.session_state.imported_name}", "rb"), file_name=st.session_state.imported_name)
-        st.info("ℹ️ Passez à l’onglet **Nettoyage**.")
+        st.success(f"{_('file_imported')} {st.session_state.imported_name}")
+        st.download_button(_("download_raw"), open(f"data/raw/{st.session_state.imported_name}", "rb"), file_name=st.session_state.imported_name)
+        st.info(_("go_clean"))
 
-# ╭────────────────────── Nettoyage ──────────────────────╮
 with tab_clean:
-    st.subheader("🧽 Nettoyage automatique du fichier")
+    st.subheader("🧽 " + _("clean"))
     if step < 1:
-        st.warning("⛔ Importez d’abord un fichier.")
+        st.warning(_("warn_import_first"))
     else:
-        if st.button("🧹 Lancer le nettoyage"):
-            with st.spinner("Nettoyage en cours…"):
+        if st.button(_("btn_clean")):
+            with st.spinner(_("cleaning")):
                 cleaned_path = clean_main()
             st.session_state.cleaned_name = Path(cleaned_path).name
             st.session_state.step = 2
             st.rerun()
 
         if st.session_state.cleaned_name:
-            st.success(f"✅ Nettoyage terminé : {st.session_state.cleaned_name}")
-            st.download_button("📥 Télécharger le fichier nettoyé", open(f"data/cleaned/{st.session_state.cleaned_name}", "rb"), file_name=st.session_state.cleaned_name)
-            st.info("ℹ️ Passez à l’onglet **Visualisation**.")
+            st.success(f"{_('clean_done')} {st.session_state.cleaned_name}")
+            st.download_button(_("download_clean"), open(f"data/cleaned/{st.session_state.cleaned_name}", "rb"), file_name=st.session_state.cleaned_name)
+            st.info(_("go_viz"))
 
-# ╭────────────────────── Visualisation ──────────────────────╮
 with tab_viz:
-    st.subheader("📊 Visualisation des données")
+    st.subheader("📊 " + _("viz"))
     if step < 2:
-        st.warning("⛔ Nettoyez d’abord un fichier.")
+        st.warning(_("warn_clean_first"))
     else:
         cleaned_path = Path("data/cleaned") / st.session_state.cleaned_name
         if cleaned_path.exists():
             st.session_state["__in_streamlit"] = True
             df = load_cleaned_file(cleaned_path.stem.replace("_cleaned", ""))
             if df is not None:
-                st.sidebar.info("📌 Paramètres du graphique")
+                st.sidebar.info("📌 Graph settings / Paramètres du graphique")
                 fig = plot_data(df)
                 if fig is not None:
                     buf = BytesIO()
                     fig.savefig(buf, format="png", dpi=300)
-                    st.download_button("📸 Télécharger le graphique", data=buf.getvalue(), file_name="graphique.png", mime="image/png")
+                    st.download_button(_("btn_viz_dl"), data=buf.getvalue(), file_name="graphique.png", mime="image/png")
             else:
-                st.error("🚫 Impossible de charger le fichier nettoyé.")
+                st.error(_("err_load_clean"))
         else:
-            st.error("🚫 Fichier nettoyé introuvable.")
+            st.error(_("err_clean_missing"))
 
-        st.info("ℹ️ Vous pouvez revenir à l’onglet **Importation** pour analyser un autre fichier.")
+        st.info(_("back_import"))
