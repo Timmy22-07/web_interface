@@ -14,6 +14,7 @@ from __future__ import annotations
 import os, re, tempfile
 from io import BytesIO
 from pathlib import Path
+from translations import TRANSLATE
 
 import streamlit as st
 
@@ -26,15 +27,17 @@ SLUG_RE = re.compile(r"[^a-z0-9]+")
 slugify = lambda txt: SLUG_RE.sub("_", txt.lower()).strip("_")
 
 # ─────────────────── Sélecteur de langue ───────────────────
+# Langue par défaut (Français)
 if "lang" not in st.session_state:
-    st.session_state.lang = "Français"
+    st.session_state["lang"] = "Français"
 
 st.sidebar.selectbox(
     "🌐 Choisissez la langue / Select language",
-    ["Français", "English"],
-    index=0,
-    key="lang",
+    options=["Français", "English"],
+    index=0 if st.session_state["lang"] == "Français" else 1,
+    key="lang"
 )
+
 
 # ─────────────────── Dictionnaire de traduction ──────────────────
 TRANSLATE = {
@@ -110,8 +113,8 @@ Thank you for your interest. Happy exploring!
 2. Click **Download options**
 """,
     ),
-    "g_step3_fr": "3. Sélectionnez **CSV – Télécharger les données sélectionnées**",
-    "g_step3_en": "3. Select **CSV – Download selected data**",
+    "g_step3_fr": "3. Sélectionnez **CSV – Télécharger les données sélectionnées (pour le chargement de la base de données).**",
+    "g_step3_en": "3. Select **CSV – Download selected data (for database loading).**",
     "g_step4_fr": """4. Importez ce fichier via l’onglet **Importation** (ou collez l’URL directe).
 
 **Notez que tout ceci à été conçu pour fonctionner principalement avec des fichiers et URLs provenant du site officiel de Statistiques Canada. Cependant, il est possible que cette interface fonctionne aussi avec des urls et des fichiers ne provenant pas de Statistiques Canada, mais cela n'est pas toujours garanti.**
@@ -122,7 +125,7 @@ Vous pouvez maintenant passer à l’onglet **Importation** pour charger vos don
 """,
     "g_step4_en": """4. Import this file via the **Import** tab (or paste the direct URL).
 
-**Note: this interface is mainly designed for files and URLs from the official Statistics Canada website. It may work with other sources, but this is not always guaranteed.**
+**Note that this interface is mainly designed for files and URLs from the official Statistics Canada website. It may work with other sources, but this is not always guaranteed.**
 
 ---
 ### 🚀 Get started
@@ -196,18 +199,31 @@ with tab_home:
 # ╭──── Tutoriel ───╮
 with tab_guide:
     st.markdown(_("guide_md"), unsafe_allow_html=True)
-    st.image(
-        "assets/statcan_choose_csv.png",
-        caption="Options de téléchargement" if st.session_state.lang == "Français" else "Download options",
-        use_container_width=True,
+
+    # Vérifie la langue en cours
+    lang = st.session_state.get("lang", "Français")
+
+    # Image 1 : Choix CSV
+    image1 = "assets/statcan_choose_csv.png" if lang == "Français" else "assets/statcan_choose_csv_eng.png"
+    caption1 = "Options de téléchargement" if lang == "Français" else "Download options"
+    st.image(image1, caption=caption1, use_container_width=True)
+
+    # Texte après image 1
+    st.markdown(
+        TRANSLATE["g_step3_fr"] if lang == "Français" else TRANSLATE["g_step3_en"],
+        unsafe_allow_html=True
     )
-    st.markdown(TRANSLATE["g_step3_fr"] if st.session_state.lang == "Français" else TRANSLATE["g_step3_en"], unsafe_allow_html=True)
-    st.image(
-        "assets/statcan_download_button.png",
-        caption="Choix du format CSV" if st.session_state.lang == "Français" else "CSV format choice",
-        use_container_width=True,
+
+    # Image 2 : Bouton téléchargement
+    image2 = "assets/statcan_download_button.png" if lang == "Français" else "assets/statcan_download_button_eng.png"
+    caption2 = "Choix du format CSV" if lang == "Français" else "CSV format choice"
+    st.image(image2, caption=caption2, use_container_width=True)
+
+    # Texte après image 2
+    st.markdown(
+        TRANSLATE["g_step4_fr"] if lang == "Français" else TRANSLATE["g_step4_en"],
+        unsafe_allow_html=True
     )
-    st.markdown(TRANSLATE["g_step4_fr"] if st.session_state.lang == "Français" else TRANSLATE["g_step4_en"], unsafe_allow_html=True)
 
 # ╭──── Importation ───╮
 with tab_import:
